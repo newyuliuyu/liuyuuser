@@ -1,0 +1,288 @@
+/*dialog 组件*/
+.dialog-content {
+	width: 100%;
+	height: 100%;
+	vertical-align: middle;
+	margin: 0;
+	padding: 0;
+	filter: inherit;
+}
+
+.dialog-sm .tipcont {
+	margin: 15px 0 8px;
+	font-size: 16px;
+	text-align: center;
+}
+
+.tip-text {
+	position: relative;
+	filter: inherit;
+	top: -12px;
+}
+
+.tip-icon {
+	padding: 0;
+	display: inline-block;
+	width: 32px;
+	height: 35px;
+	background: url("img/update-tip.gif") no-repeat;
+}
+
+.update-ing .tip-icon {
+	background-position: 0 0;
+}
+
+.update-success .tip-icon {
+	background-position: 0 -35px;
+}
+
+.update-warning .tip-icon {
+	background-position: 0 -70px;
+}
+
+.update-error .tip-icon {
+	background-position: 0 -105px;
+}
+
+.modal .update-bar-ing {
+	margin: 10px 0;
+}
+
+.update-error .tip-text {
+	color: red;
+}
+
+.modal-box {
+	position: fixed;
+}
+
+.tip-modal {
+	width: 300px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.s_modal {
+	opacity: 0;
+	position: relative;
+	top: 20px;
+}
+
+.tip-icon {
+	text-align: center;
+}
+
+.modal-body {
+	position: relative;
+	padding: 20px;
+}
+
+.tip-modal .tipcont {
+	margin: 30px 0 22px;
+	line-height: 35px;
+	height: 35px;
+	padding: 0;
+	text-align: center;
+	font-size: 16px
+}
+
+.modal-content .modal-header, .dialog-content .modal-header {
+	background-color: #00a0e9;
+	border-radius: 6px 6px 0 0;
+	color: #fff;
+}
+
+@media screen and (min-width: 768px) {
+	.dialog-content {
+		-webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+		box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+	}
+}
+
+/**/
+.modal-box {
+	position: fixed;
+}
+
+.nonmodal-box {
+	position: absolute;
+}
+
+.dialog {
+	position: absolute;
+	background-color: #fff;
+	border-radius: 6px;
+	opacity: 0;
+}
+
+.dialog .dialog-header {
+	background-color: #337ab7;
+	border-radius: 6px 6px 0 0;
+	color: #fff;
+	padding: 15px;
+	border-bottom: 1px solid #2e6da4;
+	min-height: 18px;
+}
+
+.dialog .dialog-footer {
+	padding: 19px 20px 20px;
+	text-align: right;
+	border-top: 1px solid #e5e5e5;
+}
+
+.dialog .dialog-footer .btn {
+	margin-right: 8px;
+}
+
+.dialog-body {
+	position: relative;
+	padding: 20px;
+	filter: inherit;
+}
+
+.dialog-sm {
+	width: 300px;
+	top: 40px;
+}
+
+.dialog-sm .dialog-header {
+	padding: 5px 15px;
+}
+
+.dialog-sm .dialog-header h4 {
+	font-size: 15px;
+}
+
+.dialog-sm .dialog-body {
+	padding: 14px 20px;
+}
+
+.dialog-sm .dialog-footer {
+	padding: 8px 20px;
+}
+
+.dialog-sm .dialog-footer .btn {
+	padding: 5px 10px;
+	font-size: 12px;
+	line-height: 1.5;
+	border-radius: 3px;
+}
+
+.dialog-lg {
+	width: 880px;
+	top: 40px;
+}
+
+.dialog-md {
+	width: 600px;
+	top: 60px;
+}
+
+.dialog-backdrop {
+	opacity: 0;
+	position: fixed;
+	background: #000;
+}
+
+/*table in modal  7.18*/
+.dialog-body .control-label {
+	margin-bottom: 0;
+	margin-top: 0;
+	padding-top: 7px;
+	text-align: right;
+}
+
+.dialog-body .form-control-static {
+	padding-top: 7px;
+}
+
+.dialog-body .radio-content .download-check {
+	display: inline-block;
+	padding-top: 0px;
+}
+
+.dialog .form-group input.form-control {
+	width: 70%;
+	float: left;
+}
+
+.dialog  .control-label {
+	padding-left: 0 !important;
+	padding-right: 0 !important;
+}
+
+.dialog .error-tip {
+	/**float: left;**/
+	/**padding: 7px 0 0 12px;**/
+	
+}
+
+.dialog .form-group fieldset label {
+	display: inline-block;
+}
+
+.dialog .table, .dialog .table th, .dialog .table td {
+	border-color: #ececec;
+}
+
+.dialog .table .form-group {
+	margin-bottom: 0;
+	padding-top: 5px;
+}
+
+.dialog .form-group .form-control, .dialog .form-group input.form-control, .dialog .form-group select.form-control {
+	width: 90%;
+}
+
+.dialog .table .error-tip {
+	padding: 7px 0 0 0;
+}
+
+.dialog .table {
+	-webkit-transition: height 0.15s linear;
+	transition: height 0.15s linear;
+}
+
+.dialog .form-group:before, .dialog .form-group:after {
+	content: " ";
+	display: table;
+}
+
+.dialog  .form-group:after {
+	clear: both;
+}
+
+.dialog  .download-check {
+	margin: 7px 7px 0 0;
+	display: inline-block;
+}
+
+.modal  .download-check {
+	margin: 7px 7px 0 0;
+	display: inline-block;
+}
+/*modal*/
+.dialog .table th {
+	background-color: #fff;
+}
+
+.dialog .form-group {
+	padding-bottom: 8px;
+}
+
+.trsp {
+	background-color: transparent !important;
+	box-shadow: none;
+	-webkit-box-shadow: none;
+	border-width: 0;
+}
+
+.trsp .dialog-content {
+	box-shadow: none;
+	-webkit-box-shadow: none;
+	border-width: 0;
+}
+
+.dialog-title {
+	color: #FFF;
+}
