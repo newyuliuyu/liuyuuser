@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns=http://www.w3.org/1999/xhtml>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" type="image/png" sizes="32x32" href="resources/images/favicon.png">
+    <title></title>
+
+    <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!--[if lte IE 8]>
+    <noscript>
+        <style>.html5-wrappers {
+            display: none !important;
+        }</style>
+        <div class="ie-noscript-warning">您的浏览器禁用了脚本，请<a href="">查看这里</a>来启用脚本!或者<a href="/?noscript=1">继续访问</a>.
+        </div>
+    </noscript>
+    <![endif]-->
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+
+        #div1 {
+            border-style: solid;
+            border-width: 10px;
+            /*border-color: red forestgreen blue cyan;*/
+            border-color: #0e9e9e #0e9e9e transparent transparent;
+            height: 0px;
+            width: 0px;
+        }
+
+        #div2 {
+            border-style: solid;
+            border-width: 10px;
+            /*border-color: red forestgreen blue cyan;*/
+            border-color: transparent #0e9e9e #0e9e9e transparent;
+            height: 0px;
+            width: 0px;
+        }
+
+        #div3 {
+            border-style: solid;
+            border-width: 10px;
+            /*border-color: red forestgreen blue cyan;*/
+            border-color: transparent transparent #0e9e9e #0e9e9e;
+            height: 0px;
+            width: 0px;
+        }
+
+        #div4 {
+            border-style: solid;
+            border-width: 10px;
+            /*border-color: red forestgreen blue cyan;*/
+            border-color: #0e9e9e transparent transparent #0e9e9e;
+            height: 0px;
+            width: 0px;
+        }
+    </style>
+
+</head>
+
+<body>
+<div style="display: inline-block;">
+    <div style="display: inline-block;">
+        <div id="div1">
+        </div>
+        <div id="div2">
+        </div>
+    </div>
+    <div style=" margin-left: -5px; margin-right:-5px;background-color:#0e9e9e;
+display:inline-block;width: 80px;height: 40px;vertical-align: top; text-align: center;">
+        <span style="line-height: 40px;">ddddd</span>
+    </div>
+    <div style="display: inline-block;">
+        <div id="div3">
+        </div>
+        <div id="div4">
+        </div>
+    </div>
+</div>
+<div style="display:inline-block;vertical-align: top;">
+    <span style="line-height: 40px;color: rebeccapurple;">>>>>>>>>></span>
+</div>
+<div style="display: inline-block;">
+    <div style="display: inline-block;">
+        <div id="div1">
+        </div>
+        <div id="div2">
+        </div>
+    </div>
+    <div style=" margin-left: -5px; margin-right:-5px;background-color:#0e9e9e;
+display:inline-block;width: 80px;height: 40px;vertical-align: top; text-align: center;">
+        <span style="line-height: 40px;">ddddd</span>
+    </div>
+    <div style="display: inline-block;">
+        <div id="div3">
+        </div>
+        <div id="div4">
+        </div>
+    </div>
+</div>
+
+
+<div style="display: flex;border: 1px solid rebeccapurple;height: 300px;width: 500px;">
+
+    <div style="border: 1px solid rebeccapurple;">
+        jdjfdjf
+    </div>
+    <div style="border: 1px solid rebeccapurple;">
+        111111
+    </div>
+
+</div>
+<div style="display: flex;border: 1px solid rebeccapurple;height: 300px;width: 500px;">
+
+    <div style="border: 1px solid rebeccapurple;">
+        jdjfdjf
+    </div>
+
+</div>
+
+<div style="display: flex;width: 300px;">
+    <div style="width: 0px;
+            height: 0px;
+            border-style: solid;
+            border-width: 15px;
+            border-color: aqua aqua aqua transparent;"></div>
+    <div style="flex-grow:1;background-color: aqua;">
+        <span>dddddd</span>
+    </div>
+    <div style="width: 0px;
+            height: 0px;
+            border-style: solid;
+            border-width: 15px;
+            border-color: transparent transparent transparent aqua;"></div>
+</div>
+
+
+</body>
+</html>
