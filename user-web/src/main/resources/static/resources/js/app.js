@@ -92,7 +92,8 @@ var config = {
         'datetimepicker': 'js/lib/bootstrap-datetimepicker',
         'copyutils': 'js/lib/clipboard.min',
         'TableFreeze': 'js/lib/TableFreeze',
-        'migrate': 'js/lib/jquery-migrate-1.2.1'
+        'migrate': 'js/lib/jquery-migrate-1.2.1',
+        'pace': 'js/lib/pace'
 
     },
     map: {
@@ -125,6 +126,9 @@ var config = {
         },
         'TableFreeze': {
             deps: ['jquery', 'migrate']
+        },
+        'pace': {
+            deps: ['css!style/pace/pace-theme-minimal']
         }
     }
 };
@@ -133,8 +137,10 @@ requirejs.config(config);
 // 'bootstrap', 'dot', 'bootstrapselect', 'datetimepicker', 'css!styles/bootstrap/bootstrap.min', 'css!styles/public', 'css!styles/style',
 // 'css!styles/index',
 // 'css!styles/report'
-var globalModel = ['jquery', 'utils'];
+var globalModel = ['jquery', 'utils', 'pace'];
 require(globalModel, function ($) {
+
+    Pace.start();
 
     var p = ['js/app/' + window.app.entry];
     if (!window.JSON) { // 如果浏览器不支持JSON，使用JSON2

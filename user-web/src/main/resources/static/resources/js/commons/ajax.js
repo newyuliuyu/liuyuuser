@@ -93,6 +93,14 @@
                     type: Method.POST
                 });
             },
+            postJsonForm: function (url, dataset) {
+                return myAjax({
+                    'url': url,
+                    'data': dataset,
+                    'contentType':'application/x-www-form-urlencoded',
+                    type: Method.POST
+                });
+            },
             corsPostJson: function (url, dataset) {
                 return myAjax({
                     'url': url,
