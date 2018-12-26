@@ -10,6 +10,6 @@ package com.liuyu.user.web.domain;
  * @version v1.0
  * @since JDK 1.7+
  */
-public enum CategoryType {
-    MENU, URL;
+public enum ResourceType {
+    MENU, URL, Boolean;
 }

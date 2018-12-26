@@ -6,6 +6,7 @@ import com.liuyu.user.web.config.shiro.AccessFilter;
 import com.liuyu.user.web.config.shiro.LiuyuFormAuthenticationFilter;
 import com.liuyu.user.web.config.shiro.LiuyuRealm;
 import com.liuyu.user.web.config.shiro.QuartzSessionValidationScheduler2;
+import com.liuyu.user.web.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.Authenticator;
 import org.apache.shiro.authc.pam.AtLeastOneSuccessfulStrategy;
@@ -89,7 +90,7 @@ public class ShiroConfig {
 
     @Bean
     public DefaultWebSecurityManager securityManager(SessionManager sessionManager,
-                                                     Authenticator authenticator) {
+                                                     Authenticator authenticator, UserService userService) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setSessionManager(sessionManager);
 //        securityManager.setCacheManager();
@@ -97,7 +98,9 @@ public class ShiroConfig {
         securityManager.setAuthenticator(authenticator);
 
         List<Realm> realms = Lists.newArrayList();
-        realms.add(new LiuyuRealm());
+        LiuyuRealm liuyuRealm = new LiuyuRealm();
+        liuyuRealm.setUserService(userService);
+        realms.add(liuyuRealm);
         securityManager.setRealms(realms);
 
 
@@ -145,7 +148,7 @@ public class ShiroConfig {
     public SessionValidationScheduler sessionValidationScheduler(ValidatingSessionManager sessionManager) {
         QuartzSessionValidationScheduler2 sessionValidationScheduler = new QuartzSessionValidationScheduler2();
 //        sessionValidationScheduler.setSessionValidationInterval(1800000);
-        sessionValidationScheduler.setSessionValidationInterval(5000);
+        sessionValidationScheduler.setSessionValidationInterval(1800000);
         if (sessionManager instanceof AbstractValidatingSessionManager) {
             ((AbstractValidatingSessionManager) sessionManager).setSessionValidationScheduler(sessionValidationScheduler);
         }
@@ -164,7 +167,7 @@ public class ShiroConfig {
                                                    Cookie sessionIdCookie) {
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
 //        sessionManager.setGlobalSessionTimeout(1800000);
-        sessionManager.setGlobalSessionTimeout(5000);
+        sessionManager.setGlobalSessionTimeout(1800000);
         sessionManager.setDeleteInvalidSessions(true);
         sessionManager.setSessionValidationSchedulerEnabled(true);
 //        sessionManager.setSessionValidationScheduler(sessionValidationScheduler);

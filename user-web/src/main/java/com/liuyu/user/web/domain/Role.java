@@ -19,8 +19,11 @@ import lombok.extern.slf4j.Slf4j;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@EqualsAndHashCode(of = {"id"})
 public class Role {
     private Long id;
     private String name;
+    private RoleType roleType;
+    private boolean systemBuiltin;
 
 }

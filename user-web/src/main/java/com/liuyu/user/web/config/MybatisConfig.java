@@ -46,11 +46,17 @@ public class MybatisConfig {
 //        };
 //        bean.setTypeHandlers(typeHandlers);
 
+
         PageInterceptor pageInterceptor = new PageInterceptor();
         Properties properties = new Properties();
-        properties.put("param1","value1");
+        properties.put("param1", "value1");
         pageInterceptor.setProperties(properties);
         bean.setPlugins(new Interceptor[]{pageInterceptor});
+
+
+        //设置默认枚举处理类型,必须再最后才能调用，不然前面设置的有些参数失效
+//        SqlSessionFactory sessionFactory = bean.getObject();
+//        sessionFactory.getConfiguration().getTypeHandlerRegistry().setDefaultEnumTypeHandler();
 
         return bean;
     }

@@ -2,6 +2,7 @@ package com.liuyu.user.web.domain;
 
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.StringUtils;
 
 /**
  * ClassName: User <br/>
@@ -19,11 +20,19 @@ import lombok.extern.slf4j.Slf4j;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@EqualsAndHashCode(of = {"id"})
 public class User {
     private Long id;
-    private String code;
-    private String name;
+    private String userName;
+    private String realName = "";
+    private String phone = "";
+    private String email = "";
     private String password;
-    private String phone;
-    private String email;
+
+    public String getRealName() {
+        if (StringUtils.isEmpty(realName)) {
+            return userName;
+        }
+        return realName;
+    }
 }

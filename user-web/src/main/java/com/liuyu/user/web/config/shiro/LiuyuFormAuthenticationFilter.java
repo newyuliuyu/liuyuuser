@@ -4,6 +4,7 @@ import com.liuyu.common.json.Json2;
 import com.liuyu.common.mvc.ModelAndViewFactory;
 import com.liuyu.common.mvc.Responser;
 import com.liuyu.common.util.ReqUtil;
+import com.liuyu.common.util.ThrowableToString;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.subject.Subject;
@@ -103,19 +104,19 @@ public class LiuyuFormAuthenticationFilter extends FormAuthenticationFilter {
             String message = e.getClass().getSimpleName();
             Responser rs = null;
             if (isScan && "AuthenticationException".equals(message)) {
-                rs = new Responser.Builder().failure().code("00001").msg("用户名错误").create();
+                rs = new Responser.Builder().failure().code("00001").msg("用户名错误").detail(ThrowableToString.toString(e)).create();
             } else if ("AuthenticationException".equals(message)) {
-                rs = new Responser.Builder().failure().code("00001").msg("用户名或密码错误").create();
+                rs = new Responser.Builder().failure().code("00001").msg("用户名或密码错误").detail(ThrowableToString.toString(e)).create();
             } else if (isScan && "IncorrectCredentialsException".equals(message)) {
-                rs = new Responser.Builder().failure().code("00001").msg("用户名或密码错误").create();
+                rs = new Responser.Builder().failure().code("00001").msg("用户名或密码错误").detail(ThrowableToString.toString(e)).create();
             } else if ("IncorrectCredentialsException".equals(message)) {
-                rs = new Responser.Builder().failure().code("00001").msg("用户名或密码错误").create();
+                rs = new Responser.Builder().failure().code("00001").msg("用户名或密码错误").detail(ThrowableToString.toString(e)).create();
             } else if ("UnknownAccountException".equals(message)) {
-                rs = new Responser.Builder().failure().code("00001").msg("用户名或密码错误").create();
+                rs = new Responser.Builder().failure().code("00001").msg("用户不存在").detail(ThrowableToString.toString(e)).create();
             } else if ("LockedAccountException".equals(message)) {
-                rs = new Responser.Builder().failure().code("00001").msg("账号被锁定").create();
+                rs = new Responser.Builder().failure().code("00001").msg("账号被锁定").detail(ThrowableToString.toString(e)).create();
             } else {
-                rs = new Responser.Builder().failure().code("00000").msg("未知错误").create();
+                rs = new Responser.Builder().failure().code("00000").msg("未知错误").detail(ThrowableToString.toString(e)).create();
             }
             ModelAndView modelAndView = ModelAndViewFactory.instance()
                     .with(Responser.ModelName, rs)

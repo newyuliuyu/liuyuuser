@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.liuyu.user.web.dao.ResourceDao">
+
+    <insert id="add">
+        insert into u_resource(id,name,displayText,groups,smallGroup,parentId,orderNum,resType,elementId)
+        values (#{res.id},#{res.name},#{res.displayText},#{res.group},#{res.smallGroup},#{res.parentId},#{res.orderNum},#{res.resourceType},#{res.elementId})
+    </insert>
+
+    <insert id="addResources">
+        insert into u_resource(id,name,displayText,groups,smallGroup,parentId,orderNum,resType,elementId)
+        values
+        <foreach collection="reses" item="res" index="index" separator=",">
+            (#{res.id},#{res.name},#{res.displayText},#{res.group},#{res.smallGroup},#{res.parentId},#{res.orderNum},#{res.resourceType},#{res.elementId})
+        </foreach>
+    </insert>
+
+    <insert id="addRoleResources">
+        insert into u_role_x_resource(roleId,resId)
+        values
+        <foreach collection="reses" item="res" index="index" separator=",">
+            (#{roleId},#{res.id})
+        </foreach>
+    </insert>
+    <insert id="addUserResources">
+        insert into u_user_x_resource(userId,resId)
+        values
+        <foreach collection="reses" item="res" index="index" separator=",">
+            (#{userId},#{res.id})
+        </foreach>
+    </insert>
+
+    <update id="updateResource">
+        update u_resource a
+        set name=#{res.name},
+        displayText=#{res.displayText},
+        groups=#{res.group},
+        smallGroup=#{res.smallGroup},
+        parentId=#{res.parentId},
+        orderNum=#{res.orderNum},
+        resType=#{res.resourceType}
+        elementId=#{res.elementId}
+        where a.id=#{res.id}
+    </update>
+
+    <delete id="delResource">
+        delete from u_resource where id=#{res.id}
+    </delete>
+
+    <delete id="delRoleResources">
+      delete from u_role_x_resource where roleId=#{roleId}
+    </delete>
+    <delete id="delRoleResource">
+      delete from u_role_x_resource where roleId=#{roleId} and resId=#{resId}
+    </delete>
+    <delete id="delRoleResourceWithResIds">
+        delete from u_role_x_resource
+        where roleId=#{roleId}
+        and resId in
+        <foreach collection="reses" index="index" item="res" open="(" separator="," close=")">
+            #{res.id}
+        </foreach>
+    </delete>
+
+    <delete id="delUserResources">
+      delete from u_user_x_resource where userId=#{userId}
+    </delete>
+
+    <delete id="delUserResource">
+      delete from u_user_x_resource where userId=#{userId} and resId=#{resId}
+    </delete>
+
+    <delete id="delUserResourceWithResIds">
+        delete from u_user_x_resource where userId=#{userId}
+        and resId in
+        <foreach collection="reses" index="index" item="res" open="(" separator="," close=")">
+            #{res.id}
+        </foreach>
+    </delete>
+
+    <select id="queryResources" resultType="com.liuyu.user.web.domain.Resource">
+        select id,name,displayText,groups as group,smallGroup,parentId,orderNum,resType as resourceType,elementId
+        from u_resource
+    </select>
+    <select id="queryRoleResources" resultType="com.liuyu.user.web.domain.Resource">
+        select id,name,displayText,groups as group,smallGroup,parentId,orderNum,resType as resourceType,elementId
+        from u_resource a
+        inner join u_role_x_resource b on a.id=b.resId
+        where b.roleId=#{roleId}
+    </select>
+    <select id="queryRoleResourcesWtihGroup" resultType="com.liuyu.user.web.domain.Resource">
+        select id,name,displayText,groups as group,smallGroup,parentId,orderNum,resType as resourceType,elementId
+        from u_resource a
+        inner join u_role_x_resource b on a.id=b.resId
+        where b.roleId=#{roleId} and a.groups=#{group}
+    </select>
+    <select id="queryRolesResourcesWtihGroup" resultType="com.liuyu.user.web.domain.Resource">
+        select id,name,displayText,groups as group,smallGroup,parentId,orderNum,resType as resourceType,elementId
+        from u_resource a
+        inner join u_role_x_resource b on a.id=b.resId
+        where b.roleId in
+        <foreach collection="roles" index="index" item="role" open="(" separator="," close=")">
+            #{role.id}
+        </foreach>
+        and a.groups=#{group}
+    </select>
+    <select id="queryUserResources" resultType="com.liuyu.user.web.domain.Resource">
+        select id,name,displayText,groups as group,smallGroup,parentId,orderNum,resType as resourceType,elementId
+        from u_resource a
+        inner join u_user_x_resource b on a.id=b.resId
+        where b.userId=#{userId}
+    </select>
+    <select id="queryUserResourcesWtihGroup" resultType="com.liuyu.user.web.domain.Resource">
+        select id,name,displayText,groups as group,smallGroup,parentId,orderNum,resType as resourceType,elementId
+        from u_resource a
+        inner join u_user_x_resource b on a.id=b.resId
+        where b.userId=#{userId}
+        and a.groups=#{group}
+    </select>
+</mapper>

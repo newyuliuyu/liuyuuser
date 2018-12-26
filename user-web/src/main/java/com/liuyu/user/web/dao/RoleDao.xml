@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.liuyu.user.web.dao.RoleDao">
+
+    <insert id="add">
+		insert into u_role(id,name,roletype,systembuiltin)
+		values(#{role.id},#{role.name},#{role.roleType},#{role.systemBuiltin})
+	</insert>
+
+    <insert id="addUserRoles">
+        insert into u_user_x_role(userId,roleId)
+        values
+        <foreach collection="roles" item="item" index="index" separator=",">
+            (#{userId},#{item.id})
+        </foreach>
+    </insert>
+
+    <insert id="addUserRole">
+        insert into u_user_x_role(userId,roleId)
+        values(#{userId},#{role.id})
+    </insert>
+
+    <delete id="delUserRoles">
+		delete from u_user_x_role where userId=#{userId}
+	</delete>
+
+    <delete id="delUserRole">
+		delete from u_user_x_role where userId=#{userId} and roleId=#{roleId}
+	</delete>
+
+    <select id="get" resultType="com.liuyu.user.web.domain.Role">
+		select id,name,roletype as roleType,systembuiltin as systemBuiltin
+		from u_role a
+		where a.id=#{roleId}
+	</select>
+
+    <select id="queryUserRoles" resultType="com.liuyu.user.web.domain.Role">
+		select id,name,roletype as roleType,systembuiltin as systemBuiltin
+		from u_role a
+		inner join u_user_x_role b on a.id=b.roleId
+		where a.userId=#{userId}
+	</select>
+
+    <select id="queryRoles" resultType="com.liuyu.user.web.domain.Role">
+		select id,name,roletype as roleType,systembuiltin as systemBuiltin
+		from u_role a
+	</select>
+
+</mapper>

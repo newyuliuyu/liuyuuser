@@ -11,5 +11,5 @@ package com.liuyu.user.web.domain;
  * @since JDK 1.7+
  */
 public enum RoleType {
-    Parents, Student, Teacher, CLazzMaseter, Leader;
+    Parents, Student, Teacher, CLazzMaseter, Leader, Admin, Root;
 }

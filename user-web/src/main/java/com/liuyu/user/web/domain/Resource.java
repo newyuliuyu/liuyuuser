@@ -19,12 +19,15 @@ import lombok.extern.slf4j.Slf4j;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@EqualsAndHashCode(of = {"id"})
 public class Resource {
     private Long id;
     private String name;
-    private CategoryType categoryType;
+    private String displayText;
+    private ResourceType resourceType;
+    private String elementId;
     private String group;
     private String smallGroup;
     private int orderNum;
-
+    private Long parentId;
 }
