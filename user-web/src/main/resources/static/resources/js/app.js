@@ -74,6 +74,7 @@ var config = {
         'jquery': jqueryURL,
         'Popper': 'js/lib/popper.1.14.3',
         'bootstrap': 'js/lib/bootstrap/bootstrap',
+        'bootstrapSelect': 'js/lib/bootstrap-select',
         'webuploader': 'js/lib/webuploader',
         'css': 'js/lib/css0.1.10',
         'text': 'js/lib/text2.0.15',
@@ -105,6 +106,12 @@ var config = {
     shim: {
         'bootstrap': {
             deps: ['jquery', 'Popper', 'css!style/bootstrap/bootstrap.min']
+        },
+        'bootstrapSelect': {
+            deps: ['bootstrap', 'css!style/bootstrap-select']
+        },
+        'dialog': {
+            deps: ['jquery', 'css!style/dialog']
         },
         'pin': {
             deps: ['jquery', 'css!style/pin']

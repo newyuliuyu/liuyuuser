@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
+
 /**
  * ClassName: RoleDaoTest <br/>
  * Function:  ADD FUNCTION. <br/>
@@ -32,13 +34,19 @@ public class RoleDaoTest {
     public void add() throws Exception {
 
 
-        Role role = Role.builder().id(1L).name("test").systemBuiltin(true).roleType(RoleType.Admin).build();
+        Role role = Role.builder().id(1L).name("test").systemBuiltin(true).roleType(RoleType.builder().code("Admin").build()).build();
         roleDao.add(role);
     }
 
     @Test
     public void get() throws Exception {
         Role role = roleDao.get(1L);
+        System.out.println();
+    }
+
+    @Test
+    public void queryUserRoles() throws Exception {
+        List<Role> role = roleDao.queryUserRoles(1L);
         System.out.println();
     }
 

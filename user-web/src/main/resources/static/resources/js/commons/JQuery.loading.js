@@ -101,6 +101,18 @@
                 }
             }
         });// $.fn.extend
-
+        $.extend({
+            showError: function (data) {
+                var myData = data[0];
+                if ($.isArray(data)) {
+                    myData = data[0];
+                }
+                $('body').close(myData);
+            },
+            processError: function (data) {
+                var myData = data[0];
+                $('body').close(myData);
+            }
+        });
     });// define(deps,function($)
 })();

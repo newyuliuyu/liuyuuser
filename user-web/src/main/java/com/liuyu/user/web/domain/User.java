@@ -4,6 +4,8 @@ import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 
+import java.util.List;
+
 /**
  * ClassName: User <br/>
  * Function:  ADD FUNCTION. <br/>
@@ -28,6 +30,8 @@ public class User {
     private String phone = "";
     private String email = "";
     private String password;
+
+    private List<Role> roles;
 
     public String getRealName() {
         if (StringUtils.isEmpty(realName)) {

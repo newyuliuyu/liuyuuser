@@ -35,7 +35,7 @@
         <level value="error"/>
         <appender-ref ref="ASYNC"/>
     </root>
-    <logger name="com.ez" additivity="false">
+    <logger name="com.liuyu" additivity="false">
         <level value="debug"/>
         <appender-ref ref="ASYNC"/>
     </logger>

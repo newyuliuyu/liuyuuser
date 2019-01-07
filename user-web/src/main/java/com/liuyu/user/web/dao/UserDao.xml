@@ -17,7 +17,7 @@
 
     <update id="updateUser">
 		update u_user a
-		set a.realname=#{user.relaName},a.phone=#{user.phone},a.email=#{user.email}
+		set a.realname=#{user.realName},a.phone=#{user.phone},a.email=#{user.email}
 		where a.id=#{user.id}
 	</update>
 
@@ -28,6 +28,12 @@
     <delete id="delUser">
 		delete from u_user where id=#{user.id}
 	</delete>
+
+    <select id="get" resultType="com.liuyu.user.web.domain.User">
+		select id,username,phone,email,realname
+		from u_user a
+		where a.id=#{userId}
+	</select>
 
     <select id="queryWithUserName" resultType="com.liuyu.user.web.domain.User">
 		select id,username,phone,email,pwd as password,realname
@@ -46,8 +52,14 @@
 	</select>
 
     <select id="queryUsers" resultType="com.liuyu.user.web.domain.User">
-		select id,username,phone,email,pwd as password,realname
+		select id,username,phone,email,realname
 		from u_user a
+		<if test="searchText != null ">
+			where username like #{searchText}
+			or phone like #{searchText}
+			or email like #{searchText}
+			or realname like #{searchText}
+		</if>
 	</select>
 
     <select id="queryUsersWithUserNames" resultType="com.liuyu.user.web.domain.User">

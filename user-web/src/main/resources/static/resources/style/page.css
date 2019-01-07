@@ -1,0 +1,22 @@
+/*分页样式*/
+.pages {
+    padding-left: 0;
+    margin: 20px 0;
+    text-align: center;
+    list-style: none;
+}
+.pages li {
+    display: inline;
+    margin: 0 2px;
+    padding: 5px 14px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    color: #333333;
+    border-radius: 0;
+}
+.pages li.pgCurrent,
+.pages li:hover {
+    border-color: #2B99F0;
+    background-color: #fff;
+    color: #2B99F0;
+}

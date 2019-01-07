@@ -1,6 +1,10 @@
 package com.liuyu.user.web.service;
 
+import com.liuyu.user.web.domain.Resource;
+import com.liuyu.user.web.domain.Role;
 import com.liuyu.user.web.domain.User;
+
+import java.util.List;
 
 /**
  * ClassName: UserService <br/>
@@ -13,5 +17,37 @@ import com.liuyu.user.web.domain.User;
  * @since JDK 1.7+
  */
 public interface UserService {
+
+    void saveUserRoles(User user, List<Role> roles);
+
+    void saveUserResources(long userId, List<Resource> saveReses, List<Resource> delReses);
+
+    void add(User user);
+
+    void update(User user);
+
+    void updatePwd(User user);
+
+    void resetPwd(User user);
+
+    void delete(User user);
+
     User get(String username);
+
+    User queryWithUserName(String userName);
+
+    User queryWithPhone(String phone);
+
+    User queryWithEmail(String email);
+
+    User get(long id);
+
+
+    List<User> queryUsers(String searchText);
+
+    List<Role> queryRoles(long userId);
+
+    List<Resource> queryUserResourcesWithGroup(User user, String group);
+
+    List<Resource> queryUserResources(User user);
 }

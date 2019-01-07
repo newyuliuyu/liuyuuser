@@ -28,13 +28,15 @@ public interface UserDao {
 
     int delUser(@Param("user") User user);
 
+    User get(@Param("userId") long userId);
+
     User queryWithUserName(@Param("userName") String userName);
 
     User queryWithPhone(@Param("phone") String userName);
 
     User queryWithEmail(@Param("email") String userName);
 
-    List<User> queryUsers();
+    List<User> queryUsers(@Param("searchText") String searchText);
 
     List<User> queryUsersWithUserNames(@Param("usernames") String[] usernames);
 }

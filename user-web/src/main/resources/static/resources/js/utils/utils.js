@@ -285,6 +285,9 @@ window.Req = {
         } else {
             return url1;
         }
+    },
+    redirect: function (url) {
+        window.location.href = url;
     }
 };
 

@@ -26,132 +26,159 @@
  * The included Pager.CSS file is a dependancy but can obviously tweaked to your wishes
  * Tested in IE6 IE7 Firefox & Safari. Any browser strangeness, please report.
  */
-(function($) {
-	$.fn.getCurPage = function() {
-		var curPage = this.find(".pgCurrent").text();
-		return curPage;
-	};
-	$.fn.clickCurPage = function() {
-		var myId = $(this).attr("id");
-		$(this).trigger(myId+"/curPage/click");
-	};
-	$.fn.pager = function(_opts) {
+(function ($) {
+    $.fn.getCurPage = function () {
+        var curPage = this.find(".pgCurrent").text();
+        return curPage;
+    };
+    $.fn.clickCurPage = function () {
+        var myId = $(this).attr("id");
+        $(this).trigger(myId + "/curPage/click");
+    };
+    $.fn.clickNextPage = function () {
+        var myId = $(this).attr("id");
+        $(this).trigger(myId + "/nextPage/click");
+    };
+    $.fn.clickPreviousPage = function () {
+        var myId = $(this).attr("id");
+        $(this).trigger(myId + "/previousPage/click");
+    };
+    $.fn.pager = function (_opts) {
 
-		var setting = {
-			pageNum : 1,
-			pageCount : 1,
-			click : null
-		};
-		var self=$(this);
-		
-		
-		
-		var obj = null;
-		$.extend(setting, _opts);
+        var setting = {
+            pageNum: 1,
+            pageCount: 1,
+            click: null
+        };
+        var self = $(this);
 
-		var myId = $(this).attr("id");
-		self.off(myId+"/curPage/click");
-		self.on(myId+"/curPage/click",function(){
-			if ($.isFunction(setting.click)) {
-				setting.click(setting.pageNum, setting.pageCount);
-			}
-		});
-		
-		return this.each(function() {
-			obj = this;
-			renderpager();
-		});
 
-		function buttonClickCallback(pageNum) {
-			setting.pageNum = parseInt(pageNum);
-			renderpager();
+        var obj = null;
+        $.extend(setting, _opts);
 
-			if ($.isFunction(setting.click)) {
-				setting.click(pageNum, setting.pageCount);
-			}
-		}
+        var myId = $(this).attr("id");
+        self.off(myId + "/curPage/click");
+        self.on(myId + "/curPage/click", function () {
+            if ($.isFunction(setting.click)) {
+                setting.click(setting.pageNum, setting.pageCount);
+            }
+        });
+        self.off(myId + "/nextPage/click");
+        self.on(myId + "/nextPage/click", function () {
+            if ($.isFunction(setting.click)) {
+                var pageNum = setting.pageNum;
+                if (setting.pageNum + 1 <= setting.pageCount) {
+                    pageNum = setting.pageNum + 1;
+                }
+                setting.click(pageNum, setting.pageCount);
+            }
+        });
+        self.off(myId + "/previousPage/click");
+        self.on(myId + "/previousPage/click", function () {
+            if ($.isFunction(setting.click)) {
+                var pageNum = setting.pageNum;
+                if (setting.pageNum - 1 > 0) {
+                    pageNum = setting.pageNum - 1;
+                }
+                setting.click(pageNum, setting.pageCount);
+            }
+        });
 
-		function renderpager() {
-			
-			var $pager = $('<ul class="pages"></ul>');
-			$pager.append(renderButton("first", "首页")).append(
-					renderButton("prev", "上一页"));
+        return this.each(function () {
+            obj = this;
+            renderpager();
+        });
 
-			var startPoint = 1;
-			var endPoint = 9;
+        function buttonClickCallback(pageNum) {
+            setting.pageNum = parseInt(pageNum);
+            renderpager();
 
-			if (setting.pageNum > 4) {
-				startPoint = setting.pageNum - 4;
-				endPoint = setting.pageNum + 4;
-			}
+            if ($.isFunction(setting.click)) {
+                setting.click(pageNum, setting.pageCount);
+            }
+        }
 
-			if (endPoint > setting.pageCount) {
-				startPoint = setting.pageCount - 8;
-				endPoint = setting.pageCount;
-			}
+        function renderpager() {
 
-			if (startPoint < 1) {
-				startPoint = 1;
-			}
+            var $pager = $('<ul class="pages"></ul>');
+            $pager.append(renderButton("first", "首页")).append(
+                renderButton("prev", "上一页"));
 
-			for ( var page = startPoint; page <= endPoint; page++) {
-				var currentButton = $('<li class="page-number">' + (page)
-						+ '</li>');
+            var startPoint = 1;
+            var endPoint = 9;
 
-				page == setting.pageNum ? currentButton.addClass('pgCurrent')
-						: currentButton.click(function() {
-							buttonClickCallback(this.firstChild.data);
-						});
-				currentButton.appendTo($pager);
-			}
+            if (setting.pageNum > 4) {
+                startPoint = setting.pageNum - 4;
+                endPoint = setting.pageNum + 4;
+            }
 
-			$pager.append(renderButton("next", "下一页")).append(
-					renderButton("last", "末页"));
+            if (endPoint > setting.pageCount) {
+                startPoint = setting.pageCount - 8;
+                endPoint = setting.pageCount;
+            }
 
-			// return $pager;
-			$(obj).empty().append($pager);
-			$('.pages li').mouseover(function() {
-				$(".pages").css({cursor:"pointer"});
-				//document.body.style.cursor = "pointer";
-			}).mouseout(function() {
-				$(".pages").css({cursor:"auto"});
-				//document.body.style.cursor = "auto";
-			});
-		}
+            if (startPoint < 1) {
+                startPoint = 1;
+            }
 
-		function renderButton(labelId, labelText) {
-			var $Button = $('<li class="pgNext">' + labelText + '</li>');
-			var destPage = 1;
-			// work out destination page for required button type
-			switch (labelId) {
-			case "first":
-				destPage = 1;
-				break;
-			case "prev":
-				destPage = setting.pageNum - 1;
-				break;
-			case "next":
-				destPage = setting.pageNum + 1;
-				break;
-			case "last":
-				destPage = setting.pageCount;
-				break;
-			}
+            for (var page = startPoint; page <= endPoint; page++) {
+                var currentButton = $('<li class="page-number">' + (page)
+                    + '</li>');
 
-			// disable and 'grey' out buttons if not needed.
-			if (labelId == "first" || labelId == "prev") {
-				setting.pageNum <= 1 ? $Button.addClass('pgEmpty') : $Button
-						.click(function() {
-							buttonClickCallback(destPage);
-						});
-			} else {
-				setting.pageNum >= setting.pageCount ? $Button
-						.addClass('pgEmpty') : $Button.click(function() {
-					buttonClickCallback(destPage);
-				});
-			}
+                page == setting.pageNum ? currentButton.addClass('pgCurrent')
+                    : currentButton.click(function () {
+                        buttonClickCallback(this.firstChild.data);
+                    });
+                currentButton.appendTo($pager);
+            }
 
-			return $Button;
-		}
-	};
+            $pager.append(renderButton("next", "下一页")).append(
+                renderButton("last", "末页"));
+
+            // return $pager;
+            $(obj).empty().append($pager);
+            $('.pages li').mouseover(function () {
+                $(".pages").css({cursor: "pointer"});
+                //document.body.style.cursor = "pointer";
+            }).mouseout(function () {
+                $(".pages").css({cursor: "auto"});
+                //document.body.style.cursor = "auto";
+            });
+        }
+
+        function renderButton(labelId, labelText) {
+            var $Button = $('<li class="pgNext">' + labelText + '</li>');
+            var destPage = 1;
+            // work out destination page for required button type
+            switch (labelId) {
+                case "first":
+                    destPage = 1;
+                    break;
+                case "prev":
+                    destPage = setting.pageNum - 1;
+                    break;
+                case "next":
+                    destPage = setting.pageNum + 1;
+                    break;
+                case "last":
+                    destPage = setting.pageCount;
+                    break;
+            }
+
+            // disable and 'grey' out buttons if not needed.
+            if (labelId == "first" || labelId == "prev") {
+                setting.pageNum <= 1 ? $Button.addClass('pgEmpty') : $Button
+                    .click(function () {
+                        buttonClickCallback(destPage);
+                    });
+            } else {
+                setting.pageNum >= setting.pageCount ? $Button
+                    .addClass('pgEmpty') : $Button.click(function () {
+                    buttonClickCallback(destPage);
+                });
+            }
+
+            return $Button;
+        }
+    };
 })(jQuery);

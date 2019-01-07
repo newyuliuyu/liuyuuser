@@ -25,6 +25,7 @@ public class IndexController {
 
     @RequestMapping("/")
     public ModelAndView index(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        log.debug("进入系统主页....IndexController.index");
         return ModelAndViewFactory.instance("redirect:/index.html").build();
     }
 

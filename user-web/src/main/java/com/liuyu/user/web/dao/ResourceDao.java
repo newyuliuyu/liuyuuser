@@ -3,6 +3,7 @@ package com.liuyu.user.web.dao;
 import com.liuyu.user.web.domain.Resource;
 import com.liuyu.user.web.domain.Role;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ import java.util.List;
  * @version v1.0
  * @since JDK 1.7+
  */
+@Repository
 public interface ResourceDao {
     int add(@Param("res") Resource res);
 
@@ -35,11 +37,15 @@ public interface ResourceDao {
 
     int delRoleResourceWithResIds(@Param("roleId") long roleId, @Param("reses") List<Resource> reses);
 
+    int delResourceRole(@Param("resId") long resId);
+
     int delUserResources(@Param("userId") long userId);
 
     int delUserResource(@Param("userId") long userId, @Param("resId") long resId);
 
     int delUserResourceWithResIds(@Param("userId") long userId, @Param("reses") List<Resource> reses);
+
+    int delResourceUser(@Param("resId") long resId);
 
     List<Resource> queryResources();
 

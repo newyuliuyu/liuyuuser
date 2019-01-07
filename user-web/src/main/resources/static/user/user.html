@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html xmlns=http://www.w3.org/1999/xhtml>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" type="image/png" sizes="32x32" href="resources/images/favicon.png">
+    <title></title>
+    <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!--[if lte IE 8]>
+    <noscript>
+        <style>.html5-wrappers {
+            display: none !important;
+        }</style>
+        <div class="ie-noscript-warning">您的浏览器禁用了脚本，请<a href="">查看这里</a>来启用脚本!或者<a href="/?noscript=1">继续访问</a>.
+        </div>
+    </noscript>
+    <![endif]-->
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+
+</head>
+
+<body>
+<header class="header" style="display:none;">
+    <div class="logo">
+        <i class="icon-user logo-content">&nbsp;new.liuyu</i>
+    </div>
+    <div class="header-main">
+        <ul>
+        </ul>
+    </div>
+    <div class="header-end float-right">
+    </div>
+</header>
+<main style="display: none">
+    <div class="main">
+        <div class="main-left">
+        </div>
+        <div class="main-center" style="overflow: auto;">
+            <div class="ly-content role-content">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0);">角色-资源-用户</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">用户</li>
+                    </ol>
+                </nav>
+                <div class="tool-bar">
+                    <a id="addUser" href="javascript:void(0);" class="btn btn-outline-primary">添加用户</a>
+                    <div style="display: inline-block;width: 20%;">
+                        <div class="input-group">
+                            <input type="text" id="searchText" class="form-control" placeholder="用户名|用户名称|电话|邮箱">
+                            <div class="input-group-append">
+                                <button id="searchUser" class="btn btn-outline-secondary  icon-search" type="button">
+                                    搜索
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="tableDIV">
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</main>
+<footer style="display: none">
+</footer>
+</body>
+</html>
+
+<script id="newAndUpdateUserT" type="text/x-dot-template">
+    <form>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label text-right">用户名</label>
+            <div class="col-sm-10">
+                <input type="text" id="userName" name="userName" class="form-control" placeholder="用户名"
+                       value="{{=(it.user.userName?it.user.userName:'')}}"
+                       data-valid="false"
+                       data-valid-result="true"
+                       data-old-value="{{=(it.user.userName?it.user.userName:'0')}}">
+                <small class="form-text text-danger"></small>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label text-right">手机</label>
+            <div class="col-sm-10">
+                <input type="text" id="phone" name="phone" class="form-control" placeholder="手机"
+                       value="{{=(it.user.phone?it.user.phone:'')}}"
+                       data-valid="false"
+                       data-valid-result="true"
+                       data-old-value="{{=(it.user.phone?it.user.phone:'0')}}">
+                <small class="form-text text-danger"></small>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label text-right">邮箱</label>
+            <div class="col-sm-10">
+                <input type="text" id="email" class="form-control" placeholder="邮箱"
+                       value="{{=(it.user.email?it.user.email:'')}}"
+                       data-valid="false"
+                       data-valid-result="true"
+                       data-old-value="{{=(it.user.email?it.user.email:'0')}}">
+                <small class="form-text text-danger"></small>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label text-right">姓名</label>
+            <div class="col-sm-10">
+                <input type="text" id="realName" class="form-control" placeholder="姓名"
+                       value="{{=(it.user.realName?it.user.realName:'')}}">
+                <small class="form-text text-danger"></small>
+            </div>
+        </div>
+        <input type="hidden" id="id" value="{{=(it.user.id?it.user.id:'')}}">
+    </form>
+</script>
+
+<script id="userTableT" type="text/x-dot-template">
+    <table class="user-table table table-hover">
+        <thead class="thead-dark">
+        <tr>
+            <th style="width: 20%">用户名</th>
+            <th style="width: 20%">名称</th>
+            <th style="width: 20%">手机</th>
+            <th style="width: 20%">邮箱</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{~it.users:item:index}}
+        <tr>
+            <td>{{=item.userName}}</td>
+            <td>{{=item.realName}}</td>
+            <td>{{=item.phone}}</td>
+            <td>{{=item.email}}</td>
+            <td>
+                <a href="javascript:void(0);" class="del-btn" data-id="{{=item.id}}">刪除</a>
+                <a href="javascript:void(0);" class="update-btn" data-id="{{=item.id}}">修改</a>
+                <a href="javascript:void(0);" class="resetpwd-btn" data-id="{{=item.id}}">重置密码</a>
+                <a href="javascript:void(0);" class="setting-btn" data-id="{{=item.id}}">设置权限</a>
+                <a href="javascript:void(0);" class="setting-role-btn" data-id="{{=item.id}}">设置角色</a>
+            </td>
+        </tr>
+        {{~}}
+        </tbody>
+    </table>
+    <div class="row noMargin" style="margin: 0px;">
+        <div class="col-xl-12 pager-container pagination">
+            <div id="pager" class="pager" style="margin:0;text-align:left;width: 100%;">
+                <!--<div id="pager"  class="pager" style="margin-top: 20px; text-align: center;">-->
+                <input type="hidden" id="pageNum" value="{{=it.pageInfo.pageNum}}">
+                <input type="hidden" id="pageCount" value="{{=it.pageInfo.pages}}">
+                <input type="hidden" id="pageSize" value="{{=it.pageInfo.pageSize}}">
+                <input type="hidden" id="totalRows" value="{{=it.pageInfo.total}}">
+            </div>
+        </div>
+    </div>
+</script>
+<script id="userRolesT" type="text/x-dot-template">
+    <dl>
+        {{~it.roles:item:index}}
+        <dd><input type="checkbox" value="{{=item.id}}" class="attribute role" name="role"
+                   {{=(it.roleMap[item.id]?'checked':'')}}>{{=item.name}}
+        </dd>
+        {{~}}
+    </dl>
+</script>
+
+<script type="text/javascript">
+    var pathName = document.location.pathname;
+    var index = pathName.substr(1).indexOf("/");
+    var myContextPath = pathName.substr(0, index + 1);
+    window["app"] = {rootPath: myContextPath + '/', entry: 'user.info'};
+
+    var script = document.createElement("script");
+    script.setAttribute("type", "text/javascript");
+    script.setAttribute("data-main", app.rootPath + "resources/js/app");
+    script.setAttribute("src", app.rootPath + "resources/js/lib/require.js");
+    var heads = document.getElementsByTagName("head");
+    document.documentElement.appendChild(script);
+</script>

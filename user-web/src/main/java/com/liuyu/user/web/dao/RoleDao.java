@@ -1,6 +1,7 @@
 package com.liuyu.user.web.dao;
 
 import com.liuyu.user.web.domain.Role;
+import com.liuyu.user.web.domain.RoleType;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -19,7 +20,12 @@ import java.util.List;
 @Repository
 public interface RoleDao {
 
+
     int add(@Param("role") Role role);
+
+    int update(@Param("role") Role role);
+
+    int delete(@Param("roleId") long roleId);
 
     int addUserRoles(@Param("userId") long userId, @Param("roles") List<Role> roles);
 
@@ -29,9 +35,17 @@ public interface RoleDao {
 
     int delUserRole(@Param("userId") long userId, @Param("roleId") long roleId);
 
+    int delRoleUser(@Param("roleId") long roleId);
+
     Role get(@Param("roleId") long roleId);
 
-    List<Role> queryUserRoles(long userId);
+    List<Role> queryUserRoles(@Param("userId") long userId);
 
     List<Role> queryRoles();
+
+    List<Role> queryRolesWithLevel(@Param("level") int level);
+
+    List<RoleType> queryRoleTypes();
+
+    List<RoleType> queryRoleTypeWithLevel(@Param("level") int level);
 }

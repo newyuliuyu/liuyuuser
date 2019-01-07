@@ -1,5 +1,8 @@
 package com.liuyu.user.web.domain;
 
+import lombok.*;
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * ClassName: RoleType <br/>
  * Function:  ADD FUNCTION. <br/>
@@ -10,6 +13,15 @@ package com.liuyu.user.web.domain;
  * @version v1.0
  * @since JDK 1.7+
  */
-public enum RoleType {
-    Parents, Student, Teacher, CLazzMaseter, Leader, Admin, Root;
+@Slf4j
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@EqualsAndHashCode(of = {"code"})
+public class RoleType {
+    private String code;
+    private String name;
+    private int level;
 }

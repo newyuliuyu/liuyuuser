@@ -13,14 +13,19 @@
 							</div>');
                 $dialogBox.css('z-index', ++window.zindex);
 
+                var overflow="auto";
+                if(settings.overflow){
+                    overflow=settings.overflow;
+                }
+
                 var $dialog = $dialogBox.find('.dialog');
                 if ($.isPlainObject(settings.size)) {
                     $dialog.css('width', settings.size.w + "px");
-                    $dialog.find('.dialog-body').css({'max-height': settings.size.h + "px", "overflow-x": "auto"})
+                    $dialog.find('.dialog-body').css({'max-height': settings.size.h + "px", "overflow-x": overflow})
                 } else {
                     $dialog.addClass('dialog-' + settings.size);
                     var h = window.getClientHeight() - 200;
-                    $dialog.find('.dialog-body').css({'max-height': h + "px", "overflow": "auto"})
+                    $dialog.find('.dialog-body').css({'max-height': h + "px", "overflow": overflow})
                 }
 
 
@@ -109,7 +114,7 @@
 
                 }
 
-                if (settings.moveable === true) {
+                if (settings.moveable === true && settings.header.show === true) {
                     //drag($header[0]);
                     $header.mousedown(function (e) {
                         $dialog.css('z-index', ++window.zindex);
@@ -202,6 +207,9 @@
             }
 
             var dialog = {
+                prompt: function (text) {
+                    this.fadedialog({tipText:text});
+                },
                 fadedialog: function (opts) {
                     var settings = {};
                     var baseSettings = {
@@ -442,6 +450,38 @@
                     });
 
                 },
+                myModal(opts, okCallback) {
+                    var settings = {
+                        header: {
+                            show: false,
+                            text: "提示"
+                        },
+                        footer: {
+                            show: true,
+                            buttons: [{
+                                type: 'button',
+                                text: "取消",
+                                clazz: 'btn-default',
+                                callback: function () {
+                                    $(this).trigger('close');
+                                }
+                            }, {
+                                type: 'button',
+                                text: "确定",
+                                clazz: 'btn-primary',
+                                callback: function () {
+                                    if ($.isFunction(okCallback)) {
+                                        okCallback();
+                                    } else {
+                                        $(this).trigger('close');
+                                    }
+                                }
+                            }]
+                        }
+                    };
+                    $.extend(true, settings, opts);
+                    return this.modal(settings);
+                },
                 modal: function (opts) {
                     var defaultSettings = {
                         size: 'lg',
@@ -541,8 +581,8 @@
                     });
 
                     var $oNondialogmodalBox = createDialog(settings, false);
-                    $oNonmodalBox.show();
-                    return $oNonmodalBox;
+                    $oNondialogmodalBox.show();
+                    return $oNondialogmodalBox;
                 }
             };
 

@@ -11,5 +11,5 @@ package com.liuyu.user.web.domain;
  * @since JDK 1.7+
  */
 public enum ResourceType {
-    MENU, URL, Boolean;
+    Menu, Url, Boolean;
 }

@@ -1,38 +1,33 @@
 (function () {
     "use strict";
     var models = ['jquery',
-        'bootstrap',
-        'css!style/bootstrap/bootstrap.min',
-        'css!style/font-awesome',
-        'css!style/app'
+        'ajax',
+        'js/app/user'
     ];
-    define(models, function ($) {
+    define(models, function ($, ajax, user) {
 
-        function kk() {
-            $('.main-menu-item').click(function (event) {
-                if ($(this).find('.main-menu').is(':hidden')) {
-                    $(this).find('.main-menu').slideDown();
+        function init() {
+            var url = '/user/res/query/user-main-menu';
+            ajax.getJson(url).then(function (data) {
+                var reses = data.reses;
+                reses.sort(function (o1, o2) {
+                    return o1.orderNum - o2.orderNum;
+                })
+                if (reses.length > 0) {
+                    var url = user.getURL(reses[0].elementId);
+                    console.log(url)
+                    Req.redirect(url);
                 } else {
-                    $(this).find('.main-menu').slideUp();
+
                 }
-                event.stopPropagation();
-            });
-        }
-        
-        function abc(){
-            $('#abc1').click(function () {
-                alert("1111111")
-            });
-            $('#abc11').click(function () {
-                alert("112221212")
+
             });
         }
 
         return {
             render: function () {
-                $('header,main,footer').show();
-                kk();
-                //abc();
+                init();
+
             }
         }
     });

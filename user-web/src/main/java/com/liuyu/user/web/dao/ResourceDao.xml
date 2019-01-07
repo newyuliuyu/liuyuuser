@@ -38,7 +38,7 @@
         smallGroup=#{res.smallGroup},
         parentId=#{res.parentId},
         orderNum=#{res.orderNum},
-        resType=#{res.resourceType}
+        resType=#{res.resourceType},
         elementId=#{res.elementId}
         where a.id=#{res.id}
     </update>
@@ -61,6 +61,11 @@
             #{res.id}
         </foreach>
     </delete>
+    <delete id="delResourceRole">
+        delete from u_role_x_resource
+        where resId=#{resId}
+    </delete>
+
 
     <delete id="delUserResources">
       delete from u_user_x_resource where userId=#{userId}
@@ -78,24 +83,29 @@
         </foreach>
     </delete>
 
+    <delete id="delResourceUser">
+      delete from u_user_x_resource where resId=#{resId}
+    </delete>
+
+
     <select id="queryResources" resultType="com.liuyu.user.web.domain.Resource">
-        select id,name,displayText,groups as group,smallGroup,parentId,orderNum,resType as resourceType,elementId
+        select id,name,displayText,groups as `group`,smallGroup,parentId,orderNum,resType as resourceType,elementId
         from u_resource
     </select>
     <select id="queryRoleResources" resultType="com.liuyu.user.web.domain.Resource">
-        select id,name,displayText,groups as group,smallGroup,parentId,orderNum,resType as resourceType,elementId
+        select a.id,name,displayText,groups as `group`,smallGroup,parentId,orderNum,resType as resourceType,elementId
         from u_resource a
         inner join u_role_x_resource b on a.id=b.resId
         where b.roleId=#{roleId}
     </select>
     <select id="queryRoleResourcesWtihGroup" resultType="com.liuyu.user.web.domain.Resource">
-        select id,name,displayText,groups as group,smallGroup,parentId,orderNum,resType as resourceType,elementId
+        select a.id,name,displayText,groups as `group`,smallGroup,parentId,orderNum,resType as resourceType,elementId
         from u_resource a
         inner join u_role_x_resource b on a.id=b.resId
         where b.roleId=#{roleId} and a.groups=#{group}
     </select>
     <select id="queryRolesResourcesWtihGroup" resultType="com.liuyu.user.web.domain.Resource">
-        select id,name,displayText,groups as group,smallGroup,parentId,orderNum,resType as resourceType,elementId
+        select a.id,name,displayText,groups as `group`,smallGroup,parentId,orderNum,resType as resourceType,elementId
         from u_resource a
         inner join u_role_x_resource b on a.id=b.resId
         where b.roleId in
@@ -105,13 +115,13 @@
         and a.groups=#{group}
     </select>
     <select id="queryUserResources" resultType="com.liuyu.user.web.domain.Resource">
-        select id,name,displayText,groups as group,smallGroup,parentId,orderNum,resType as resourceType,elementId
+        select a.id,name,displayText,groups as `group`,smallGroup,parentId,orderNum,resType as resourceType,elementId
         from u_resource a
         inner join u_user_x_resource b on a.id=b.resId
         where b.userId=#{userId}
     </select>
     <select id="queryUserResourcesWtihGroup" resultType="com.liuyu.user.web.domain.Resource">
-        select id,name,displayText,groups as group,smallGroup,parentId,orderNum,resType as resourceType,elementId
+        select a.id,name,displayText,groups as `group`,smallGroup,parentId,orderNum,resType as resourceType,elementId
         from u_resource a
         inner join u_user_x_resource b on a.id=b.resId
         where b.userId=#{userId}
