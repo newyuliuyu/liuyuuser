@@ -208,3 +208,24 @@ ul.main-menu {
 a.btn-outline-primary:hover{
     color: #fff;
 }
+
+/***************上传按钮********************/
+.uploadBtn {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    color: #fff;
+    border-color: #4cae4c;
+}
+
+.uploadBtn input {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    opacity: 0;
+    -ms-filter: 'alpha(opacity=0)';
+    font-size: 200px !important;
+    direction: ltr;
+    cursor: pointer;
+}

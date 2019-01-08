@@ -1,0 +1,30 @@
+
+DROP TABLE IF EXISTS b_org;
+CREATE TABLE b_org(
+  id INT NOT NULL AUTO_INCREMENT COMMENT'ID',
+  CODE VARCHAR(32) NOT NULL COMMENT'机构代码',
+  NAME VARCHAR(20) NOT NULL COMMENT'机构名称',
+  deep TINYINT NOT NULL COMMENT'机构类别 1 省 2地市 3 区县 4 学校',
+  parentCode VARCHAR(32) NOT NULL COMMENT'机构的父级代码',
+  PRIMARY KEY id(id),
+  UNIQUE KEY CODE(CODE),
+  KEY parentCode(parentCode)
+) ENGINE=INNODB COMMENT'机构表';
+
+DROP TABLE IF EXISTS b_import_org_cache;
+CREATE TABLE b_import_org_cache(
+  id INT NOT NULL AUTO_INCREMENT COMMENT'ID',
+  CODE VARCHAR(32) NOT NULL COMMENT'机构代码',
+  NAME VARCHAR(20) NOT NULL COMMENT'机构名称',
+  deep TINYINT NOT NULL COMMENT'机构类别 1 省 2地市 3 区县 4 学校',
+  parentCode VARCHAR(32) NOT NULL COMMENT'机构的父级代码',
+  userCode VARCHAR(32) NOT NULL COMMENT'导入者id',
+  TIMESTAMP BIGINT NOT NULL COMMENT'时间戳',
+  PRIMARY KEY id(id),
+  UNIQUE KEY codeAndTimeStamp(userCode,TIMESTAMP)
+--   key parentCode(parentCode)
+) ENGINE=INNODB COMMENT'机构导入数据临时表';
+
+
+
+

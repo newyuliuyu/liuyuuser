@@ -1,4 +1,4 @@
-package com.liuyu.user.web.business;
+package com.liuyu.bs.business;
 
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -22,5 +22,5 @@ import lombok.extern.slf4j.Slf4j;
 public class Teacher {
     private Long id;
     private String name;
-    private Organization organization;
+    private Org organization;
 }

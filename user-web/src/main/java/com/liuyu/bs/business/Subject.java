@@ -1,13 +1,13 @@
-package com.liuyu.user.web.business;
+package com.liuyu.bs.business;
 
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * ClassName: TeachClazz <br/>
+ * ClassName: Subject <br/>
  * Function:  ADD FUNCTION. <br/>
  * Reason:  ADD REASON(可选). <br/>
- * date: 18-12-17 下午1:51 <br/>
+ * date: 18-12-17 上午10:27 <br/>
  *
  * @author liuyu
  * @version v1.0
@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class TeachClazz {
-    private Clazz clazz;
-    private String subjectName;
+public class Subject {
+    private Long id;
+    private String name;
 }

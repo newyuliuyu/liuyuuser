@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.liuyu.bs.dao.OrgDao">
+
+    <insert id="add">
+        insert  into b_org(code,name,deep,parentCode)
+        values(#{org.code},#{org.name},#{org.deep},#{org.parentCode})
+    </insert>
+
+    <insert id="adds">
+        insert into b_org(code,name,deep,parentCode)
+        values
+        <foreach collection="orgs" item="org" index="index" separator=",">
+            (#{org.code},#{org.name},#{org.deep},#{org.parentCode})
+        </foreach>
+    </insert>
+
+    <update id="update">
+        update b_org a
+        set name=#{org.name}
+        where a.code=#{org.code}
+    </update>
+
+    <delete id="delete">
+        delete from b_org where code=#{org.code}
+    </delete>
+
+    <select id="get" resultType="com.liuyu.bs.business.Org">
+        select id,code,name,deep,parentCode
+        from b_org a
+        where a.code=#{code}
+    </select>
+
+    <select id="queryOrgWithNotSchool" resultType="com.liuyu.bs.business.Org">
+        <!--<![CDATA[-->
+        select id,code,name,deep,parentCode
+        from b_org a
+        where deep &lt;=3
+        <!--]]>-->
+    </select>
+    <select id="queryChild" resultType="com.liuyu.bs.business.Org">
+        select id,code,name,deep,parentCode
+        from b_org a
+        where parentCode=#{parentCode}
+    </select>
+
+</mapper>

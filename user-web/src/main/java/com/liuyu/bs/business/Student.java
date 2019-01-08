@@ -1,4 +1,4 @@
-package com.liuyu.user.web.business;
+package com.liuyu.bs.business;
 
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;

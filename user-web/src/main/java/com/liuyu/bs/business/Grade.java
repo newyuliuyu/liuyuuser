@@ -1,4 +1,4 @@
-package com.liuyu.user.web.business;
+package com.liuyu.bs.business;
 
 import com.liuyu.common.util.Dateutil;
 import lombok.*;

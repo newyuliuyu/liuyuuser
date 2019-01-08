@@ -1,7 +1,7 @@
-package com.liuyu.user.web.business;
+package com.liuyu.bs.business;
 
 /**
- * ClassName: City <br/>
+ * ClassName: Province <br/>
  * Function:  ADD FUNCTION. <br/>
  * Reason:  ADD REASON(可选). <br/>
  * date: 18-12-17 下午1:48 <br/>
@@ -10,5 +10,5 @@ package com.liuyu.user.web.business;
  * @version v1.0
  * @since JDK 1.7+
  */
-public class City extends Organization {
+public class Province extends Org {
 }

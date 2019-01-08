@@ -136,7 +136,7 @@
         }
 
         $.fn.extend({
-            'progress': function (_opts) {
+            'myprogress': function (_opts) {
                 var opts = {
                     url: '',
                     onlyKey: '',
