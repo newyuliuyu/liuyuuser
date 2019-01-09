@@ -37,4 +37,10 @@ public class UserServiceImplTest {
         List<Resource> reses = userService.queryUserResourcesWithGroup(user, "user-main-menu");
         System.out.println();
     }
+
+    @Test
+    public void getUser() throws Exception {
+        User user = userService.get("123");
+        System.out.println();
+    }
 }

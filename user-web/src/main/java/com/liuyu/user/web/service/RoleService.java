@@ -18,7 +18,7 @@ import java.util.List;
  */
 public interface RoleService {
 
-    void saveRoleResources(long roleId,List<Resource> saveReses, List<Resource> delReses);
+    void saveRoleResources(long roleId, List<Resource> saveReses, List<Resource> delReses);
 
     void add(Role role);
 
@@ -27,12 +27,8 @@ public interface RoleService {
     void delete(Role role);
 
 
-
     List<Role> queryRoles();
 
-    List<Role> queryRoles(int level);
+    List<Role> queryRoles(List<RoleType> roleTypes);
 
-    List<RoleType> queryRoleTypes();
-
-    List<RoleType> queryRoleTypes(int level);
 }

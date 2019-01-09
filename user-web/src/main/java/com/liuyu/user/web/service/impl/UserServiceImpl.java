@@ -50,7 +50,9 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void saveUserRoles(User user, List<Role> roles) {
         roleDao.delUserRoles(user.getId());
-        roleDao.addUserRoles(user.getId(), roles);
+        if (!roles.isEmpty()) {
+            roleDao.addUserRoles(user.getId(), roles);
+        }
     }
 
     @Override

@@ -39,4 +39,8 @@ public class User {
         }
         return realName;
     }
+
+//    public boolean isSuperAdmin(){
+//
+//    }
 }

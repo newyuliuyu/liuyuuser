@@ -75,23 +75,11 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public List<Role> queryRoles(int level) {
-        if (level == -1) {
+    public List<Role> queryRoles(List<RoleType> roleTypes) {
+        if (roleTypes == null || roleTypes.isEmpty()) {
             return roleDao.queryRoles();
         }
-        return roleDao.queryRolesWithLevel(level);
+        return roleDao.queryRolesWithLevel(roleTypes);
     }
 
-    @Override
-    public List<RoleType> queryRoleTypes() {
-        return roleDao.queryRoleTypes();
-    }
-
-    @Override
-    public List<RoleType> queryRoleTypes(int level) {
-        if (level == -1) {
-            return roleDao.queryRoleTypes();
-        }
-        return roleDao.queryRoleTypeWithLevel(level);
-    }
 }

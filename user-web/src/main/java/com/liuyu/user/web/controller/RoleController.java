@@ -2,11 +2,13 @@ package com.liuyu.user.web.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.google.common.collect.Lists;
 import com.liuyu.common.mvc.ModelAndViewFactory;
 import com.liuyu.common.util.HttpReqUtils;
 import com.liuyu.user.web.domain.Resource;
 import com.liuyu.user.web.domain.Role;
 import com.liuyu.user.web.domain.RoleType;
+import com.liuyu.user.web.dto.RoleTypeDTO;
 import com.liuyu.user.web.dto.SaveXResourceDTO;
 import com.liuyu.user.web.service.ResourceService;
 import com.liuyu.user.web.service.RoleService;
@@ -93,7 +95,16 @@ public class RoleController extends BaseController {
                                       HttpServletRequest request,
                                       HttpServletResponse response) throws Exception {
         log.debug("获取资源....RoleController.listWithLevel");
-        List<Role> roles = roleService.queryRoles(level);
+        List<RoleType> roleTypeList = Lists.newArrayList();
+        if (level != -1) {
+            RoleType[] roleTypes = RoleType.values();
+            for (RoleType roleType : roleTypes) {
+                if (level == roleType.getLevel()) {
+                    roleTypeList.add(roleType);
+                }
+            }
+        }
+        List<Role> roles = roleService.queryRoles(roleTypeList);
         return ModelAndViewFactory.instance().with("roles", roles).build();
     }
 
@@ -102,8 +113,14 @@ public class RoleController extends BaseController {
                                        HttpServletRequest request,
                                        HttpServletResponse response) throws Exception {
         log.debug("获取资源....RoleController.queryRoleTypes");
-        List<RoleType> roleTypes = roleService.queryRoleTypes(level);
-        return ModelAndViewFactory.instance().with("roleTypes", roleTypes).build();
+        RoleType[] roleTypes = RoleType.values();
+        List<RoleTypeDTO> roleTypeDTOs = Lists.newArrayList();
+        for (RoleType roleType : roleTypes) {
+            if (level == -1 || level == roleType.getLevel()) {
+                roleTypeDTOs.add(RoleTypeDTO.converFor(roleType));
+            }
+        }
+        return ModelAndViewFactory.instance().with("roleTypes", roleTypeDTOs).build();
     }
 
     @RequestMapping("/res/{roleId}")

@@ -25,6 +25,20 @@ CREATE TABLE b_import_org_cache(
 --   key parentCode(parentCode)
 ) ENGINE=INNODB COMMENT'机构导入数据临时表';
 
+DROP TABLE IF EXISTS b_school_subject;
+CREATE TABLE b_school_subject(
+  id INT NOT NULL AUTO_INCREMENT COMMENT'ID',
+  schoolCode VARCHAR(32) NOT NULL COMMENT'学校代码',
+  subjectName VARCHAR(20) NOT NULL COMMENT'机构名称',
+  PRIMARY KEY id(id)
+) ENGINE=INNODB COMMENT'学校科目表';
 
-
-
+DROP TABLE IF EXISTS b_school_grade;
+CREATE TABLE b_school_grade(
+  id INT NOT NULL AUTO_INCREMENT COMMENT'ID',
+  schoolCode VARCHAR(32) NOT NULL COMMENT'学校代码',
+  name VARCHAR(20) NOT NULL COMMENT'年级名字',
+  enterSchoolYear int NOT NULL COMMENT'入学年份',
+  learnSegment tinyint NOT NULL COMMENT'学段 1 小学 2 初中 3 高中',
+  PRIMARY KEY id(id)
+) ENGINE=INNODB COMMENT'学校年级表';

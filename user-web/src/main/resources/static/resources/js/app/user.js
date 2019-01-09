@@ -9,7 +9,8 @@
 
         var urlMap = {
             'home': window.app.rootPath + 'home.html',
-            'org': window.app.rootPath + 'org/org.html'
+            'org': window.app.rootPath + 'org/org.html',
+            'school': window.app.rootPath + 'school/school.html'
         };
 
         var userHTML = '<div class="user-panel">\

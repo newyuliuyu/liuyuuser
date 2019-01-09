@@ -4,7 +4,7 @@
 
     <insert id="add">
 		insert into u_role(id,name,roletype,systembuiltin)
-		values(#{role.id},#{role.name},#{role.roleType.code},#{role.systemBuiltin})
+		values(#{role.id},#{role.name},#{role.roleType},#{role.systemBuiltin})
 	</insert>
 
     <insert id="addUserRoles">
@@ -23,7 +23,7 @@
     <update id="update">
 		update u_role
 		set name=#{role.name},
-		roletype=#{role.roleType.code},
+		roletype=#{role.roleType},
 		systembuiltin=#{role.systemBuiltin}
 		where id=#{role.id}
 	</update>
@@ -43,60 +43,29 @@
 	</delete>
 
 
-    <resultMap id="RoleMap" type="com.liuyu.user.web.domain.Role">
-        <id property="id" column="id"/>
-        <result property="name" column="name"/>
-        <result property="systemBuiltin" column="systembuiltin"/>
-        <association property="roleType" javaType="com.liuyu.user.web.domain.RoleType">
-            <id property="code" column="roleTypeCode"/>
-            <result property="name" column="roleTypeName"/>
-            <result property="level" column="roleTypeLevel"/>
-        </association>
-    </resultMap>
-
-    <select id="get" resultMap="RoleMap">
-		select id,a.name,systembuiltin as systemBuiltin,
-		b.code as roleTypeCode,
-		b.name as roleTypeName,
-		b.level as roleTypeLevel
+    <select id="get" resultType="com.liuyu.user.web.domain.Role">
+		select id,a.name,systembuiltin as systemBuiltin,a.roleType
 		from u_role a
-		inner join u_role_type b on a.roleType=b.code
 		where a.id=#{roleId}
 	</select>
 
-    <select id="queryUserRoles" resultMap="RoleMap">
-		select a.id,a.name,systembuiltin as systemBuiltin,a.roleType as roleTypeCode
+    <select id="queryUserRoles" resultType="com.liuyu.user.web.domain.Role">
+		select a.id,a.name,systembuiltin as systemBuiltin,a.roleType
 		from u_role a
 		inner join u_user_x_role b on a.id=b.roleId
 		where b.userId=#{userId}
 	</select>
-
-    <select id="queryRoles" resultMap="RoleMap">
-		select id,a.name,systembuiltin as systemBuiltin,
-		b.code as roleTypeCode,
-		b.name as roleTypeName,
-		b.level as roleTypeLevel
+    <select id="queryRoles" resultType="com.liuyu.user.web.domain.Role">
+		select id,a.name,systembuiltin as systemBuiltin,a.roleType
 		from u_role a
-		inner join u_role_type b on a.roleType=b.code
 	</select>
-    <select id="queryRolesWithLevel" resultMap="RoleMap">
-		select id,a.name,systembuiltin as systemBuiltin,
-		b.code as roleTypeCode,
-		b.name as roleTypeName,
-		b.level as roleTypeLevel
+    <select id="queryRolesWithLevel" resultType="com.liuyu.user.web.domain.Role">
+		select id,a.name,systembuiltin as systemBuiltin,a.roleType
 		from u_role a
-		inner join u_role_type b on a.roleType=b.code
-		where b.level=#{level}
-	</select>
-
-    <select id="queryRoleTypes" resultType="com.liuyu.user.web.domain.RoleType">
-		select code,name,level
-		from u_role_type a
-	</select>
-    <select id="queryRoleTypeWithLevel" resultType="com.liuyu.user.web.domain.RoleType">
-		select code,name,level
-		from u_role_type a
-		where a.level=#{level}
+		where a.roleType in
+		<foreach collection="roleTypes" index="index" item="item" open="(" separator="," close=")">
+			#{item}
+		</foreach>
 	</select>
 
 </mapper>

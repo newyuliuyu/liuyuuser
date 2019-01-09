@@ -128,17 +128,19 @@
                         role.id = $(this).val();
                         roles.push(role);
                     });
-                    if (roles.length > 0) {
-                        var url = 'user/save/role/' + userId;
-                        ajax.postJson(url, roles).then(function (value) {
-                            dialog.prompt("设置角色成功");
-                            myDialog.close();
-                        }).always(function () {
-                            $.processError(arguments);
-                        });
-                    } else {
+                    // if (roles.length > 0) {
+                    //
+                    // } else {
+                    //     myDialog.close();
+                    // }
+
+                    var url = 'user/save/role/' + userId;
+                    ajax.postJson(url, roles).then(function (value) {
+                        dialog.prompt("设置角色成功");
                         myDialog.close();
-                    }
+                    }).always(function () {
+                        $.processError(arguments);
+                    });
                 });
                 $(".attribute").iCheck({
                     checkboxClass: 'icheckbox_square-blue',

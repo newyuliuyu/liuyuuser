@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.liuyu.bs.dao.SchoolDao">
+
+    <select id="querySchools" resultType="com.liuyu.bs.business.School">
+        SELECT school.id,school.code,school.name,school.deep,school.parentCode
+        FROM b_org school
+        LEFT JOIN b_org county ON school.parentCode=county.code
+        LEFT JOIN b_org city ON county.parentCode=city.code
+        LEFT JOIN b_org province ON city.parentCode=province.code
+        WHERE school.deep=4
+        <if test="schoolName != null">
+            school.name like #{schoolName}
+        </if>
+        <choose>
+            <when test="codeOwnerDeep==4">
+                AND school.code=#{code}
+            </when>
+            <when test="codeOwnerDeep==3">
+                AND county.code=#{code}
+            </when>
+            <when test="codeOwnerDeep==2">
+                AND city.code=#{code}
+            </when>
+            <when test="codeOwnerDeep==1">
+                AND province.code=#{code}
+            </when>
+        </choose>
+    </select>
+</mapper>

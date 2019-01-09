@@ -15,13 +15,24 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-@EqualsAndHashCode(of = {"code"})
-public class RoleType {
-    private String code;
+public enum RoleType {
+    Root("超级管理员", 1000),
+    Admin("管理员", 1),
+    schoolMaseter("校长", 1),
+    gradeMaseter("年级主任", 1),
+    LPGroupLeader("备课组长", 1),
+    cLazzMaseter("班主任", 1),
+    teacher("教师", 1),
+    SFE("教育局局长", 2),
+    TARS("教研室主任", 2),
+    researchStaff("教研员", 2),
+    parents("家长", 100),
+    student("学生", 100);
     private String name;
     private int level;
+
+    private RoleType(String name, int level) {
+        this.name = name;
+        this.level = level;
+    }
 }

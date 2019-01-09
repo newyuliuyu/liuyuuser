@@ -152,7 +152,7 @@
         function addRole() {
             var dataset = {};
             dataset.roleTypes = roleTypes;
-            dataset.role = {roleType: {}};
+            dataset.role = {};
             var templateText = $("#newAndUpdateRoleT").text();
             var arrText = dot.template(templateText);
             var html = arrText(dataset);
@@ -163,7 +163,7 @@
                 var role = {}
                 role.name = roleName;
                 role.systemBuiltin = systemBuiltin;
-                role.roleType = {code: roleType};
+                role.roleType = roleType;
                 if (!role.name || role.name === '') {
                     $('#name+small').text("角色名字不能为空");
                     return;
@@ -191,7 +191,7 @@
             var systembuiltin = $this.data('systembuiltin');
             var role = {}
             role.id = id;
-            role.roleType = {code: roleType};
+            role.roleType = roleType;
             role.name = name;
             role.systemBuiltin = systembuiltin;
 
@@ -211,7 +211,7 @@
                 role.id = id;
                 role.name = roleName;
                 role.systemBuiltin = systemBuiltin;
-                role.roleType = {code: roleType};
+                role.roleType = roleType;
                 if (!role.name || role.name === '') {
                     $('#name+small').text("角色名字不能为空");
                     return;
@@ -264,6 +264,7 @@
             var url = '/role/roletype/-1';
             ajax.getJson(url).then(function (data) {
                 roleTypes = data.roleTypes;
+                console.log(roleTypes)
             }).always(function () {
                 $.processError(arguments);
             });

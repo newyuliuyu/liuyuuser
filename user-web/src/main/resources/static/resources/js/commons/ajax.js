@@ -125,6 +125,20 @@
                 }
                 return myAjax(param);
             },
+            corsGetHtml: function (url, timeout) {
+                var param = {
+                    'url': url,
+                    'dataType': DataType.HTML,
+                    crossDomain: true,
+                    xhrFields: {
+                        withCredentials: true
+                    }
+                };
+                if (timeout) {
+                    param.timeout = timeout;
+                }
+                return myAjax(param);
+            }
         }
         return o;
     });

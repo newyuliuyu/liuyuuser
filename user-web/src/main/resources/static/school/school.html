@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html xmlns=http://www.w3.org/1999/xhtml>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" type="image/png" sizes="32x32" href="resources/images/favicon.png">
+    <title></title>
+    <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!--[if lte IE 8]>
+    <noscript>
+        <style>.html5-wrappers {
+            display: none !important;
+        }</style>
+        <div class="ie-noscript-warning">您的浏览器禁用了脚本，请<a href="">查看这里</a>来启用脚本!或者<a href="/?noscript=1">继续访问</a>.
+        </div>
+    </noscript>
+    <![endif]-->
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+
+</head>
+
+<body>
+<header class="header" style="display:none;">
+    <div class="logo">
+        <i class="icon-user logo-content">&nbsp;new.liuyu</i>
+    </div>
+    <div class="header-main">
+        <ul>
+        </ul>
+    </div>
+    <div class="header-end float-right">
+    </div>
+</header>
+<main style="display: none">
+    <div class="main">
+        <!--<div class="main-left">-->
+        <!---->
+        <!--</div>-->
+        <div class="main-center" style="overflow: auto;">
+            <!--<nav aria-label="breadcrumb">-->
+            <!--<ol class="breadcrumb">-->
+            <!--<li class="breadcrumb-item"><a href="javascript:void(0);">角色-资源-用户</a></li>-->
+            <!--<li class="breadcrumb-item active">角色</li>-->
+            <!--</ol>-->
+            <!--</nav>-->
+            <div class="my-tool-bar container">
+                <div style="display: inline-block;width: 20%;">
+                    <div class="input-group">
+                        <input type="text" id="searchText" class="form-control" placeholder="学校名称">
+                        <div class="input-group-append">
+                            <button id="searchBtn" class="btn btn-outline-secondary  icon-search" type="button">
+                                搜索
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="contentDIV" class="container">
+                <div class="my-panel">
+                    <div class="panel-header">
+                        <span class="panel-header-text">学科</span>
+                    </div>
+                    <div>
+                        <div class="subject-name-block">
+                            <span class="del-subject">x</span>
+                            语文
+                        </div>
+                        <span class="subject-name-block">
+                            添加+
+                        </span>
+                    </div>
+                </div>
+                <div class="my-panel">
+                    <div class="panel-header">
+                        <span class="panel-header-text">学段和年级</span>
+                    </div>
+                    <table class="table table-bordered">
+                        <tr>
+                            <td style="width: 10%;">
+                                <span class="subject-name-block">
+                            初中
+                        </span>
+                            </td>
+                            <td>
+                                <div class="subject-name-block">
+                                    <span class="del-subject">x</span>
+                                    初一
+                                </div>
+                                <div class="subject-name-block">
+                                    <span class="del-subject">x</span>
+                                    初一
+                                </div>
+                                <div class="subject-name-block">
+                                    <span class="del-subject">x</span>
+                                    初一
+                                </div>
+                                <div class="subject-name-block">
+                                    <span class="del-subject">x</span>
+                                    初一
+                                </div>
+                                <div class="subject-name-block">
+                                    <span class="del-subject">x</span>
+                                    初一
+                                </div>
+                                <div class="subject-name-block">
+                                    <span class="del-subject">x</span>
+                                    初一
+                                </div>
+                                <div class="subject-name-block">
+                                    <span class="del-subject">x</span>
+                                    初一
+                                </div>
+                                <span class="subject-name-block">
+                            添加+
+                        </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 10%;">
+                                <span class="subject-name-block">
+                            初中
+                        </span>
+                            </td>
+                            <td>
+                                <div class="subject-name-block">
+                                    <span class="del-subject">x</span>
+                                    初一
+                                </div>
+                                <span class="subject-name-block">
+                            添加+
+                        </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 10%;">
+                                <span class="subject-name-block">
+                            初中
+                        </span>
+                            </td>
+                            <td>
+                                <div class="subject-name-block">
+                                    <span class="del-subject">x</span>
+                                    初一
+                                </div>
+                                <span class="subject-name-block">
+                            添加+
+                        </span>
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer style="display: none">
+</footer>
+</body>
+</html>
+
+<script type="text/javascript">
+    var pathName = document.location.pathname;
+    var index = pathName.substr(1).indexOf("/");
+    var myContextPath = pathName.substr(0, index + 1);
+    window["app"] = {rootPath: myContextPath + '/', entry: 'school'};
+
+    var script = document.createElement("script");
+    script.setAttribute("type", "text/javascript");
+    script.setAttribute("data-main", app.rootPath + "resources/js/app");
+    script.setAttribute("src", app.rootPath + "resources/js/lib/require.js");
+    var heads = document.getElementsByTagName("head");
+    document.documentElement.appendChild(script);
+</script>

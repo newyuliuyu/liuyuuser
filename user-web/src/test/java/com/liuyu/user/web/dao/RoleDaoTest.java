@@ -34,7 +34,7 @@ public class RoleDaoTest {
     public void add() throws Exception {
 
 
-        Role role = Role.builder().id(1L).name("test").systemBuiltin(true).roleType(RoleType.builder().code("Admin").build()).build();
+        Role role = Role.builder().id(1L).name("test").systemBuiltin(true).roleType(RoleType.Admin).build();
         roleDao.add(role);
     }
 

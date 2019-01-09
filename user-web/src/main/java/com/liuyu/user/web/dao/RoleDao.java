@@ -43,9 +43,6 @@ public interface RoleDao {
 
     List<Role> queryRoles();
 
-    List<Role> queryRolesWithLevel(@Param("level") int level);
+    List<Role> queryRolesWithLevel(@Param("roleTypes") List<RoleType> roleTypes);
 
-    List<RoleType> queryRoleTypes();
-
-    List<RoleType> queryRoleTypeWithLevel(@Param("level") int level);
 }
