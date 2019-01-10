@@ -8,7 +8,10 @@ import com.liuyu.common.util.ThrowableToString;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.web.filter.AccessControlFilter;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
+import org.apache.shiro.web.util.SavedRequest;
+import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
@@ -72,13 +75,20 @@ public class LiuyuFormAuthenticationFilter extends FormAuthenticationFilter {
 //            UserPrincipalCollection userPrincipalCollection = (UserPrincipalCollection) subject.getPrincipals();
 //            User user = userPrincipalCollection.getUserFace().getUser();
 
+
+            String redirectURL = null;
+            SavedRequest savedRequest = WebUtils.getAndClearSavedRequest(request);
+            if (savedRequest != null && savedRequest.getMethod().equalsIgnoreCase(AccessControlFilter.GET_METHOD)) {
+                redirectURL = savedRequest.getRequestUrl();
+            }
+
+
             httpServletResponse.setCharacterEncoding("UTF-8");
             PrintWriter out = httpServletResponse.getWriter();
-
-
             ModelAndView modelAndView = ModelAndViewFactory.instance()
                     .with("result", "登入成功")
                     .with("sessionId", httpServletRequest.getSession().getId())
+                    .with("redirectURL", redirectURL)
                     .build();
             out.println(Json2.toJson(modelAndView.getModel()));
             out.flush();

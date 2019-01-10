@@ -21,9 +21,13 @@
 
                 ajax.postJsonForm('/login.html', user).then(function (data) {
                     console.log("成功。。。。。")
-                    console.log(data)
                     if (data.status.status) {
-                        window.location.href = window.app.rootPath;
+                        if(data.redirectURL){
+                            Req.redirect(data.redirectURL);
+                        }else{
+                            Req.redirect(window.app.rootPath)
+                        }
+                       // window.location.href = window.app.rootPath;
                     } else {
                         $('.error-msg').html(data.status.msg);
                     }
