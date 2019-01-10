@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.liuyu.bs.dao.ClazzDao">
+
+    <insert id="add">
+        insert into b_clazz(schoolCode,code,name,wl,teachClazz,subjectName,grade)
+        values(#{clazz.school.code},#{clazz.code},#{clazz.name},#{clazz.wl},#{clazz.teachClazz},#{clazz.subjectName},#{clazz.grade.id})
+    </insert>
+    <insert id="adds">
+        insert into b_clazz(schoolCode,code,name,wl,teachClazz,subjectName,grade)
+        values
+        <foreach collection="clazzes" item="clazz" index="index" separator=",">
+            (#{clazz.school.code},#{clazz.code},#{clazz.name},#{clazz.wl},#{clazz.teachClazz},#{clazz.subjectName},#{clazz.grade.id})
+        </foreach>
+    </insert>
+    <delete id="del">
+        delete from b_clazz where code=#{code}
+    </delete>
+    <delete id="delGradeClazz">
+        delete from b_clazz where grade=#{gradeId}
+    </delete>
+
+    <resultMap id="clazzMap" type="com.liuyu.bs.business.Clazz">
+        <id property="id" column="id"/>
+        <result property="code" column="code"/>
+        <result property="name" column="name"/>
+        <result property="wl" column="wl"/>
+        <result property="teachClazz" column="teachClazz"/>
+        <result property="subjectName" column="subjectName"/>
+        <association property="school" javaType="com.liuyu.bs.business.School">
+            <id property="code" column="schoolCode"/>
+            <result property="name" column="schoolName"/>
+        </association>
+        <association property="grade" javaType="com.liuyu.bs.business.Grade">
+            <id property="id" column="gradeId"/>
+            <result property="name" column="gradeName"/>
+            <result property="enterSchoolYear" column="enterSchoolYear"/>
+            <result property="learnSegment" column="learnSegment"/>
+        </association>
+    </resultMap>
+
+    <select id="get" resultMap="clazzMap">
+        select a.id,a.code,a.name,a.wl,a.teachClazz,a.subjectName,
+        a.schoolCode,b.name as schoolName,
+        a.grade as gradeId,c.name as gradeName,c.enterSchoolYear,c.learnSegment
+        from b_clazz a
+        left join b_org b on a.schoolCode=b.code and b.deep=4
+        left join b_school_grade c on a.grade=c.id
+        where a.code=#{code}
+    </select>
+
+    <select id="queryClazzesWithSchoolCode" resultMap="clazzMap">
+        select a.id,a.code,a.name,a.wl,a.teachClazz,a.subjectName,
+        a.schoolCode,b.name as schoolName,
+        a.grade as gradeId,c.name as gradeName,c.enterSchoolYear,c.learnSegment
+        from b_clazz a
+        left join b_org b on a.schoolCode=b.code and b.deep=4
+        left join b_school_grade c on a.grade=c.id
+        where a.schoolCode=#{schoolCode}
+    </select>
+
+</mapper>

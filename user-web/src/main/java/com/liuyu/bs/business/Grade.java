@@ -29,12 +29,27 @@ public class Grade {
     private int graduationYear;//毕业年份
     private int learnSegment;//学段
 
-    public static Grade createGrade(String name) {
-        return createGrade(name, new Date());
+
+    public int getGraduationYear() {
+        if (learnSegment == 1) {
+            return enterSchoolYear + 6;
+        } else {
+            return enterSchoolYear + 3;
+        }
     }
 
-    public static Grade createGrade(String name, Date date) {
+    public static Grade createGrade(String name) {
+        return createGrade(name, new Date(), 0);
+    }
+
+    public static Grade createGrade(String name, long id) {
+        return createGrade(name, new Date(), id);
+    }
+
+    public static Grade createGrade(String name, Date date, long id) {
         Grade grade = new Grade();
+        grade.setId(id);
+        grade.setName(name);
         int month = Integer.parseInt(Dateutil.getMonth(date));
         int year = Integer.parseInt(Dateutil.getYear(date));
         int semester = 1;

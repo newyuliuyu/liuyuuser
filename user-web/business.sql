@@ -35,10 +35,25 @@ CREATE TABLE b_school_subject(
 
 DROP TABLE IF EXISTS b_school_grade;
 CREATE TABLE b_school_grade(
-  id INT NOT NULL AUTO_INCREMENT COMMENT'ID',
+  id BIGINT NOT NULL COMMENT'ID',
   schoolCode VARCHAR(32) NOT NULL COMMENT'学校代码',
-  name VARCHAR(20) NOT NULL COMMENT'年级名字',
-  enterSchoolYear int NOT NULL COMMENT'入学年份',
-  learnSegment tinyint NOT NULL COMMENT'学段 1 小学 2 初中 3 高中',
+  NAME VARCHAR(20) NOT NULL COMMENT'年级名字',
+  enterSchoolYear INT NOT NULL COMMENT'入学年份',
+  learnSegment TINYINT NOT NULL COMMENT'学段 1 小学 2 初中 3 高中',
   PRIMARY KEY id(id)
 ) ENGINE=INNODB COMMENT'学校年级表';
+
+
+DROP TABLE IF EXISTS b_clazz;
+CREATE TABLE b_clazz(
+  id INT NOT NULL AUTO_INCREMENT COMMENT'ID',
+  schoolCode VARCHAR(32) NOT NULL COMMENT'学校代码',
+  CODE VARCHAR(32) NOT NULL COMMENT'班级代码',
+  NAME VARCHAR(20) NOT NULL COMMENT'班级名称',
+  wl TINYINT NOT NULL COMMENT'文理标志 0 不文文理 1 理科 2 文科',
+  teachClazz BOOLEAN DEFAULT FALSE COMMENT'是否教学班',
+  subjectName VARCHAR(20) DEFAULT '' COMMENT'什么科目的教学班',
+  grade BIGINT NOT NULL COMMENT'年级',
+  PRIMARY KEY id(id),
+  UNIQUE KEY CODE(CODE)
+) ENGINE=INNODB COMMENT'班级';

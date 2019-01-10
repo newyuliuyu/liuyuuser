@@ -1,0 +1,69 @@
+<script id="selecteSchoolDialogT" type="text/x-dot-template">
+    <div style="padding: 0px 30px;">
+        <div class="input-group">
+            <input type="text" id="searchText" class="form-control" placeholder="学校名称">
+            <div class="input-group-append">
+                <button id="searchBtn" class="btn btn-outline-secondary  icon-search" type="button">
+                    搜索
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="school-ul-dialog">
+
+    </div>
+</script>
+<script id="schoolListT" type="text/x-dot-template">
+    <ul class="school-li">
+        {{~it.schools:item:index}}
+        <li><input type="radio" class="attribute school-radio" name="school" data-name="{{=item.name}}"
+                   value="{{=item.code}}">&nbsp;&nbsp;&nbsp;{{=item.name}}
+        </li>
+        {{~}}
+    </ul>
+    <div class="row noMargin" style="margin: 0px;">
+        <div class="col-xl-12 pager-container pagination">
+            <div id="pager" class="pager" style="margin:0;text-align:left;width: 100%;">
+                <!--<div id="pager"  class="pager" style="margin-top: 20px; text-align: center;">-->
+                <input type="hidden" id="pageNum" value="{{=it.pageInfo.pageNum}}">
+                <input type="hidden" id="pageCount" value="{{=it.pageInfo.pages}}">
+                <input type="hidden" id="pageSize" value="{{=it.pageInfo.pageSize}}">
+                <input type="hidden" id="totalRows" value="{{=it.pageInfo.total}}">
+            </div>
+        </div>
+    </div>
+</script>
+<script id="clazzListT" type="text/x-dot-template">
+    <table class="table table-bordered">
+        {{~it.grades:grade:idx}}
+        <tr>
+            <td style="width: 10%;">
+                <span class="subject-name-block" style="border: none">
+                    {{? grade.learnSegment==1}}
+                        小学
+                    {{?? grade.learnSegment==2}}
+                        初中
+                    {{?? grade.learnSegment==3}}
+                        高中
+                    {{?}}
+                </span>
+            </td>
+            <td style="width: 12%;">
+                <span class="subject-name-block" style="border: none">{{=grade.name}}</span>
+            </td>
+            <td>
+                {{? it.gradeClazzMap[grade.id]}}
+                    {{~it.gradeClazzMap[grade.id]:clazz:idx1}}
+                    <div class="subject-name-block data">
+                        <span class="del-subject" data-id="{{=clazz.code}}">x</span>
+                        <label>{{=clazz.name}}</label>
+                    </div>
+                    {{~}}
+                {{?}}
+                <span class="subject-name-block add-clazz-btn" data-grade-id="{{=grade.id}}">添加+</span>
+            </td>
+        </tr>
+        {{~}}
+    </table>
+</script>
+

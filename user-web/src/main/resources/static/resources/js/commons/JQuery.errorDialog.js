@@ -13,7 +13,7 @@
                     errorText = '系统内部错误，联系管理员>><a id="showDetailError" style="cursor: pointer;">查看详情</a>';
                 } else {
                     var obj = $.parseJSON(responseText);
-                    errorText = obj.status.code + '>><a id="showDetailError" style="cursor: pointer;">查看详情</a>';
+                    errorText = obj.status.msg + '>><a id="showDetailError" style="cursor: pointer;">查看详情</a>';
                     responseText = obj.status.detail;
                 }
                 var $dialog = dialog.alter(errorText, '关闭');

@@ -10,7 +10,7 @@
         LEFT JOIN b_org province ON city.parentCode=province.code
         WHERE school.deep=4
         <if test="schoolName != null">
-            school.name like #{schoolName}
+            AND school.name like #{schoolName}
         </if>
         <choose>
             <when test="codeOwnerDeep==4">

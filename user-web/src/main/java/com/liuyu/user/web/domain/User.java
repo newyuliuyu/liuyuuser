@@ -40,7 +40,14 @@ public class User {
         return realName;
     }
 
-//    public boolean isSuperAdmin(){
-//
-//    }
+    public boolean isSuperAdmin() {
+        if (roles != null) {
+            for (Role role : roles) {
+                if (role.getRoleType().equals(RoleType.Root)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }

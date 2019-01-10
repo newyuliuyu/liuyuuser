@@ -259,6 +259,15 @@ a.btn-outline-primary:hover {
     top: -20%;
 }
 
+
+.school-li{
+    list-style: none;
+    margin-top: 10px;
+}
+.school-li li{
+    padding: 5px 0px;
+}
+
 /***************上传按钮********************/
 .uploadBtn {
     position: relative;

@@ -54,113 +54,67 @@
             <!--<li class="breadcrumb-item active">角色</li>-->
             <!--</ol>-->
             <!--</nav>-->
-            <div class="my-tool-bar container">
-                <div style="display: inline-block;width: 20%;">
-                    <div class="input-group">
-                        <input type="text" id="searchText" class="form-control" placeholder="学校名称">
-                        <div class="input-group-append">
-                            <button id="searchBtn" class="btn btn-outline-secondary  icon-search" type="button">
-                                搜索
-                            </button>
-                        </div>
-                    </div>
-                </div>
+            <div class="my-tool-bar container" style="padding: 15px;">
+                <input type="hidden" id="curSchoolCode" value="">
+                <label class="school-name-label" style="font-size:20px;">
+                </label>
+                <span><a class="icon-exchange change-school-btn" href="javascript:void(0);">切换学校</a></span>
+
+
             </div>
             <div id="contentDIV" class="container">
-                <div class="my-panel">
+
+
+                <div class="my-panel subject-panel">
                     <div class="panel-header">
                         <span class="panel-header-text">学科</span>
                     </div>
                     <div>
-                        <div class="subject-name-block">
-                            <span class="del-subject">x</span>
-                            语文
-                        </div>
-                        <span class="subject-name-block">
-                            添加+
-                        </span>
+                        <span class="subject-name-block add-subject-btn">添加+</span>
                     </div>
                 </div>
-                <div class="my-panel">
+                <div class="my-panel grade-panel">
                     <div class="panel-header">
                         <span class="panel-header-text">学段和年级</span>
                     </div>
                     <table class="table table-bordered">
                         <tr>
                             <td style="width: 10%;">
-                                <span class="subject-name-block">
-                            初中
-                        </span>
+                                <span class="subject-name-block" style="border: none">小学</span>
                             </td>
                             <td>
-                                <div class="subject-name-block">
-                                    <span class="del-subject">x</span>
-                                    初一
-                                </div>
-                                <div class="subject-name-block">
-                                    <span class="del-subject">x</span>
-                                    初一
-                                </div>
-                                <div class="subject-name-block">
-                                    <span class="del-subject">x</span>
-                                    初一
-                                </div>
-                                <div class="subject-name-block">
-                                    <span class="del-subject">x</span>
-                                    初一
-                                </div>
-                                <div class="subject-name-block">
-                                    <span class="del-subject">x</span>
-                                    初一
-                                </div>
-                                <div class="subject-name-block">
-                                    <span class="del-subject">x</span>
-                                    初一
-                                </div>
-                                <div class="subject-name-block">
-                                    <span class="del-subject">x</span>
-                                    初一
-                                </div>
-                                <span class="subject-name-block">
-                            添加+
-                        </span>
+                                <span class="subject-name-block add-grade-1-btn add-grade-btn" data-learn-segment="1">添加+</span>
                             </td>
                         </tr>
                         <tr>
                             <td style="width: 10%;">
-                                <span class="subject-name-block">
-                            初中
-                        </span>
+                                <span class="subject-name-block" style="border: none">初中</span>
                             </td>
                             <td>
-                                <div class="subject-name-block">
-                                    <span class="del-subject">x</span>
-                                    初一
-                                </div>
-                                <span class="subject-name-block">
-                            添加+
-                        </span>
+
+                                <span class="subject-name-block add-grade-2-btn add-grade-btn" data-learn-segment="2">添加+</span>
                             </td>
                         </tr>
                         <tr>
                             <td style="width: 10%;">
-                                <span class="subject-name-block">
-                            初中
-                        </span>
+                                <span class="subject-name-block" style="border: none">高中</span>
                             </td>
                             <td>
-                                <div class="subject-name-block">
-                                    <span class="del-subject">x</span>
-                                    初一
-                                </div>
-                                <span class="subject-name-block">
-                            添加+
-                        </span>
+                                <span class="subject-name-block add-grade-3-btn add-grade-btn" data-learn-segment="3">添加+</span>
                             </td>
                         </tr>
                     </table>
-
                 </div>
+
+                <div class="my-panel clazz-panel">
+                    <div class="panel-header">
+                        <span class="panel-header-text">班级</span>
+                    </div>
+                    <div class="panel-content">
+
+                    </div>
+                </div>
+                <!--=====================================-->
             </div>
         </div>
     </div>

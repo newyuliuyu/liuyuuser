@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.liuyu.bs.dao.SchoolGradeDao">
+
+    <insert id="add">
+        insert into b_school_grade(id,schoolCode,name,enterSchoolYear,learnSegment)
+        values(#{grade.id},#{code},#{grade.name},#{grade.enterSchoolYear},#{grade.learnSegment})
+    </insert>
+    <insert id="adds">
+        insert into b_school_grade(id,schoolCode,name,enterSchoolYear,learnSegment)
+        values
+        <foreach collection="grades" item="grade" index="index" separator=",">
+            (#{grade.id},#{code},#{grade.name},#{grade.enterSchoolYear},#{grade.learnSegment})
+        </foreach>
+    </insert>
+
+    <delete id="del">
+        delete from b_school_grade where id=#{id}
+    </delete>
+
+    <select id="queryGrades" resultType="com.liuyu.bs.business.Grade">
+        select id,name,enterSchoolYear,learnSegment from b_school_grade where schoolCode=#{code}
+    </select>
+
+</mapper>
