@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.liuyu.bs.dao.SchoolSubjectDao">
 
-    <insert id="add">
+    <insert id="add" useGeneratedKeys="true" keyProperty="subject.id">
         insert into b_school_subject(schoolCode,subjectName) values(#{code},#{subject.name})
     </insert>
     <insert id="adds">

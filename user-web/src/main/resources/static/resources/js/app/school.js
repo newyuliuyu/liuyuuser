@@ -61,6 +61,7 @@
         }
 
         function showSubjects(subjects) {
+            $('.subject-panel .data').remove();
             var dataset = {subjects: subjects};
             var tmplate = '{{~it.subjects:item:idx}}<div class="subject-name-block data">\
                              <span class="del-subject" data-id="{{=item.id}}">x</span>\
@@ -72,6 +73,7 @@
         }
 
         function showGrades(grades) {
+            $('.grade-panel .data').remove();
             var learnSegmentMap = {1: [], 2: [], 3: []};
             $.each(grades, function (idx, item) {
                 learnSegmentMap[item.learnSegment].push(item);
@@ -90,6 +92,7 @@
         }
 
         function showClazz(grades, clazzes) {
+            $('.clazz-panel .panel-content').html('');
             var gradeClazzMap = {};
             $.each(clazzes, function (idx, item) {
                 var gradeId = item.grade.id;
@@ -205,6 +208,30 @@
             return $('#curSchoolCode').val();
         }
 
+
+        function addSubject() {
+            var tmplate = getTemplate("#addSubjectT");
+            var myDialog = dialog.myModal({size: 'md', body: tmplate}, function () {
+                var subjectName = $('#subjectName').val();
+                if (subjectName === '') {
+                    $('#subjectName+small').text('科目名字不能为空');
+                    return;
+                }
+                var subject = {name: subjectName};
+                var schoolCode = getSchoolCode();
+                var url = 'school/subject/add/' + schoolCode;
+                ajax.postJson(url, subject).then(function (data) {
+                    var newSubject = data.subject;
+                    subjects.push(newSubject);
+                    showSubjects(subjects);
+                    myDialog.close();
+                    dialog.prompt("增加科目成功");
+                }).always(function () {
+                    $.processError(arguments);
+                });
+            });
+        }
+
         function delSubject($this) {
             var subjectId = $this.data('id');
             dialog.confirm("删除科目", "你确定要删除改科目吗?删除该科目可能会影响其他业务模块", function () {
@@ -222,6 +249,43 @@
                 }).always(function () {
                     $.processError(arguments);
                 });
+            });
+        }
+
+        function addGrade() {
+            var gradeNames = ["一年级", "二年级", "三年级", "四年级", "五年级", "六年级", "初一", "初二", "初三", "高一", "高二", "高三"];
+            $.each(grades, function (idx, item) {
+                var idx = gradeNames.indexOf(item.name);
+                if (idx != -1) {
+                    gradeNames.splice(idx, 1);
+                }
+            });
+            var dataset = {gradeNames: gradeNames};
+            var tmplate = getTemplate("#addGradeT");
+            var arrText = dot.template(tmplate);
+            var html = arrText(dataset);
+            var myDialog = dialog.myModal({size: 'md', body: html, overflow: "unset"}, function () {
+                var addGradeNames = $('#gradeName').val();
+                if (!addGradeNames) {
+                    $('#gradeNameMsg').text('新增的年级必须选择');
+                    return;
+                }
+                var url = 'school/grade/add/' + getSchoolCode();
+                ajax.postJson(url, addGradeNames).then(function (data) {
+                    var newGrades = data.grades;
+                    grades = grades.concat(newGrades);
+                    console.log(grades)
+                    showGrades(grades);
+                    showClazz(grades, clazzes);
+                    myDialog.close();
+                    dialog.prompt("增加年级成功");
+                }).always(function () {
+                    $.processError(arguments);
+                });
+            });
+            $('.selectpicker').selectpicker({
+                width: '120px',
+                noneSelectedText: '选择年级'
             });
         }
 
@@ -243,6 +307,86 @@
                 }).always(function () {
                     $.processError(arguments);
                 });
+            });
+        }
+
+        function addClazz(gradeId) {
+            var dataset = {subjects: subjects};
+            console.log(dataset)
+            var tmplate = getTemplate("#addClazzT");
+            var arrText = dot.template(tmplate);
+            var html = arrText(dataset);
+            var myDialog = dialog.myModal({size: 'md', body: html}, function () {
+                var AddClazzDTO = {};
+                var type = $('.add-clazz-div a.active').data('type');
+                var $content = $('.' + type);
+                AddClazzDTO.batchCreate = $('.add-clazz-div a.active').data('batchCreate');
+                if (AddClazzDTO.batchCreate) {
+                    AddClazzDTO.num = $content.find('.clazzNum').val();
+                    var myNum = parseInt(AddClazzDTO.num);
+                    if (isNaN(myNum) || myNum < 1) {
+                        $content.find('.clazzNum+small').text("必须为数字并且大于0");
+                        return;
+                    }
+                } else {
+                    AddClazzDTO.name = $content.find('.clazzName').val().trim();
+                    if (AddClazzDTO.name === '') {
+                        $content.find('.clazzName+small').text("班级名字不能为空");
+                        return;
+                    }
+                }
+                AddClazzDTO.wl = $content.find('.wl:checked').val()
+                AddClazzDTO.teachClazz = $content.find('.teachClazz').is(':checked');
+                if (AddClazzDTO.teachClazz) {
+                    AddClazzDTO.subjectName = $content.find('.subjectName option:selected').val();
+                    if (AddClazzDTO.subjectName === '') {
+                        $content.find('.subjectName+small').text("必须选择科目");
+                        return;
+                    }
+                }
+                AddClazzDTO.schoolCode = getSchoolCode();
+                AddClazzDTO.gradeId = gradeId;
+
+                console.log(AddClazzDTO)
+
+                var url = 'school/clazz/add';
+                ajax.postJson(url, AddClazzDTO).then(function (data) {
+                    var newClazzes = data.clazzes;
+                    clazzes = clazzes.concat(newClazzes);
+                    showClazz(grades, clazzes);
+                    myDialog.close();
+                    dialog.prompt("增加编辑成功");
+                }).always(function () {
+                    $.processError(arguments);
+                });
+
+            });
+            $('.selectpicker').selectpicker({
+                width: '120px'
+            });
+            $(".attribute").iCheck({
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass: 'iradio_square-blue'
+            });
+            $('.single-add .teachClazz').on('ifChanged', function () {
+                $('.single-add .subjectName+small').text("");
+                if ($(this).is(':checked')) {
+                    $('.single-add .subjectName').attr('disabled', false);
+                    $('.single-add .subjectName').selectpicker('refresh');
+                } else {
+                    $('.single-add .subjectName').attr('disabled', true);
+                    $('.single-add .subjectName').selectpicker('refresh');
+                }
+            });
+            $('.batch-add .teachClazz').on('ifChanged', function () {
+                $('.batch-add .subjectName+small').text("");
+                if ($(this).is(':checked')) {
+                    $('.batch-add .subjectName').attr('disabled', false);
+                    $('.batch-add .subjectName').selectpicker('refresh');
+                } else {
+                    $('.batch-add .subjectName').attr('disabled', true);
+                    $('.batch-add .subjectName').selectpicker('refresh');
+                }
             });
         }
 
@@ -271,19 +415,20 @@
                 aKeyConfigSchool();
             });
             $('.subject-panel').on('click', '.add-subject-btn', function () {
-                console.log("add-subject-btn")
+                addSubject();
             });
             $('.subject-panel').on('click', '.del-subject', function () {
                 delSubject($(this))
             });
             $('.grade-panel').on('click', '.add-grade-btn', function () {
-                console.log("add-grade-btn")
+                addGrade();
             });
             $('.grade-panel').on('click', '.del-subject', function () {
                 delGrade($(this));
             });
             $('.clazz-panel').on('click', '.add-clazz-btn', function () {
-                console.log("add-clazz-btn")
+                var gradeId = $(this).data('gradeId');
+                addClazz(gradeId);
             });
             $('.clazz-panel').on('click', '.del-subject', function () {
                 delClazz($(this))

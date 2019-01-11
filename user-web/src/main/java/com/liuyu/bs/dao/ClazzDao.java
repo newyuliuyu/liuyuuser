@@ -21,7 +21,7 @@ public interface ClazzDao {
 
     void add(@Param("clazz") Clazz clazz);
 
-    void adds(@Param("clazz") List<Clazz> clazzes);
+    void adds(@Param("clazzes") List<Clazz> clazzes);
 
     void del(@Param("code") String code);
 

@@ -18,19 +18,19 @@ import java.util.List;
  */
 public interface SchoolService {
 
-    void addSubject(String code, Subject subject);
+    Subject addSubject(String code, Subject subject);
 
     void delSubject(long subjectId);
 
     List<Subject> querySubjects(String code);
 
-    void addGrade(String code, Grade grade);
+    List<Grade> addGrade(String code, List<String> gradeNames);
 
     void delGrade(long gradeId);
 
     List<Grade> queryGrade(String code);
 
-    void addClazz(Clazz clazz);
+    List<Clazz> addClazzes(List<Clazz> clazzes);
 
     void delClazz(String clazzCode);
 

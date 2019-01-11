@@ -237,6 +237,7 @@ a.btn-outline-primary:hover {
     border-radius: 5px;
     font-size: 20px;
     cursor: pointer;
+    text-align: center;
 }
 .subject-name-block:hover{
     background-color: #c9cccf;

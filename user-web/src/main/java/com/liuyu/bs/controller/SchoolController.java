@@ -9,10 +9,12 @@ import com.liuyu.bs.business.Subject;
 import com.liuyu.bs.service.SchoolService;
 import com.liuyu.bs.service.UserSchoolService;
 import com.liuyu.common.mvc.ModelAndViewFactory;
+import com.liuyu.common.util.ClazzNameToNumber;
 import com.liuyu.common.util.HttpReqUtils;
 import com.liuyu.user.web.controller.BaseController;
 import com.liuyu.user.web.domain.User;
 import com.liuyu.user.web.dto.AKeyConfigSchoolDTO;
+import com.liuyu.user.web.dto.AddClazzDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -101,8 +104,9 @@ public class SchoolController extends BaseController {
                                          HttpServletRequest request,
                                          HttpServletResponse response) throws Exception {
         log.debug(this.getClass().getSimpleName() + ".schoolSubjectAdd");
-        schoolService.addSubject(schoolCode, subject);
+        subject = schoolService.addSubject(schoolCode, subject);
         return ModelAndViewFactory.instance()
+                .with("subject", subject)
                 .build();
     }
 
@@ -123,6 +127,8 @@ public class SchoolController extends BaseController {
                                      HttpServletResponse response) throws Exception {
         log.debug(this.getClass().getSimpleName() + ".schoolGrades");
         List<Grade> grades = schoolService.queryGrade(schoolCode);
+
+        grades.sort(Comparator.comparingInt(Grade::getLearnSegment).thenComparingInt(g -> ClazzNameToNumber.toNum(g.getName())));
         return ModelAndViewFactory.instance()
                 .with("grades", grades)
                 .build();
@@ -130,12 +136,13 @@ public class SchoolController extends BaseController {
 
     @RequestMapping("/grade/add/{schoolCode}")
     public ModelAndView schoolGradeAdd(@PathVariable String schoolCode,
-                                       @RequestBody Grade grade,
+                                       @RequestBody List<String> gradeNames,
                                        HttpServletRequest request,
                                        HttpServletResponse response) throws Exception {
         log.debug(this.getClass().getSimpleName() + ".schoolGradeAdd");
-        schoolService.addGrade(schoolCode, grade);
+        List<Grade> grades = schoolService.addGrade(schoolCode, gradeNames);
         return ModelAndViewFactory.instance()
+                .with("grades", grades)
                 .build();
     }
 
@@ -156,19 +163,21 @@ public class SchoolController extends BaseController {
                                       HttpServletResponse response) throws Exception {
         log.debug(this.getClass().getSimpleName() + ".schoolGrades");
         List<Clazz> clazzes = schoolService.queryClazz(schoolCode);
+        clazzes.sort(Comparator.comparingInt(c -> ClazzNameToNumber.toNum(c.getName())));
         return ModelAndViewFactory.instance()
                 .with("clazzes", clazzes)
                 .build();
     }
 
-    @RequestMapping("/clazz/add/{schoolCode}")
-    public ModelAndView schoolClazzAdd(@PathVariable String schoolCode,
-                                       @RequestBody Clazz clazz,
+    @RequestMapping("/clazz/add")
+    public ModelAndView schoolClazzAdd(@RequestBody AddClazzDTO addClazzDTO,
                                        HttpServletRequest request,
                                        HttpServletResponse response) throws Exception {
         log.debug(this.getClass().getSimpleName() + ".schoolClazzAdd");
-
+        List<Clazz> clazzes = addClazzDTO.converToClazz();
+        schoolService.addClazzes(clazzes);
         return ModelAndViewFactory.instance()
+                .with("clazzes", clazzes)
                 .build();
     }
 

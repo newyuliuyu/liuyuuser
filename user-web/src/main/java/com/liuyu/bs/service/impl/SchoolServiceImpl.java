@@ -46,8 +46,9 @@ public class SchoolServiceImpl implements SchoolService {
 
     @Override
     @Transactional
-    public void addSubject(String code, Subject subject) {
+    public Subject addSubject(String code, Subject subject) {
         schoolSubjectDao.add(code, subject);
+        return subject;
     }
 
     @Override
@@ -63,9 +64,13 @@ public class SchoolServiceImpl implements SchoolService {
 
     @Override
     @Transactional
-    public void addGrade(String code, Grade grade) {
-        grade.setId(idGenerator.nextId());
-        schoolGradeDao.add(code, grade);
+    public List<Grade> addGrade(String code, List<String> gradeNames) {
+        List<Grade> grades = Lists.newArrayList();
+        for (String name : gradeNames) {
+            grades.add(Grade.createGrade(name, idGenerator.nextId()));
+        }
+        schoolGradeDao.adds(code, grades);
+        return grades;
     }
 
     @Override
@@ -82,8 +87,9 @@ public class SchoolServiceImpl implements SchoolService {
 
     @Override
     @Transactional
-    public void addClazz(Clazz clazz) {
-        clazzDao.add(clazz);
+    public List<Clazz> addClazzes(List<Clazz> clazzes) {
+        clazzDao.adds(clazzes);
+        return clazzes;
     }
 
     @Override

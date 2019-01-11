@@ -53,17 +53,130 @@
             </td>
             <td>
                 {{? it.gradeClazzMap[grade.id]}}
-                    {{~it.gradeClazzMap[grade.id]:clazz:idx1}}
-                    <div class="subject-name-block data">
-                        <span class="del-subject" data-id="{{=clazz.code}}">x</span>
-                        <label>{{=clazz.name}}</label>
-                    </div>
-                    {{~}}
+                {{~it.gradeClazzMap[grade.id]:clazz:idx1}}
+                <div class="subject-name-block data">
+                    <span class="del-subject" data-id="{{=clazz.code}}">x</span>
+                    <label>{{=clazz.name}}</label>
+                    <label style="display: block;font-size: 10px;background-color: #FFEB3B;border: 1px solid #FFEB3B;">
+                        {{? clazz.teachClazz}}
+                        教学班({{=clazz.subjectName}})
+                        {{??}}
+                        行政班
+                        {{?}}
+                    </label>
+                </div>
+                {{~}}
                 {{?}}
                 <span class="subject-name-block add-clazz-btn" data-grade-id="{{=grade.id}}">添加+</span>
             </td>
         </tr>
         {{~}}
     </table>
+</script>
+<script id="addSubjectT" type="text/x-dot-template">
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label text-right">科目名称</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="subjectName" placeholder="科目名称">
+            <small class="form-text text-danger"></small>
+        </div>
+    </div>
+</script>
+<script id="addGradeT" type="text/x-dot-template">
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label text-right">选择年级</label>
+        <div class="col-sm-10">
+            <select class="selectpicker" id="gradeName" multiple>
+                {{~it.gradeNames:name:idx}}
+                <option value="{{=name}}">{{=name}}</option>
+                {{~}}
+            </select>
+            <small class="form-text text-danger" id="gradeNameMsg"></small>
+        </div>
+    </div>
+</script>
+<script id="addClazzT" type="text/x-dot-template">
+    <nav>
+        <div class="nav nav-tabs add-clazz-div" id="nav-tab" role="tablist">
+            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
+               aria-controls="nav-home" aria-selected="true" data-type="single-add" data-batch-create="false">增加班级</a>
+            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
+               aria-controls="nav-profile" aria-selected="false" data-type="batch-add" data-batch-create="true">批量增加班级</a>
+        </div>
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active single-add" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+            <form>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label text-right">班级名字</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control clazzName" id="clazzName" placeholder="科目名称">
+                        <small class="form-text text-danger"></small>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label text-right">文理标志</label>
+                    <div class="col-sm-10">
+                        <input type="radio" class="attribute wl" name="wl" value="0" checked>不分科
+                        <input type="radio" class="attribute wl" name="wl" value="1">理科
+                        <input type="radio" class="attribute wl" name="wl" value="2">文科
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label text-right">是否教学班</label>
+                    <div class="col-sm-10">
+                        <input type="checkbox" class="attribute teachClazz" name="teachClazz" value="0">是否教学班
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label text-right">科目</label>
+                    <div class="col-sm-10">
+                        <select class="selectpicker subjectName" disabled>
+                            {{~it.subjects:item:idx}}
+                                <option value="{{=item.name}}">{{=item.name}}</option>
+                            {{~}}
+                        </select>
+                        <small class="form-text text-danger"></small>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="tab-pane fade batch-add" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+            <form>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label text-right">班级数量</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control clazzNum" id="clazzNum" placeholder="班级数量">
+                        <small class="form-text text-danger"></small>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label text-right">文理标志</label>
+                    <div class="col-sm-10">
+                        <input type="radio" class="attribute wl" name="wl" value="0" checked>不分科
+                        <input type="radio" class="attribute wl" name="wl" value="1">理科
+                        <input type="radio" class="attribute wl" name="wl" value="2">文科
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label text-right">是否教学班</label>
+                    <div class="col-sm-10">
+                        <input type="checkbox" class="attribute teachClazz" name="teachClazz" value="0">是否教学班
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label text-right">科目</label>
+                    <div class="col-sm-10">
+                        <select class="selectpicker subjectName" disabled>
+                            {{~it.subjects:item:idx}}
+                            <option value="{{=item.name}}">{{=item.name}}</option>
+                            {{~}}
+                        </select>
+                        <small class="form-text text-danger"></small>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 </script>
 
