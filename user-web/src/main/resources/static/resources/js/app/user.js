@@ -10,7 +10,7 @@
         var urlMap = {
             'home': window.app.rootPath + 'home.html',
             'org': window.app.rootPath + 'org/org.html',
-            'school': window.app.rootPath + 'school/school.html',
+            'orgConfig': window.app.rootPath + 'org/config/org-config.html',
             'teacher': window.app.rootPath + 'teacher/teacher.html'
         };
 

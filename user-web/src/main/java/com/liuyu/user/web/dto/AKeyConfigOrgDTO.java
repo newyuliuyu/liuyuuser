@@ -17,8 +17,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class AKeyConfigSchoolDTO {
-    private String schoolCode;
+public class AKeyConfigOrgDTO {
+    private String orgCode;
     private boolean hasPrimarySchool;
     private boolean hasJuniorHighSchool;
     private boolean hasHighSchool;

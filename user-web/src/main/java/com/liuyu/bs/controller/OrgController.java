@@ -5,12 +5,14 @@ import com.github.pagehelper.PageInfo;
 import com.liuyu.bs.business.Org;
 import com.liuyu.bs.business.SysConfig;
 import com.liuyu.bs.service.OrgService;
+import com.liuyu.bs.service.UserOrgService;
 import com.liuyu.bs.service.impl.ImportOrgService;
 import com.liuyu.common.excel.ExcelTable;
 import com.liuyu.common.mvc.ModelAndViewFactory;
 import com.liuyu.common.thread.ThreadExecutor;
 import com.liuyu.common.util.HttpReqUtils;
 import com.liuyu.user.web.controller.BaseController;
+import com.liuyu.user.web.domain.User;
 import com.liuyu.user.web.dto.UploadFileDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -46,6 +48,9 @@ public class OrgController extends BaseController {
 
     @Autowired
     private OrgService orgService;
+
+    @Autowired
+    private UserOrgService userOrgService;
 
     @Autowired
     private SysConfig config;
@@ -157,6 +162,60 @@ public class OrgController extends BaseController {
         et.createRowAndCells(rowIdx++, "", "", "", "省");
         et.createDropDownMenu(1, 1, 3, 3, new String[]{"省", "地市", "区县", "学校"});
         et.save(os);
+    }
+
+
+    @RequestMapping(value = "/user-org")
+    public ModelAndView userOrg(HttpServletRequest request,
+                                HttpServletResponse response) throws Exception {
+        log.debug("进入" + this.getClass().getSimpleName() + ".userOrg");
+        User user = getUser();
+
+        Org org = user.queryOrg();
+        if (org.getDeep() == -2) {
+            if (user.isSuperAdmin()) {
+                org = userOrgService.getSchool(user);
+            } else {
+                throw new RuntimeException("没有权限查看相关数据");
+            }
+        }
+
+        return ModelAndViewFactory.instance().with("org", org).build();
+    }
+
+    @RequestMapping(value = "/user-orgs/{deep}")
+    public ModelAndView userOrgs(@PathVariable int deep,
+                                 HttpServletRequest request,
+                                 HttpServletResponse response) throws Exception {
+        log.debug("进入" + this.getClass().getSimpleName() + ".userOrgs");
+
+
+        int pageNum = HttpReqUtils.getParamInt(request, "pageNum");
+        if (pageNum == 0) {
+            pageNum = 1;
+        }
+        int pageSize = HttpReqUtils.getParamInt(request, "pageSize");
+        if (pageSize == 0) {
+            pageSize = 10;
+        }
+
+        String search = HttpReqUtils.getParamString(request, "search");
+
+
+        User user = getUser();
+        List<? extends Org> orgs = null;
+        PageHelper.startPage(pageNum, pageSize);
+        if (deep == 1) {
+            orgs = userOrgService.queryUserProvince(user, search);
+        } else if (deep == 2) {
+            orgs = userOrgService.queryUserCity(user, search);
+        } else if (deep == 3) {
+            orgs = userOrgService.queryUserCounty(user, search);
+        } else if (deep == 4) {
+            orgs = userOrgService.queryUserSchools(user, search);
+        }
+        PageInfo<? extends Org> pageInfo = new PageInfo<>(orgs);
+        return ModelAndViewFactory.instance().with("orgs", orgs).with("pageInfo", pageInfo).build();
     }
 
 

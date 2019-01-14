@@ -6,9 +6,9 @@ import com.liuyu.bs.business.Grade;
 import com.liuyu.bs.business.Subject;
 import com.liuyu.bs.dao.ClazzDao;
 import com.liuyu.bs.dao.SchoolDao;
-import com.liuyu.bs.dao.SchoolGradeDao;
-import com.liuyu.bs.dao.SchoolSubjectDao;
-import com.liuyu.bs.service.SchoolService;
+import com.liuyu.bs.dao.OrgGradeDao;
+import com.liuyu.bs.dao.OrgSubjectDao;
+import com.liuyu.bs.service.OrgConfigService;
 import com.liuyu.common.util.IdGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,16 +27,16 @@ import java.util.List;
  * @since JDK 1.7+
  */
 @Service
-public class SchoolServiceImpl implements SchoolService {
+public class OrgConfigServiceImpl implements OrgConfigService {
 
     @Autowired
     private SchoolDao schoolDao;
 
     @Autowired
-    private SchoolSubjectDao schoolSubjectDao;
+    private OrgSubjectDao orgSubjectDao;
 
     @Autowired
-    private SchoolGradeDao schoolGradeDao;
+    private OrgGradeDao orgGradeDao;
 
     @Autowired
     private ClazzDao clazzDao;
@@ -47,19 +47,19 @@ public class SchoolServiceImpl implements SchoolService {
     @Override
     @Transactional
     public Subject addSubject(String code, Subject subject) {
-        schoolSubjectDao.add(code, subject);
+        orgSubjectDao.add(code, subject);
         return subject;
     }
 
     @Override
     @Transactional
     public void delSubject(long subjectId) {
-        schoolSubjectDao.del(subjectId);
+        orgSubjectDao.del(subjectId);
     }
 
     @Override
     public List<Subject> querySubjects(String code) {
-        return schoolSubjectDao.querySubjects(code);
+        return orgSubjectDao.querySubjects(code);
     }
 
     @Override
@@ -69,20 +69,20 @@ public class SchoolServiceImpl implements SchoolService {
         for (String name : gradeNames) {
             grades.add(Grade.createGrade(name, idGenerator.nextId()));
         }
-        schoolGradeDao.adds(code, grades);
+        orgGradeDao.adds(code, grades);
         return grades;
     }
 
     @Override
     @Transactional
     public void delGrade(long gradeId) {
-        schoolGradeDao.del(gradeId);
+        orgGradeDao.del(gradeId);
         clazzDao.delGradeClazz(gradeId);
     }
 
     @Override
     public List<Grade> queryGrade(String code) {
-        return schoolGradeDao.queryGrades(code);
+        return orgGradeDao.queryGrades(code);
     }
 
     @Override
@@ -105,7 +105,7 @@ public class SchoolServiceImpl implements SchoolService {
 
     @Override
     @Transactional
-    public void aKeyConfigSchool(String code,
+    public void aKeyConfigOrg(String code,
                                  boolean hasPrimarySchool,
                                  boolean hasJuniorHighSchool,
                                  boolean hasHighSchool) {
@@ -142,7 +142,7 @@ public class SchoolServiceImpl implements SchoolService {
             grades.add(Grade.createGrade("高三", idGenerator.nextId()));
         }
 
-        schoolSubjectDao.adds(code, subjects);
-        schoolGradeDao.adds(code, grades);
+        orgSubjectDao.adds(code, subjects);
+        orgGradeDao.adds(code, grades);
     }
 }

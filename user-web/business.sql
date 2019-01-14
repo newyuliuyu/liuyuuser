@@ -11,37 +11,37 @@ CREATE TABLE b_org(
   KEY parentCode(parentCode)
 ) ENGINE=INNODB COMMENT'机构表';
 
-DROP TABLE IF EXISTS b_import_org_cache;
-CREATE TABLE b_import_org_cache(
-  id INT NOT NULL AUTO_INCREMENT COMMENT'ID',
-  CODE VARCHAR(32) NOT NULL COMMENT'机构代码',
-  NAME VARCHAR(20) NOT NULL COMMENT'机构名称',
-  deep TINYINT NOT NULL COMMENT'机构类别 1 省 2地市 3 区县 4 学校',
-  parentCode VARCHAR(32) NOT NULL COMMENT'机构的父级代码',
-  userCode VARCHAR(32) NOT NULL COMMENT'导入者id',
-  TIMESTAMP BIGINT NOT NULL COMMENT'时间戳',
-  PRIMARY KEY id(id),
-  UNIQUE KEY codeAndTimeStamp(userCode,TIMESTAMP)
---   key parentCode(parentCode)
-) ENGINE=INNODB COMMENT'机构导入数据临时表';
+-- DROP TABLE IF EXISTS b_import_org_cache;
+-- CREATE TABLE b_import_org_cache(
+--   id INT NOT NULL AUTO_INCREMENT COMMENT'ID',
+--   CODE VARCHAR(32) NOT NULL COMMENT'机构代码',
+--   NAME VARCHAR(20) NOT NULL COMMENT'机构名称',
+--   deep TINYINT NOT NULL COMMENT'机构类别 1 省 2地市 3 区县 4 学校',
+--   parentCode VARCHAR(32) NOT NULL COMMENT'机构的父级代码',
+--   userCode VARCHAR(32) NOT NULL COMMENT'导入者id',
+--   TIMESTAMP BIGINT NOT NULL COMMENT'时间戳',
+--   PRIMARY KEY id(id),
+--   UNIQUE KEY codeAndTimeStamp(userCode,TIMESTAMP)
+-- --   key parentCode(parentCode)
+-- ) ENGINE=INNODB COMMENT'机构导入数据临时表';
 
-DROP TABLE IF EXISTS b_school_subject;
-CREATE TABLE b_school_subject(
+DROP TABLE IF EXISTS b_org_subject;
+CREATE TABLE b_org_subject(
   id INT NOT NULL AUTO_INCREMENT COMMENT'ID',
-  schoolCode VARCHAR(32) NOT NULL COMMENT'学校代码',
+  orgCode VARCHAR(32) NOT NULL COMMENT'学校代码',
   subjectName VARCHAR(20) NOT NULL COMMENT'机构名称',
   PRIMARY KEY id(id)
-) ENGINE=INNODB COMMENT'学校科目表';
+) ENGINE=INNODB COMMENT'组织(包含学校，区县，地市，省市)的科目表';
 
-DROP TABLE IF EXISTS b_school_grade;
-CREATE TABLE b_school_grade(
+DROP TABLE IF EXISTS b_org_grade;
+CREATE TABLE b_org_grade(
   id BIGINT NOT NULL COMMENT'ID',
-  schoolCode VARCHAR(32) NOT NULL COMMENT'学校代码',
+  orgCode VARCHAR(32) NOT NULL COMMENT'学校代码',
   NAME VARCHAR(20) NOT NULL COMMENT'年级名字',
   enterSchoolYear INT NOT NULL COMMENT'入学年份',
   learnSegment TINYINT NOT NULL COMMENT'学段 1 小学 2 初中 3 高中',
   PRIMARY KEY id(id)
-) ENGINE=INNODB COMMENT'学校年级表';
+) ENGINE=INNODB COMMENT'组织(包含学校，区县，地市，省市)的年级表';
 
 
 DROP TABLE IF EXISTS b_clazz;
@@ -57,3 +57,14 @@ CREATE TABLE b_clazz(
   PRIMARY KEY id(id),
   UNIQUE KEY CODE(CODE)
 ) ENGINE=INNODB COMMENT'班级';
+
+
+DROP TABLE IF EXISTS b_teacher;
+CREATE TABLE b_teacher(
+  id INT NOT NULL AUTO_INCREMENT COMMENT'ID',
+  orgCode VARCHAR(32) NOT NULL COMMENT'机构代码',
+  `name` VARCHAR(32) NOT NULL COMMENT'教师名称',
+  `code` VARCHAR(32) NOT NULL COMMENT'教师唯一编码',
+  account varchar(32) not null comment'教师帐号'
+  PRIMARY KEY id(id)
+) ENGINE=INNODB COMMENT'教师表';

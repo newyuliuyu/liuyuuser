@@ -1,6 +1,9 @@
 package com.liuyu.user.web;
 
 import com.google.common.collect.Lists;
+import com.liuyu.bs.business.Org;
+import com.liuyu.bs.business.OrgHelper;
+import com.liuyu.bs.business.School;
 import freemarker.cache.StringTemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -55,6 +58,16 @@ public class APITest {
 
         aList.retainAll(bList);
 
+        System.out.println();
+    }
+
+    @Test
+    public void beanUtils() throws Exception {
+        Org org = Org.builder().id(1).code("1").name("1").parentCode("0").deep(1).build();
+//        School school  = BeanUtils.instantiateClass(School.class);
+//        BeanUtils.copyProperties(org,school);
+
+        School school = OrgHelper.converTo(org, School.class);
         System.out.println();
     }
 

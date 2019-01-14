@@ -16,7 +16,7 @@ import java.util.List;
  * @version v1.0
  * @since JDK 1.7+
  */
-public interface SchoolService {
+public interface OrgConfigService {
 
     Subject addSubject(String code, Subject subject);
 
@@ -37,7 +37,7 @@ public interface SchoolService {
     List<Clazz> queryClazz(String code);
 
 
-    void aKeyConfigSchool(String code,
+    void aKeyConfigOrg(String code,
                           boolean hasPrimarySchool,
                           boolean hasJuniorHighSchool,
                           boolean hasHighSchool);

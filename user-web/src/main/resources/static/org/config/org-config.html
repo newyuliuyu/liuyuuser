@@ -55,8 +55,9 @@
             <!--</ol>-->
             <!--</nav>-->
             <div class="my-tool-bar container" style="padding: 15px;">
-                <input type="hidden" id="curSchoolCode" value="">
-                <label class="school-name-label" style="font-size:20px;">
+                <input type="hidden" id="curOrgCode" value="">
+                <input type="hidden" id="curOrgDeep" value="">
+                <label class="org-name-label" style="font-size:20px;">
                 </label>
                 <span><a class="icon-exchange change-school-btn" href="javascript:void(0);">切换学校</a></span>
 
@@ -128,7 +129,7 @@
     var pathName = document.location.pathname;
     var index = pathName.substr(1).indexOf("/");
     var myContextPath = pathName.substr(0, index + 1);
-    window["app"] = {rootPath: myContextPath + '/', entry: 'school'};
+    window["app"] = {rootPath: myContextPath + '/', entry: 'org.config'};
 
     var script = document.createElement("script");
     script.setAttribute("type", "text/javascript");

@@ -1,7 +1,8 @@
 <script id="selecteSchoolDialogT" type="text/x-dot-template">
+
     <div style="padding: 0px 30px;">
         <div class="input-group">
-            <input type="text" id="searchText" class="form-control" placeholder="学校名称">
+            <input type="text" id="searchText" class="form-control" placeholder="">
             <div class="input-group-append">
                 <button id="searchBtn" class="btn btn-outline-secondary  icon-search" type="button">
                     搜索
@@ -9,15 +10,35 @@
             </div>
         </div>
     </div>
-    <div class="school-ul-dialog">
 
+    <nav>
+        <div class="nav nav-tabs org-nav-list">
+            {{~it.orgs:org:idx}}
+            <a class="nav-item nav-link {{=(idx==0)?'active':''}}" data-toggle="tab" href="#nav-{{=org.elementId}}"
+               data-type="{{=org.elementId}}">{{=org.displayText}}</a>
+            {{~}}
+        </div>
+    </nav>
+    <div class="tab-content">
+        <div class="tab-pane fade show active" id="nav-province">
+            省市
+        </div>
+        <div class="tab-pane fade" id="nav-city">
+            地市
+        </div>
+        <div class="tab-pane fade" id="nav-county">
+            区县
+        </div>
+        <div class="tab-pane fade" id="nav-school">
+            学校
+        </div>
     </div>
 </script>
-<script id="schoolListT" type="text/x-dot-template">
+<script id="orgListT" type="text/x-dot-template">
     <ul class="school-li">
-        {{~it.schools:item:index}}
-        <li><input type="radio" class="attribute school-radio" name="school" data-name="{{=item.name}}"
-                   value="{{=item.code}}">&nbsp;&nbsp;&nbsp;{{=item.name}}
+        {{~it.orgs:item:index}}
+        <li><input type="radio" class="attribute org-radio" name="school" data-name="{{=item.name}}"
+                   value="{{=item.code}}" data-deep="{{=item.deep}}">&nbsp;&nbsp;&nbsp;{{=item.name}}
         </li>
         {{~}}
     </ul>
@@ -101,7 +122,8 @@
             <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
                aria-controls="nav-home" aria-selected="true" data-type="single-add" data-batch-create="false">增加班级</a>
             <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
-               aria-controls="nav-profile" aria-selected="false" data-type="batch-add" data-batch-create="true">批量增加班级</a>
+               aria-controls="nav-profile" aria-selected="false" data-type="batch-add"
+               data-batch-create="true">批量增加班级</a>
         </div>
     </nav>
     <div class="tab-content" id="nav-tabContent">
@@ -133,7 +155,7 @@
                     <div class="col-sm-10">
                         <select class="selectpicker subjectName" disabled>
                             {{~it.subjects:item:idx}}
-                                <option value="{{=item.name}}">{{=item.name}}</option>
+                            <option value="{{=item.name}}">{{=item.name}}</option>
                             {{~}}
                         </select>
                         <small class="form-text text-danger"></small>

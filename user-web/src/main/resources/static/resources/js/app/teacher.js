@@ -7,7 +7,7 @@
         'dialog',
         'js/app/menu',
         'js/commons/UI',
-        'text!tmpl/school-tmpl.html',
+        'text!tmpl/teacher-tmpl.html',
         'bootstrap',
         'css!style/bootstrap/bootstrap.min',
         'bootstrapSelect',
@@ -32,10 +32,45 @@
         }
 
 
+        function loadOrgData() {
+            var url = 'org/user-org';
+            ajax.getJson(url).then(function (data) {
+                var org = data.org;
+                $('.org-name-label').text(org.name);
+                $('#curOrgCode').val(org.code);
+                $('#curOrgDeep').val(org.deep);
+
+            }).always(function () {
+                $.processError(arguments);
+            });
+        }
+
+
+        function changeOrg() {
+            var url = 'user/res/query/org-menu';
+            ajax.getJson(url).then(function (data) {
+                var dataset = {};
+                dataset.orgs = data.reses;
+                var tmplate = getTemplate('#changeOrgDialogT');
+                var arrText = dot.template(tmplate);
+                var html = arrText(dataset);
+                var myDialog = dialog.myModal({size: getSize(), body: html});
+            }).always(function () {
+                $.processError(arguments);
+            });
+        }
+
+        function initEvent() {
+            $('.change-org-btn').click(function () {
+                changeOrg();
+            });
+        }
+
         return {
             render: function () {
                 user.userInfo('teacher');
-
+                loadOrgData();
+                initEvent();
                 $('main').show();
             }
         }

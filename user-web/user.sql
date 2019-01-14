@@ -22,31 +22,31 @@ CREATE TABLE u_role(
 	PRIMARY KEY id(id)
 ) ENGINE=INNODB COMMENT'角色表';
 
-DROP TABLE IF EXISTS u_role_type;
-CREATE TABLE u_role_type(
-	CODE VARCHAR(20) NOT NULL COMMENT'角色类型代码',
-	NAME VARCHAR(20) NOT NULL COMMENT'角色类型名字',
-	LEVEL INT NOT NULL COMMENT'角色类型级别',
-	PRIMARY KEY CODE(CODE)
-) ENGINE=INNODB COMMENT'角色类型';
-
-INSERT INTO u_role_type(CODE,NAME,LEVEL) VALUES('parents','家长',100);
-INSERT INTO u_role_type(CODE,NAME,LEVEL) VALUES('student','学生',100);
-
-INSERT INTO u_role_type(CODE,NAME,LEVEL) VALUES('teacher','教师',1);
-INSERT INTO u_role_type(CODE,NAME,LEVEL) VALUES('cLazzMaseter','班主任',1);
-INSERT INTO u_role_type(CODE,NAME,LEVEL) VALUES('LPGroupLeader','备课组长',1);
-INSERT INTO u_role_type(CODE,NAME,LEVEL) VALUES('gradeMaseter','年级主任',1);
-INSERT INTO u_role_type(CODE,NAME,LEVEL) VALUES('schoolMaseter','校长',1);
-INSERT INTO u_role_type(CODE,NAME,LEVEL) VALUES('Admin','管理员',1);
-
-INSERT INTO u_role_type(CODE,NAME,LEVEL) VALUES('researchStaff','教研员',2);
-INSERT INTO u_role_type(CODE,NAME,LEVEL) VALUES('TARS','教研室主任',2);
-INSERT INTO u_role_type(CODE,NAME,LEVEL) VALUES('SFE','教育局局长',2);
-
-
-
-INSERT INTO u_role_type(CODE,NAME,LEVEL) VALUES('Root','超级管理员',1000);
+-- DROP TABLE IF EXISTS u_role_type;
+-- CREATE TABLE u_role_type(
+-- 	CODE VARCHAR(20) NOT NULL COMMENT'角色类型代码',
+-- 	NAME VARCHAR(20) NOT NULL COMMENT'角色类型名字',
+-- 	LEVEL INT NOT NULL COMMENT'角色类型级别',
+-- 	PRIMARY KEY CODE(CODE)
+-- ) ENGINE=INNODB COMMENT'角色类型';
+--
+-- INSERT INTO u_role_type(CODE,NAME,LEVEL) VALUES('parents','家长',100);
+-- INSERT INTO u_role_type(CODE,NAME,LEVEL) VALUES('student','学生',100);
+--
+-- INSERT INTO u_role_type(CODE,NAME,LEVEL) VALUES('teacher','教师',1);
+-- INSERT INTO u_role_type(CODE,NAME,LEVEL) VALUES('cLazzMaseter','班主任',1);
+-- INSERT INTO u_role_type(CODE,NAME,LEVEL) VALUES('LPGroupLeader','备课组长',1);
+-- INSERT INTO u_role_type(CODE,NAME,LEVEL) VALUES('gradeMaseter','年级主任',1);
+-- INSERT INTO u_role_type(CODE,NAME,LEVEL) VALUES('schoolMaseter','校长',1);
+-- INSERT INTO u_role_type(CODE,NAME,LEVEL) VALUES('Admin','管理员',1);
+--
+-- INSERT INTO u_role_type(CODE,NAME,LEVEL) VALUES('researchStaff','教研员',2);
+-- INSERT INTO u_role_type(CODE,NAME,LEVEL) VALUES('TARS','教研室主任',2);
+-- INSERT INTO u_role_type(CODE,NAME,LEVEL) VALUES('SFE','教育局局长',2);
+--
+--
+--
+-- INSERT INTO u_role_type(CODE,NAME,LEVEL) VALUES('Root','超级管理员',1000);
 
 
 
@@ -102,17 +102,23 @@ CREATE TABLE u_user_x_resource(
 
 INSERT INTO `u_resource`(id,NAME,displayText,elementId,groups,smallGroup,parentId,orderNum,resType) VALUES(1,'主页','主页','home','user-main-menu','',0,1,'Menu');
 INSERT INTO `u_resource`(id,NAME,displayText,elementId,groups,smallGroup,parentId,orderNum,resType) VALUES(2,'机构','机构','org','user-main-menu','',0,2,'Menu');
-INSERT INTO `u_resource`(id,NAME,displayText,elementId,groups,smallGroup,parentId,orderNum,resType) VALUES(3,'学校','学校','school','user-main-menu','',0,3,'Menu');
-INSERT INTO `u_resource`(id,NAME,displayText,elementId,groups,smallGroup,parentId,orderNum,resType) VALUES(4,'年级','年级','grade','user-main-menu','',0,4,'Menu');
-INSERT INTO `u_resource`(id,NAME,displayText,elementId,groups,smallGroup,parentId,orderNum,resType) VALUES(5,'班级','班级','clazz','user-main-menu','',0,5,'Menu');
+INSERT INTO `u_resource`(id,NAME,displayText,elementId,groups,smallGroup,parentId,orderNum,resType) VALUES(3,'结构配置','结构配置','orgConfig','user-main-menu','',0,3,'Menu');
+INSERT INTO `u_resource`(id,NAME,displayText,elementId,groups,smallGroup,parentId,orderNum,resType) VALUES(5,'教师','教师','teacher','user-main-menu','',0,5,'Menu');
+-- INSERT INTO `u_resource`(id,NAME,displayText,elementId,groups,smallGroup,parentId,orderNum,resType) VALUES(4,'年级','年级','grade','user-main-menu','',0,4,'Menu');
+-- INSERT INTO `u_resource`(id,NAME,displayText,elementId,groups,smallGroup,parentId,orderNum,resType) VALUES(5,'班级','班级','clazz','user-main-menu','',0,5,'Menu');
 INSERT INTO `u_resource`(id,NAME,displayText,elementId,groups,smallGroup,parentId,orderNum,resType) VALUES(6,'学生','学生','student','user-main-menu','',0,6,'Menu');
 INSERT INTO `u_resource`(id,NAME,displayText,elementId,groups,smallGroup,parentId,orderNum,resType) VALUES(7,'教学','教学','teaching','user-main-menu','',0,7,'Menu');
-INSERT INTO `u_resource`(id,NAME,displayText,elementId,groups,smallGroup,parentId,orderNum,resType) VALUES(12,'教师','教师','teacher','user-main-menu','',0,8,'Menu');
 
 INSERT INTO `u_resource`(id,NAME,displayText,elementId,groups,smallGroup,parentId,orderNum,resType) VALUES(8,'用户-角色-资源','<div class="menu-item-text"><i class="icon-cogs">&nbsp;用户-角色-资源</i><i class="icon-chevron-down float-right-u"></i></div>','','home-menu','',0,1,'Menu');
 INSERT INTO `u_resource`(id,NAME,displayText,elementId,groups,smallGroup,parentId,orderNum,resType) VALUES(9,'资源管理','<div class="menu-item-text"><i class="icon-th-large">&nbsp;资源管理</i></div>','resourceMenu','home-menu','',8,1,'Menu');
 INSERT INTO `u_resource`(id,NAME,displayText,elementId,groups,smallGroup,parentId,orderNum,resType) VALUES(10,'角色管理','<div class="menu-item-text"><i class="icon-group">&nbsp;角色管理</i></div>','roleMenu','home-menu','',8,2,'Menu');
 INSERT INTO `u_resource`(id,NAME,displayText,elementId,groups,smallGroup,parentId,orderNum,resType) VALUES(11,'用户管理','<div class="menu-item-text"><i class="icon-user">&nbsp;用户管理</i></div>','userMenu','home-menu','',8,3,'Menu');
+
+INSERT INTO `u_resource`(id,NAME,displayText,elementId,groups,smallGroup,parentId,orderNum,resType) VALUES(100,'组织菜单管理','组织菜单管理','','','',0,0,'Menu');
+INSERT INTO `u_resource`(id,NAME,displayText,elementId,groups,smallGroup,parentId,orderNum,resType) VALUES(101,'省市','省市','province','org-menu','',100,1,'Menu');
+INSERT INTO `u_resource`(id,NAME,displayText,elementId,groups,smallGroup,parentId,orderNum,resType) VALUES(102,'地市','地市','city','org-menu','',100,2,'Menu');
+INSERT INTO `u_resource`(id,NAME,displayText,elementId,groups,smallGroup,parentId,orderNum,resType) VALUES(103,'区县','区县','county','org-menu','',100,3,'Menu');
+INSERT INTO `u_resource`(id,NAME,displayText,elementId,groups,smallGroup,parentId,orderNum,resType) VALUES(104,'学校','学校','school','org-menu','',100,4,'Menu');
 
 
 

@@ -7,7 +7,7 @@
         'dialog',
         'js/app/menu',
         'js/commons/UI',
-        'text!tmpl/school-tmpl.html',
+        'text!tmpl/org-config-tmpl.html',
         'bootstrap',
         'css!style/bootstrap/bootstrap.min',
         'bootstrapSelect',
@@ -35,11 +35,11 @@
         var grades = null;
         var clazzes = null;
 
-        function loadSchoolConfig() {
-            var schoolCode = $('#curSchoolCode').val();
-            var subjectURL = 'school/subjects/' + schoolCode;
-            var gradeURL = 'school/grades/' + schoolCode;
-            var clazzURL = 'school/clazzes/' + schoolCode;
+        function loadOrgConfig() {
+            var schoolCode = getOrgCode();
+            var subjectURL = 'orgconfig/subjects/' + schoolCode;
+            var gradeURL = 'orgconfig/grades/' + schoolCode;
+            var clazzURL = 'orgconfig/clazzes/' + schoolCode;
             $.when(ajax.getJson(subjectURL), ajax.getJson(gradeURL), ajax.getJson(clazzURL)).then(function (data) {
                 subjects = arguments[0][0].subjects;
                 grades = arguments[1][0].grades;
@@ -47,10 +47,12 @@
                 $('.subject-panel .data').remove();
                 $('.grade-panel .data').remove();
                 $('.clazz-panel .panel-content').html('');
+                $('.clazz-panel').hide();
                 if (subjects.length === 0 && grades.length === 0) {
-                    $('.my-tool-bar').append('<button type="button" class="a-key-config-school btn btn-outline-primary float-right">一键初始化学校配置</button>');
+                    $('.a-key-config-org').remove();
+                    $('.my-tool-bar').append('<button type="button" class="a-key-config-org btn btn-outline-primary float-right">一键初始化学校配置</button>');
                 } else {
-                    $('.a-key-config-school').remove();
+                    $('.a-key-config-org').remove();
                     showSubjects(subjects);
                     showGrades(grades);
                     showClazz(grades, clazzes);
@@ -93,6 +95,14 @@
 
         function showClazz(grades, clazzes) {
             $('.clazz-panel .panel-content').html('');
+            if (getOrgDeep() === 4) {
+                $('.clazz-panel').show();
+
+            } else {
+                $('.clazz-panel').hide();
+                return;
+            }
+
             var gradeClazzMap = {};
             $.each(clazzes, function (idx, item) {
                 var gradeId = item.grade.id;
@@ -112,54 +122,106 @@
 
 
         function loadUserSchool() {
-            var url = 'school/user/school';
+            var url = 'org/user-org';
             ajax.getJson(url).then(function (data) {
-                var school = data.school;
-                $('.school-name-label').text(school.name);
-                $('#curSchoolCode').val(school.code);
-                loadSchoolConfig();
+                // var school = data.school;
+                // $('.school-name-label').text(school.name);
+                // $('#curSchoolCode').val(school.code);
+                var org = data.org;
+                $('.org-name-label').text(org.name);
+                $('#curOrgCode').val(org.code);
+                $('#curOrgDeep').val(org.deep);
+                loadOrgConfig();
             }).always(function () {
                 $.processError(arguments);
             });
         }
 
-        function changeSchool() {
+        function changeOrg() {
+
             $('.change-school-btn').click(function () {
-                var tmplate = getTemplate("#selecteSchoolDialogT");
-                var myDialog = dialog.myModal({size: getSize(), body: tmplate}, function () {
-                    var selecteSchool = $('.school-radio:checked');
-                    if (selecteSchool.size() > 0) {
-                        $('.school-name-label').text(selecteSchool.data('name'));
-                        $('#curSchoolCode').val(selecteSchool.val());
-                        loadSchoolConfig();
-                    }
-                    myDialog.close();
-                });
-                schoolList();
-                $('#searchBtn').click(function () {
-                    var schoolName = $('#searchText').val().trim();
-                    schoolList();
+                var url = 'user/res/query/org-menu';
+                ajax.getJson(url).then(function (data) {
+                    var dataset = {};
+                    dataset.orgs = data.reses;
+                    var tmplate = getTemplate('#selecteSchoolDialogT');
+                    var arrText = dot.template(tmplate);
+                    var html = arrText(dataset);
+                    var myDialog = dialog.myModal({size: getSize(), body: html}, function () {
+                        var selecteOrg = $('.org-radio:checked');
+                        if (selecteOrg.size() > 0) {
+                            $('.org-name-label').text(selecteOrg.data('name'));
+                            $('#curOrgCode').val(selecteOrg.val());
+                            $('#curOrgDeep').val(selecteOrg.data('deep'));
+                            loadOrgConfig();
+                        }
+                        myDialog.close();
+                    });
+                    listUserOrgs();
+                    $('#searchBtn').click(function () {
+                        listUserOrgs();
+                    });
+                    $('.org-nav-list').on('click', 'a', function () {
+                        var type = $(this).data('type');
+                        var deep = getOrgNavDeep(type);
+                        listUserOrgs(undefined, deep, type);
+                    });
+                }).always(function () {
+                    $.processError(arguments);
                 });
             });
         }
 
-        function schoolList(page) {
-            var url = 'school/schools?1=1';
+        function getOrgNavDeep(type) {
+            if (!type) {
+                type = $('.org-nav-list a.active').data('type');
+            }
+            var deep = 0;
+            if (type === 'province') {
+                deep = 1;
+            } else if (type === 'city') {
+                deep = 2;
+            } else if (type === 'county') {
+                deep = 3;
+            } else if (type === 'school') {
+                deep = 4;
+            }
+            return deep;
+        }
+
+        function getOrgNavType() {
+            var type = $('.org-nav-list a.active').data('type');
+            return type;
+        }
+
+        function listUserOrgs(page, deep, type) {
+            if (!deep) {
+                var deep = getOrgNavDeep();
+                if (deep === 0) {
+                    dialog.alter("没有类型不能进行切换");
+                    return;
+                }
+            }
+            if (!type) {
+                type = getOrgNavType();
+            }
+
+
+            var url = 'org/user-orgs/' + deep + '?1=1';
             if ($.isPlainObject(page)) {
                 url += '&pageNum=' + page.pageNum + "&pageSize=" + page.pageSize;
             }
             var searchText = $('#searchText').val();
             if (searchText && searchText !== '') {
-                url += '&schoolName=' + searchText;
+                url += '&search=' + searchText;
             }
-
             ajax.getJson(url).then(function (data) {
-                var tmplate = getTemplate("#schoolListT");
+                var tmplate = getTemplate("#orgListT");
                 var arrText = dot.template(tmplate);
                 var html = arrText(data);
-                $('.school-ul-dialog').html(html);
+                $('#nav-' + type).html(html);
                 UI.pager().create('pager', function (page) {
-                    schoolList(page);
+                    listUserOrgs(page);
                 });
                 $(".attribute").iCheck({
                     checkboxClass: 'icheckbox_square-blue',
@@ -168,15 +230,43 @@
             }).always(function () {
                 $.processError(arguments);
             });
+
         }
 
-        function aKeyConfigSchool() {
+        // function schoolList(page) {
+        //     var url = 'orgconfig/schools?1=1';
+        //     if ($.isPlainObject(page)) {
+        //         url += '&pageNum=' + page.pageNum + "&pageSize=" + page.pageSize;
+        //     }
+        //     var searchText = $('#searchText').val();
+        //     if (searchText && searchText !== '') {
+        //         url += '&schoolName=' + searchText;
+        //     }
+        //
+        //     ajax.getJson(url).then(function (data) {
+        //         var tmplate = getTemplate("#schoolListT");
+        //         var arrText = dot.template(tmplate);
+        //         var html = arrText(data);
+        //         $('.school-ul-dialog').html(html);
+        //         UI.pager().create('pager', function (page) {
+        //             schoolList(page);
+        //         });
+        //         $(".attribute").iCheck({
+        //             checkboxClass: 'icheckbox_square-blue',
+        //             radioClass: 'iradio_square-blue'
+        //         });
+        //     }).always(function () {
+        //         $.processError(arguments);
+        //     });
+        // }
+
+        function aKeyConfigOrg() {
             var html = '<input type="checkbox" class="attribute" data-type="hasPrimarySchool">是否有小学\
                     <input type="checkbox" class="attribute" data-type="hasJuniorHighSchool">是否有初中\
                     <input type="checkbox" class="attribute" data-type="hasHighSchool">是否有高中';
             var myDialog = dialog.myModal({size: 'sm', body: html}, function () {
-                var AKeyConfigSchoolDTO = {
-                    schoolCode: $('#curSchoolCode').val(),
+                var AKeyConfigOrgDTO = {
+                    orgCode: getOrgCode(),
                     hasPrimarySchool: false,
                     hasJuniorHighSchool: false,
                     hasHighSchool: false
@@ -186,13 +276,13 @@
                     return;
                 }
                 $(".attribute:checked").each(function () {
-                    AKeyConfigSchoolDTO[$(this).data('type')] = true;
+                    AKeyConfigOrgDTO[$(this).data('type')] = true;
                 });
-                var url = 'school/a-key-config-school';
-                ajax.postJson(url, AKeyConfigSchoolDTO).then(function (data) {
+                var url = 'orgconfig/a-key-config-org';
+                ajax.postJson(url, AKeyConfigOrgDTO).then(function (data) {
                     myDialog.close();
                     dialog.prompt("初始化成功");
-                    loadSchoolConfig();
+                    loadOrgConfig();
                 }).always(function () {
                     $.processError(arguments);
                 });
@@ -204,8 +294,12 @@
             });
         }
 
-        function getSchoolCode() {
-            return $('#curSchoolCode').val();
+        function getOrgCode() {
+            return $('#curOrgCode').val();
+        }
+
+        function getOrgDeep() {
+            return parseInt($('#curOrgDeep').val());
         }
 
 
@@ -218,8 +312,8 @@
                     return;
                 }
                 var subject = {name: subjectName};
-                var schoolCode = getSchoolCode();
-                var url = 'school/subject/add/' + schoolCode;
+                var schoolCode = getOrgCode();
+                var url = 'orgconfig/subject/add/' + schoolCode;
                 ajax.postJson(url, subject).then(function (data) {
                     var newSubject = data.subject;
                     subjects.push(newSubject);
@@ -235,8 +329,8 @@
         function delSubject($this) {
             var subjectId = $this.data('id');
             dialog.confirm("删除科目", "你确定要删除改科目吗?删除该科目可能会影响其他业务模块", function () {
-                var schoolCode = getSchoolCode();
-                var url = 'school/subject/del/' + schoolCode + '/' + subjectId;
+                var schoolCode = getOrgCode();
+                var url = 'orgconfig/subject/del/' + schoolCode + '/' + subjectId;
                 ajax.postJson(url).then(function (data) {
                     $.each(subjects, function (idx, item) {
                         if (item.id === subjectId) {
@@ -270,7 +364,7 @@
                     $('#gradeNameMsg').text('新增的年级必须选择');
                     return;
                 }
-                var url = 'school/grade/add/' + getSchoolCode();
+                var url = 'orgconfig/grade/add/' + getOrgCode();
                 ajax.postJson(url, addGradeNames).then(function (data) {
                     var newGrades = data.grades;
                     grades = grades.concat(newGrades);
@@ -292,8 +386,8 @@
         function delGrade($this) {
             var gradeId = $this.data('id');
             dialog.confirm("删除年级", "你确定要删除该年级吗?删除该年级同时删除该年级的班级，可能会影响其他业务模块", function () {
-                var schoolCode = getSchoolCode();
-                var url = 'school/grade/del/' + schoolCode + '/' + gradeId;
+                var schoolCode = getOrgCode();
+                var url = 'orgconfig/grade/del/' + schoolCode + '/' + gradeId;
                 ajax.postJson(url).then(function (data) {
                     $.each(grades, function (idx, item) {
                         if (item.id === gradeId) {
@@ -344,12 +438,12 @@
                         return;
                     }
                 }
-                AddClazzDTO.schoolCode = getSchoolCode();
+                AddClazzDTO.schoolCode = getOrgCode();
                 AddClazzDTO.gradeId = gradeId;
 
                 console.log(AddClazzDTO)
 
-                var url = 'school/clazz/add';
+                var url = 'orgconfig/clazz/add';
                 ajax.postJson(url, AddClazzDTO).then(function (data) {
                     var newClazzes = data.clazzes;
                     clazzes = clazzes.concat(newClazzes);
@@ -393,8 +487,8 @@
         function delClazz($this) {
             var clazzCode = $this.data('id');
             dialog.confirm("删除班级", "你确定要删除该年级吗?删除该班级可能会影响其他业务模块", function () {
-                var schoolCode = getSchoolCode();
-                var url = 'school/clazz/del/' + schoolCode + '/' + clazzCode;
+                var schoolCode = getOrgCode();
+                var url = 'orgconfig/clazz/del/' + schoolCode + '/' + clazzCode;
                 ajax.postJson(url).then(function (data) {
                     $.each(clazzes, function (idx, item) {
                         if (item.code === clazzCode) {
@@ -411,8 +505,8 @@
         }
 
         function initEvent() {
-            $('.my-tool-bar').on('click', '.a-key-config-school', function () {
-                aKeyConfigSchool();
+            $('.my-tool-bar').on('click', '.a-key-config-org', function () {
+                aKeyConfigOrg();
             });
             $('.subject-panel').on('click', '.add-subject-btn', function () {
                 addSubject();
@@ -437,9 +531,9 @@
 
         return {
             render: function () {
-                user.userInfo('school');
+                user.userInfo('orgConfig');
                 loadUserSchool();
-                changeSchool();
+                changeOrg();
                 initEvent();
                 $('main').show();
             }

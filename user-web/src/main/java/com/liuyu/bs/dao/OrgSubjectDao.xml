@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.liuyu.bs.dao.SchoolSubjectDao">
+<mapper namespace="com.liuyu.bs.dao.OrgSubjectDao">
 
     <insert id="add" useGeneratedKeys="true" keyProperty="subject.id">
-        insert into b_school_subject(schoolCode,subjectName) values(#{code},#{subject.name})
+        insert into b_org_subject(orgCode,subjectName) values(#{code},#{subject.name})
     </insert>
     <insert id="adds">
-        insert into b_school_subject(schoolCode,subjectName) values
+        insert into b_org_subject(orgCode,subjectName) values
         <foreach collection="subjects" item="subject" index="index" separator=",">
             (#{code},#{subject.name})
         </foreach>
     </insert>
 
     <delete id="del">
-        delete from b_school_subject where id=#{id}
+        delete from b_org_subject where id=#{id}
     </delete>
 
     <select id="querySubjects" resultType="com.liuyu.bs.business.Subject">
-        select id,subjectName as name from b_school_subject where schoolCode=#{code}
+        select id,subjectName as name from b_org_subject where orgCode=#{code}
     </select>
 
 </mapper>

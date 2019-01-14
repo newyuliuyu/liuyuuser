@@ -1,0 +1,24 @@
+<script id="changeOrgDialogT" type="text/x-dot-template">
+    <nav>
+        <div class="nav nav-tabs">
+            {{~it.orgs:org:idx}}
+            <a class="nav-item nav-link {{=(idx==0)?'active':''}}" data-toggle="tab" href="#nav-{{=org.elementId}}" data-type="{{=org.elementId}}">{{=org.displayText}}</a>
+            {{~}}
+        </div>
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-province">
+            省市
+        </div>
+        <div class="tab-pane fade" id="nav-city">
+            地市
+        </div>
+        <div class="tab-pane fade" id="nav-county">
+            区县
+        </div>
+        <div class="tab-pane fade" id="nav-school">
+            学校
+        </div>
+    </div>
+</script>
+

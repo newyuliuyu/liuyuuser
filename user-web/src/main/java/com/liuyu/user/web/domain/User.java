@@ -1,5 +1,7 @@
 package com.liuyu.user.web.domain;
 
+import com.liuyu.bs.business.Org;
+import com.liuyu.bs.business.Teacher;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
@@ -32,6 +34,7 @@ public class User {
     private String password;
 
     private List<Role> roles;
+    private Teacher teacher;
 
     public String getRealName() {
         if (StringUtils.isEmpty(realName)) {
@@ -49,5 +52,12 @@ public class User {
             }
         }
         return false;
+    }
+
+    public Org queryOrg() {
+        if (teacher != null) {
+            return teacher.getOrg();
+        }
+        return Org.builder().code("-00000").name("空").deep(-2).parentCode("-00000").build();
     }
 }

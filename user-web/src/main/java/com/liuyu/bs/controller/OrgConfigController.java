@@ -1,19 +1,14 @@
 package com.liuyu.bs.controller;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.liuyu.bs.business.Clazz;
 import com.liuyu.bs.business.Grade;
-import com.liuyu.bs.business.School;
 import com.liuyu.bs.business.Subject;
-import com.liuyu.bs.service.SchoolService;
-import com.liuyu.bs.service.UserSchoolService;
+import com.liuyu.bs.service.OrgConfigService;
+import com.liuyu.bs.service.UserOrgService;
 import com.liuyu.common.mvc.ModelAndViewFactory;
 import com.liuyu.common.util.ClazzNameToNumber;
-import com.liuyu.common.util.HttpReqUtils;
 import com.liuyu.user.web.controller.BaseController;
-import com.liuyu.user.web.domain.User;
-import com.liuyu.user.web.dto.AKeyConfigSchoolDTO;
+import com.liuyu.user.web.dto.AKeyConfigOrgDTO;
 import com.liuyu.user.web.dto.AddClazzDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,93 +35,56 @@ import java.util.List;
  */
 @RestController
 @Slf4j
-@RequestMapping("/school")
-public class SchoolController extends BaseController {
+@RequestMapping("/orgconfig")
+public class OrgConfigController extends BaseController {
 
     @Autowired
-    private UserSchoolService userSchoolService;
+    private UserOrgService userOrgService;
 
     @Autowired
-    private SchoolService schoolService;
-
-    @RequestMapping("/user/school")
-    public ModelAndView querySchool(HttpServletRequest request,
-                                    HttpServletResponse response) throws Exception {
-        log.debug(this.getClass().getSimpleName() + ".querySchool");
-
-        User user = getUser();
-        School school = userSchoolService.queryUserSchool(user);
-        return ModelAndViewFactory.instance()
-                .with("school", school)
-                .build();
-    }
-
-    @RequestMapping("/schools")
-    public ModelAndView querySchools(HttpServletRequest request,
-                                     HttpServletResponse response) throws Exception {
-        log.debug(this.getClass().getSimpleName() + ".schools");
-        User user = getUser();
-        int pageNum = HttpReqUtils.getParamInt(request, "pageNum");
-        if (pageNum == 0) {
-            pageNum = 1;
-        }
-        int pageSize = HttpReqUtils.getParamInt(request, "pageSize");
-        if (pageSize == 0) {
-            pageSize = 10;
-        }
-
-        String schoolName = HttpReqUtils.getParamString(request, "schoolName");
-
-        PageHelper.startPage(pageNum, pageSize);
-        List<School> schools = userSchoolService.queryUserSchools(user, schoolName);
-        PageInfo<School> pageInfo = new PageInfo<>(schools);
-        return ModelAndViewFactory.instance()
-                .with("schools", schools)
-                .with("pageInfo", pageInfo)
-                .build();
-    }
+    private OrgConfigService orgConfigService;
 
 
-    @RequestMapping("/subjects/{schoolCode}")
-    public ModelAndView schoolSubjects(@PathVariable String schoolCode,
+    @RequestMapping("/subjects/{orgCode}")
+    public ModelAndView schoolSubjects(@PathVariable String orgCode,
                                        HttpServletRequest request,
                                        HttpServletResponse response) throws Exception {
         log.debug(this.getClass().getSimpleName() + ".schoolSubjects");
-        List<Subject> subjects = schoolService.querySubjects(schoolCode);
+        List<Subject> subjects = orgConfigService.querySubjects(orgCode);
         return ModelAndViewFactory.instance()
                 .with("subjects", subjects)
                 .build();
     }
 
-    @RequestMapping("/subject/add/{schoolCode}")
-    public ModelAndView schoolSubjectAdd(@PathVariable String schoolCode,
+    @RequestMapping("/subject/add/{orgCode}")
+    public ModelAndView schoolSubjectAdd(@PathVariable String orgCode,
                                          @RequestBody Subject subject,
                                          HttpServletRequest request,
                                          HttpServletResponse response) throws Exception {
         log.debug(this.getClass().getSimpleName() + ".schoolSubjectAdd");
-        subject = schoolService.addSubject(schoolCode, subject);
+        subject = orgConfigService.addSubject(orgCode, subject);
         return ModelAndViewFactory.instance()
                 .with("subject", subject)
                 .build();
     }
 
-    @RequestMapping("/subject/del/{schoolCode}/{subjectId}")
-    public ModelAndView schoolSubjectDel(@PathVariable String schoolCode,
+    @RequestMapping("/subject/del/{orgCode}/{subjectId}")
+    public ModelAndView schoolSubjectDel(@PathVariable String orgCode,
                                          @PathVariable long subjectId,
                                          HttpServletRequest request,
                                          HttpServletResponse response) throws Exception {
         log.debug(this.getClass().getSimpleName() + ".schoolSubjectDel");
-        schoolService.delSubject(subjectId);
+        orgConfigService.delSubject(subjectId);
         return ModelAndViewFactory.instance()
                 .build();
     }
 
-    @RequestMapping("/grades/{schoolCode}")
-    public ModelAndView schoolGrades(@PathVariable String schoolCode,
+    @RequestMapping("/grades/{orgCode}")
+    public ModelAndView schoolGrades(@PathVariable String orgCode,
                                      HttpServletRequest request,
                                      HttpServletResponse response) throws Exception {
         log.debug(this.getClass().getSimpleName() + ".schoolGrades");
-        List<Grade> grades = schoolService.queryGrade(schoolCode);
+        List<Grade> grades = orgConfigService.queryGrade(orgCode);
 
         grades.sort(Comparator.comparingInt(Grade::getLearnSegment).thenComparingInt(g -> ClazzNameToNumber.toNum(g.getName())));
         return ModelAndViewFactory.instance()
@@ -134,25 +92,25 @@ public class SchoolController extends BaseController {
                 .build();
     }
 
-    @RequestMapping("/grade/add/{schoolCode}")
-    public ModelAndView schoolGradeAdd(@PathVariable String schoolCode,
+    @RequestMapping("/grade/add/{orgCode}")
+    public ModelAndView schoolGradeAdd(@PathVariable String orgCode,
                                        @RequestBody List<String> gradeNames,
                                        HttpServletRequest request,
                                        HttpServletResponse response) throws Exception {
         log.debug(this.getClass().getSimpleName() + ".schoolGradeAdd");
-        List<Grade> grades = schoolService.addGrade(schoolCode, gradeNames);
+        List<Grade> grades = orgConfigService.addGrade(orgCode, gradeNames);
         return ModelAndViewFactory.instance()
                 .with("grades", grades)
                 .build();
     }
 
-    @RequestMapping("/grade/del/{schoolCode}/{gradeId}")
-    public ModelAndView schoolGradeDel(@PathVariable String schoolCode,
+    @RequestMapping("/grade/del/{orgCode}/{gradeId}")
+    public ModelAndView schoolGradeDel(@PathVariable String orgCode,
                                        @PathVariable long gradeId,
                                        HttpServletRequest request,
                                        HttpServletResponse response) throws Exception {
         log.debug(this.getClass().getSimpleName() + ".schoolGradeDel");
-        schoolService.delGrade(gradeId);
+        orgConfigService.delGrade(gradeId);
         return ModelAndViewFactory.instance()
                 .build();
     }
@@ -162,7 +120,7 @@ public class SchoolController extends BaseController {
                                       HttpServletRequest request,
                                       HttpServletResponse response) throws Exception {
         log.debug(this.getClass().getSimpleName() + ".schoolGrades");
-        List<Clazz> clazzes = schoolService.queryClazz(schoolCode);
+        List<Clazz> clazzes = orgConfigService.queryClazz(schoolCode);
         clazzes.sort(Comparator.comparingInt(c -> ClazzNameToNumber.toNum(c.getName())));
         return ModelAndViewFactory.instance()
                 .with("clazzes", clazzes)
@@ -175,7 +133,7 @@ public class SchoolController extends BaseController {
                                        HttpServletResponse response) throws Exception {
         log.debug(this.getClass().getSimpleName() + ".schoolClazzAdd");
         List<Clazz> clazzes = addClazzDTO.converToClazz();
-        schoolService.addClazzes(clazzes);
+        orgConfigService.addClazzes(clazzes);
         return ModelAndViewFactory.instance()
                 .with("clazzes", clazzes)
                 .build();
@@ -188,20 +146,20 @@ public class SchoolController extends BaseController {
                                        HttpServletResponse response) throws Exception {
         log.debug(this.getClass().getSimpleName() + ".schoolClazzDel");
 
-        schoolService.delClazz(clazzCode);
+        orgConfigService.delClazz(clazzCode);
         return ModelAndViewFactory.instance()
                 .build();
     }
 
-    @RequestMapping("/a-key-config-school")
-    public ModelAndView aKeyConfigSchool(@RequestBody AKeyConfigSchoolDTO aKeyConfigSchoolDTO,
+    @RequestMapping("/a-key-config-org")
+    public ModelAndView aKeyConfigOrg(@RequestBody AKeyConfigOrgDTO aKeyConfigOrgDTO,
                                          HttpServletRequest request,
                                          HttpServletResponse response) throws Exception {
-        log.debug(this.getClass().getSimpleName() + ".aKeyConfigSchool");
-        schoolService.aKeyConfigSchool(aKeyConfigSchoolDTO.getSchoolCode(),
-                aKeyConfigSchoolDTO.isHasPrimarySchool(),
-                aKeyConfigSchoolDTO.isHasJuniorHighSchool(),
-                aKeyConfigSchoolDTO.isHasHighSchool());
+        log.debug(this.getClass().getSimpleName() + ".aKeyConfigOrg");
+        orgConfigService.aKeyConfigOrg(aKeyConfigOrgDTO.getOrgCode(),
+                aKeyConfigOrgDTO.isHasPrimarySchool(),
+                aKeyConfigOrgDTO.isHasJuniorHighSchool(),
+                aKeyConfigOrgDTO.isHasHighSchool());
         return ModelAndViewFactory.instance()
                 .build();
     }

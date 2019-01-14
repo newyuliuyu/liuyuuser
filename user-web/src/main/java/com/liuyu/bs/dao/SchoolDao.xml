@@ -25,6 +25,30 @@
             <when test="codeOwnerDeep==1">
                 AND province.code=#{code}
             </when>
+            <when test="codeOwnerDeep==-2">
+                AND 1 != 1
+            </when>
         </choose>
+    </select>
+    <select id="getSchoolOwnerCounty" resultType="com.liuyu.bs.business.County">
+        SELECT county.id,county.code,county.name,county.deep,county.parentCode
+        FROM b_org school
+        LEFT JOIN b_org county ON school.parentCode=county.code
+        WHERE school.code=${code}
+    </select>
+    <select id="getSchoolOwnerCity" resultType="com.liuyu.bs.business.City">
+        SELECT city.id,city.code,city.name,city.deep,city.parentCode
+        FROM b_org school
+        LEFT JOIN b_org county ON school.parentCode=county.code
+        LEFT JOIN b_org city ON county.parentCode=city.code
+        WHERE school.code=${code}
+    </select>
+    <select id="getSchoolOwnerProvince" resultType="com.liuyu.bs.business.Province">
+        SELECT province.id,province.code,province.name,province.deep,province.parentCode
+        FROM b_org school
+        LEFT JOIN b_org county ON school.parentCode=county.code
+        LEFT JOIN b_org city ON county.parentCode=city.code
+        LEFT JOIN b_org province ON city.parentCode=province.code
+        WHERE school.code=${code}
     </select>
 </mapper>

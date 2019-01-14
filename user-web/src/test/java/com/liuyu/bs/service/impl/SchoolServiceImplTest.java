@@ -1,7 +1,7 @@
 package com.liuyu.bs.service.impl;
 
 import com.liuyu.bs.business.Subject;
-import com.liuyu.bs.service.SchoolService;
+import com.liuyu.bs.service.OrgConfigService;
 import com.liuyu.user.web.UserWebApplication;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -26,7 +26,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class SchoolServiceImplTest {
 
     @Autowired
-    SchoolService schoolService;
+    OrgConfigService schoolService;
 
     @Test
     public void addSubject() throws Exception {

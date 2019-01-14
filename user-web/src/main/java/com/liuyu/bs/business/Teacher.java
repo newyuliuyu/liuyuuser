@@ -1,7 +1,6 @@
 package com.liuyu.bs.business;
 
 import lombok.*;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * ClassName: Teacher <br/>
@@ -13,7 +12,6 @@ import lombok.extern.slf4j.Slf4j;
  * @version v1.0
  * @since JDK 1.7+
  */
-@Slf4j
 @Getter
 @Setter
 @NoArgsConstructor
@@ -21,6 +19,8 @@ import lombok.extern.slf4j.Slf4j;
 @Builder
 public class Teacher {
     private Long id;
+    private String code;
     private String name;
-    private Org organization;
+    private String account;
+    private Org org;
 }

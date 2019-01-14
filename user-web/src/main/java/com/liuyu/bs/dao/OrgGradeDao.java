@@ -1,6 +1,6 @@
 package com.liuyu.bs.dao;
 
-import com.liuyu.bs.business.Subject;
+import com.liuyu.bs.business.Grade;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -17,13 +17,13 @@ import java.util.List;
  * @since JDK 1.7+
  */
 @Repository
-public interface SchoolSubjectDao {
+public interface OrgGradeDao {
 
-    int add(@Param("code") String code, @Param("subject") Subject subject);
+    int add(@Param("code") String code, @Param("grade") Grade garde);
 
-    int adds(@Param("code") String code, @Param("subjects") List<Subject> subjects);
+    int adds(@Param("code") String code, @Param("grades") List<Grade> gardes);
 
-    int del(@Param("id") long subjectId);
+    int del(@Param("id") long gradeId);
 
-    List<Subject> querySubjects(@Param("code") String code);
+    List<Grade> queryGrades(@Param("code") String code);
 }

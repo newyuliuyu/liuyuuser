@@ -45,7 +45,7 @@
         a.grade as gradeId,c.name as gradeName,c.enterSchoolYear,c.learnSegment
         from b_clazz a
         left join b_org b on a.schoolCode=b.code and b.deep=4
-        left join b_school_grade c on a.grade=c.id
+        left join b_org_grade c on a.grade=c.id
         where a.code=#{code}
     </select>
 
@@ -55,7 +55,7 @@
         a.grade as gradeId,c.name as gradeName,c.enterSchoolYear,c.learnSegment
         from b_clazz a
         left join b_org b on a.schoolCode=b.code and b.deep=4
-        left join b_school_grade c on a.grade=c.id
+        left join b_org_grade c on a.grade=c.id
         where a.schoolCode=#{schoolCode}
     </select>
 
