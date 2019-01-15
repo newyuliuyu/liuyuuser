@@ -55,7 +55,6 @@
 
                 var myDialog = dialog.myModal({size: size, body: html}, function () {
                     var user = getUser();
-                    console.log(user)
                     if (user != false) {
                         var url = '/user/add';
                         ajax.postJson(url, user).then(function (data) {
@@ -272,7 +271,7 @@
                 var oldValue = $this.data('oldValue') + '';
                 if (userName && userName !== '' && userName !== oldValue) {
                     beginValidate($this);
-                    var url = '/user/validate/1/' + userName;
+                    var url = '/user/validate/1?value=' + userName;
                     ajax.postJson(url).then(function (data) {
                         if (data.exist) {
                             validate($this, false)
@@ -295,7 +294,7 @@
                         validate($this, false);
                         $("#phone+small").text('不是合法的手机号');
                     } else {
-                        var url = '/user/validate/2/' + phone;
+                        var url = '/user/validate/2?value=' + phone;
                         ajax.postJson(url).then(function (data) {
                             if (data.exist) {
                                 validate($this, false)
@@ -324,7 +323,7 @@
                         validate($this, false)
                         $("#email+small").text('不是合法的邮箱地址');
                     } else {
-                        var url = '/user/validate/3/' + email;
+                        var url = '/user/validate/3?value=' + email;
                         ajax.postJson(url).then(function (data) {
                             if (data.exist) {
                                 validate($this, false)
@@ -387,12 +386,12 @@
             var hasError = false;
 
             user.id = $("#id").val().trim();
-            user.userName = $("#userName").val().trim();
-            if (!user.userName || user.userName === '') {
+            user.account = $("#userName").val().trim();
+            if (!user.account || user.account === '') {
                 $("#userName+small").text("不能为空");
                 hasError = true;
             }
-            user.realName = $("#realName").val().trim();
+            user.name = $("#realName").val().trim();
             user.phone = $("#phone").val().trim();
             user.email = $("#email").val().trim();
 

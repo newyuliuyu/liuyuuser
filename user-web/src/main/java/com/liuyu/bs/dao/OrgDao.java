@@ -29,6 +29,8 @@ public interface OrgDao {
 
     Org get(@Param("code") String code);
 
+    Org getWithName(@Param("name") String name);
+
     List<Org> queryChild(@Param("parentCode") String parentCode);
 
     List<Org> queryOrgWithNotSchool();

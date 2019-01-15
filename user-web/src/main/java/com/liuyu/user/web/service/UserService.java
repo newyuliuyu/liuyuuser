@@ -24,7 +24,11 @@ public interface UserService {
 
     void add(User user);
 
+    void adds(List<User> users);
+
     void update(User user);
+
+    void updateWithAccount(User user);
 
     void updatePwd(User user);
 
@@ -32,9 +36,12 @@ public interface UserService {
 
     void delete(User user);
 
-    User get(String username);
+    void delete(String account);
 
-    User queryWithUserName(String userName);
+
+    User get(String account);
+
+    User queryWithAccount(String account);
 
     User queryWithPhone(String phone);
 

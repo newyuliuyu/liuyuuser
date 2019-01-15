@@ -27,8 +27,8 @@ import java.util.List;
 @EqualsAndHashCode(of = {"id"})
 public class User {
     private Long id;
-    private String userName;
-    private String realName = "";
+    private String account;
+    private String name = "";
     private String phone = "";
     private String email = "";
     private String password;
@@ -36,11 +36,11 @@ public class User {
     private List<Role> roles;
     private Teacher teacher;
 
-    public String getRealName() {
-        if (StringUtils.isEmpty(realName)) {
-            return userName;
+    public String getName() {
+        if (StringUtils.isEmpty(name)) {
+            return account;
         }
-        return realName;
+        return name;
     }
 
     public boolean isSuperAdmin() {

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.liuyu.bs.dao.TeacherDao">
+    <insert id="add">
+        insert into b_teacher(code,name,orgCode,account,phone,email)
+        values (#{teacher.code},#{teacher.name},#{teacher.org.code},#{teacher.account},#{teacher.phone},#{teacher.email})
+    </insert>
+    <insert id="adds">
+        insert into b_teacher(code,name,orgCode,account,phone,email)
+        values
+        <foreach collection="teachers" item="teacher" index="index" separator=",">
+            (#{teacher.code},#{teacher.name},#{teacher.org.code},#{teacher.account},#{teacher.phone},#{teacher.email})
+        </foreach>
+    </insert>
+
+    <update id="update">
+        update b_teacher a
+        set name=#{teacher.name},
+            phone=#{teacher.phone},
+            email=#{teacher.email}
+        where a.code=#{teacher.code}
+    </update>
+
+    <delete id="delete">
+        delete from b_teacher where code=#{teacher.code}
+    </delete>
+
+    <select id="get" resultType="com.liuyu.bs.business.Teacher">
+        select code,name,orgCode,account,phone,email
+        from b_teacher a
+        where a.code=#{code}
+    </select>
+
+    <select id="queryListWithOrgCode" resultType="com.liuyu.bs.business.Teacher">
+        select code,name,orgCode,account,phone,email
+        from b_teacher a
+        where a.orgCode=#{orgCode}
+        <if test="name != null">
+            AND a.name like #{name}
+        </if>
+    </select>
+
+</mapper>

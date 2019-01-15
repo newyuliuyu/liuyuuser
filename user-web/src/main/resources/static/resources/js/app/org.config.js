@@ -233,32 +233,6 @@
 
         }
 
-        // function schoolList(page) {
-        //     var url = 'orgconfig/schools?1=1';
-        //     if ($.isPlainObject(page)) {
-        //         url += '&pageNum=' + page.pageNum + "&pageSize=" + page.pageSize;
-        //     }
-        //     var searchText = $('#searchText').val();
-        //     if (searchText && searchText !== '') {
-        //         url += '&schoolName=' + searchText;
-        //     }
-        //
-        //     ajax.getJson(url).then(function (data) {
-        //         var tmplate = getTemplate("#schoolListT");
-        //         var arrText = dot.template(tmplate);
-        //         var html = arrText(data);
-        //         $('.school-ul-dialog').html(html);
-        //         UI.pager().create('pager', function (page) {
-        //             schoolList(page);
-        //         });
-        //         $(".attribute").iCheck({
-        //             checkboxClass: 'icheckbox_square-blue',
-        //             radioClass: 'iradio_square-blue'
-        //         });
-        //     }).always(function () {
-        //         $.processError(arguments);
-        //     });
-        // }
 
         function aKeyConfigOrg() {
             var html = '<input type="checkbox" class="attribute" data-type="hasPrimarySchool">是否有小学\

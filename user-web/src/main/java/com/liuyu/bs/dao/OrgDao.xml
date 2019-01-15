@@ -30,6 +30,11 @@
         from b_org a
         where a.code=#{code}
     </select>
+    <select id="getWithName" resultType="com.liuyu.bs.business.Org">
+        select id,code,name,deep,parentCode
+        from b_org a
+        where a.name=#{name}
+    </select>
 
     <select id="queryOrgWithNotSchool" resultType="com.liuyu.bs.business.Org">
         <!--<![CDATA[-->

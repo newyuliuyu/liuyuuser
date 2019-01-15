@@ -35,7 +35,7 @@ public class UserDaoTest {
         IdGenerator id = new IdGenerator();
 
         for (int i = 0; i < 1000; i++) {
-            User user = User.builder().id(id.nextId()).userName(name()).realName("").email("").phone("").password("111").build();
+            User user = User.builder().id(id.nextId()).account(name()).name("").email("").phone("").password("111").build();
             userDao.add(user);
         }
 

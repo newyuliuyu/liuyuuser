@@ -2,13 +2,13 @@
 DROP TABLE IF EXISTS u_user;
 CREATE TABLE u_user(
 	id BIGINT NOT NULL COMMENT'用户ID，由程序来维护ID的生成',
-	username VARCHAR(20) NOT NULL COMMENT'用户名',
+	account VARCHAR(20) NOT NULL COMMENT'用户名',
 	phone VARCHAR(11) DEFAULT '' COMMENT'电话',
 	email VARCHAR(30) DEFAULT '' COMMENT'邮箱',
 	pwd VARCHAR(20) NOT NULL COMMENT'密码 md5加密',
-	realname VARCHAR(50) DEFAULT '' COMMENT'用户的真实名字',
+	name VARCHAR(50) DEFAULT '' COMMENT'用户的真实名字',
 	PRIMARY KEY id(id),
-	KEY username(username),
+	unique KEY account(account),
 	KEY phone(phone),
 	KEY email(email)
 ) ENGINE=INNODB COMMENT'用户表';

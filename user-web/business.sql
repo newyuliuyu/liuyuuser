@@ -65,6 +65,9 @@ CREATE TABLE b_teacher(
   orgCode VARCHAR(32) NOT NULL COMMENT'机构代码',
   `name` VARCHAR(32) NOT NULL COMMENT'教师名称',
   `code` VARCHAR(32) NOT NULL COMMENT'教师唯一编码',
-  account varchar(32) not null comment'教师帐号'
-  PRIMARY KEY id(id)
+  account VARCHAR(32) NOT NULL COMMENT'教师帐号',
+  phone VARCHAR(11) DEFAULT '' COMMENT'电话',
+	email VARCHAR(30) DEFAULT '' COMMENT'邮箱',
+  PRIMARY KEY id(id),
+  KEY CODE(CODE)
 ) ENGINE=INNODB COMMENT'教师表';

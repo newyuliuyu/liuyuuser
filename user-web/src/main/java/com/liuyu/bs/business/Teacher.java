@@ -22,5 +22,7 @@ public class Teacher {
     private String code;
     private String name;
     private String account;
+    private String phone;
+    private String email;
     private Org org;
 }

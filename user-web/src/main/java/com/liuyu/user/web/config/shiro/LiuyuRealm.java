@@ -60,7 +60,7 @@ public class LiuyuRealm extends AuthorizingRealm {
         // 参数 ：credentials ---> 密码
         Object credentials = "123456";
 //        principal, credentials, realName
-        SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(user, user.getPassword(), user.getRealName());
+        SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(user, user.getPassword(), user.getName());
 //        simpleAuthenticationInfo.setCredentials(userId);
 //        simpleAuthenticationInfo.setPrincipals(principalCollection);
         return simpleAuthenticationInfo;

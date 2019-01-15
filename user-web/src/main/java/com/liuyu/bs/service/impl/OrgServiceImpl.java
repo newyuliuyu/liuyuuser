@@ -55,6 +55,11 @@ public class OrgServiceImpl implements OrgService {
     }
 
     @Override
+    public Org getWithName(String name) {
+        return orgDao.getWithName(name);
+    }
+
+    @Override
     public List<Org> queryOrgWithNotSchool() {
         return orgDao.queryOrgWithNotSchool();
     }

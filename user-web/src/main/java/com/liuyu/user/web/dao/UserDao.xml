@@ -3,70 +3,81 @@
 <mapper namespace="com.liuyu.user.web.dao.UserDao">
 
     <insert id="add">
-		insert into u_user(id,username,phone,email,pwd,realname)
-		values(#{user.id},#{user.userName},#{user.phone},#{user.email},#{user.password},#{user.realName})
+		insert into u_user(id,account,phone,email,pwd,name)
+		values(#{user.id},#{user.account},#{user.phone},#{user.email},#{user.password},#{user.name})
 	</insert>
     <!--如果需要自动生成的ID返回，必须使用list-->
     <insert id="addUsers">
-        insert into u_user(id,username,phone,email,pwd,realname)
+        insert into u_user(id,account,phone,email,pwd,name)
         values
         <foreach collection="users" item="user" index="index" separator=",">
-            (#{user.id},#{user.userName},#{user.phone},#{user.email},#{user.password},#{user.realName})
+            (#{user.id},#{user.account},#{user.phone},#{user.email},#{user.password},#{user.name})
         </foreach>
     </insert>
 
     <update id="updateUser">
 		update u_user a
-		set a.realname=#{user.realName},a.phone=#{user.phone},a.email=#{user.email}
+		set a.name=#{user.name},a.phone=#{user.phone},a.email=#{user.email}
 		where a.id=#{user.id}
+	</update>
+    <update id="updateUserWithAccount">
+		update u_user a
+		set a.name=#{user.name},a.phone=#{user.phone},a.email=#{user.email}
+		where a.account=#{user.account}
 	</update>
 
     <update id="updatePassword">
 		update u_user a set a.pwd=#{user.password} where a.id=#{user.id}
 	</update>
+    <update id="updatePasswordWithAccount">
+		update u_user a set a.pwd=#{user.password} where a.account=#{user.account}
+	</update>
 
     <delete id="delUser">
 		delete from u_user where id=#{user.id}
 	</delete>
+    <delete id="delUserWithAccount">
+		delete from u_user where account=#{user.account}
+	</delete>
 
     <select id="get" resultType="com.liuyu.user.web.domain.User">
-		select id,username,phone,email,realname
+		select id,account,phone,email,name
 		from u_user a
 		where a.id=#{userId}
 	</select>
 
-    <select id="queryWithUserName" resultType="com.liuyu.user.web.domain.User">
-		select id,username,phone,email,pwd as password,realname
+    <select id="queryWithAccount" resultType="com.liuyu.user.web.domain.User">
+		select id,account,phone,email,pwd as password,name
 		from u_user a
-		where a.username=#{userName}
+		where a.account=#{account}
 	</select>
     <select id="queryWithPhone" resultType="com.liuyu.user.web.domain.User">
-		select id,username,phone,email,pwd as password,realname
+		select id,account,phone,email,pwd as password,name
 		from u_user a
-		where a.username=#{phone}
+		where a.phone=#{phone}
 	</select>
     <select id="queryWithEmail" resultType="com.liuyu.user.web.domain.User">
-		select id,username,phone,email,pwd as password,realname
+		select id,account,phone,email,pwd as password,name
 		from u_user a
-		where a.username=#{email}
+		where a.email=#{email}
 	</select>
 
     <select id="queryUsers" resultType="com.liuyu.user.web.domain.User">
-		select id,username,phone,email,realname
-		from u_user a
-		<if test="searchText != null ">
-			where username like #{searchText}
-			or phone like #{searchText}
-			or email like #{searchText}
-			or realname like #{searchText}
-		</if>
-	</select>
-
-    <select id="queryUsersWithUserNames" resultType="com.liuyu.user.web.domain.User">
-        select id,username,phone,email,pwd as password,realname
+        select id,account,phone,email,name
         from u_user a
-        where a.username in
-        <foreach collection="usernames" index="index" item="item" open="(" separator="," close=")">
+        <if test="searchText != null ">
+            where account like #{searchText}
+            or phone like #{searchText}
+            or email like #{searchText}
+            or name like #{searchText}
+        </if>
+    </select>
+
+    <select id="queryUsersWithAccounts" resultType="com.liuyu.user.web.domain.User">
+        select id,account,phone,email,pwd as password,name
+        from u_user a
+        where a.account in
+        <foreach collection="accounts" index="index" item="item" open="(" separator="," close=")">
             #{item}
         </foreach>
     </select>

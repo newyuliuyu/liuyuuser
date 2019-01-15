@@ -24,13 +24,19 @@ public interface UserDao {
 
     int updateUser(@Param("user") User user);
 
+    int updateUserWithAccount(@Param("user") User user);
+
     int updatePassword(@Param("user") User user);
+
+    int updatePasswordWithAccount(@Param("user") User user);
 
     int delUser(@Param("user") User user);
 
+    int delUserWithAccount(@Param("user") User user);
+
     User get(@Param("userId") long userId);
 
-    User queryWithUserName(@Param("userName") String userName);
+    User queryWithAccount(@Param("account") String account);
 
     User queryWithPhone(@Param("phone") String userName);
 
@@ -38,5 +44,5 @@ public interface UserDao {
 
     List<User> queryUsers(@Param("searchText") String searchText);
 
-    List<User> queryUsersWithUserNames(@Param("usernames") String[] usernames);
+    List<User> queryUsersWithAccounts(@Param("accounts") String[] accounts);
 }

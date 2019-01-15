@@ -17,7 +17,7 @@
         var userHTML = '<div class="user-panel">\
                 <span><img style="width: 2.5rem;"\
                   src="#"></span>\
-                <span>{{=it.realName}}</span>\
+                <span>{{=it.name}}</span>\
                 <i class="icon-angle-down"></i>\
                 <div class="menu">\
                 <!--<span>这是一个三角形，应用的时候删除该文字</span>-->\

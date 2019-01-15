@@ -17,6 +17,7 @@ import java.util.List;
 public interface OrgService {
 
     void add(Org org);
+
     void adds(List<Org> orgs);
 
     void update(Org org);
@@ -24,6 +25,8 @@ public interface OrgService {
     void delete(Org org);
 
     Org get(String code);
+
+    Org getWithName(String name);
 
     List<Org> queryOrgWithNotSchool();
 

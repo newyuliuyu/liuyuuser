@@ -152,16 +152,15 @@ public class UserController extends BaseController {
         return ModelAndViewFactory.instance().build();
     }
 
-    @RequestMapping("/validate/{type}/{value}")
+    @RequestMapping("/validate/{type}")
     public ModelAndView validate(@PathVariable int type,
-                                 @PathVariable String value,
                                  HttpServletRequest request,
                                  HttpServletResponse response) throws Exception {
         log.debug("获取资源....UserController.validate");
-
+        String value = HttpReqUtils.getParamString(request, "value");
         User user = null;
         if (type == 1) {
-            user = userService.queryWithUserName(value);
+            user = userService.queryWithAccount(value);
         } else if (type == 2) {
             user = userService.queryWithPhone(value);
         } else if (type == 3) {

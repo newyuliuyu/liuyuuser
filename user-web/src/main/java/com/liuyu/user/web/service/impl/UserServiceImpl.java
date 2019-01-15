@@ -69,9 +69,19 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void add(User user) {
+        setUserIdAndDefualtPassword(user);
+        userDao.add(user);
+    }
+
+    private void setUserIdAndDefualtPassword(User user) {
         user.setId(idGenerator.nextId());
         user.setPassword("12345678");
-        userDao.add(user);
+    }
+
+    @Override
+    public void adds(List<User> users) {
+        users.forEach(user -> setUserIdAndDefualtPassword(user));
+        userDao.addUsers(users);
     }
 
     @Override
@@ -84,6 +94,11 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void updatePwd(User user) {
         userDao.updatePassword(user);
+    }
+
+    @Override
+    public void updateWithAccount(User user) {
+        userDao.updateUserWithAccount(user);
     }
 
     @Override
@@ -102,25 +117,32 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User get(String username) {
+    @Transactional
+    public void delete(String account) {
+        User user = queryWithAccount(account);
+        delete(user);
+    }
+
+    @Override
+    public User get(String account) {
 
         User user = null;
-        user = userDao.queryWithUserName(username);
+        user = userDao.queryWithAccount(account);
         if (user == null) {
-            user = userDao.queryWithPhone(username);
+            user = userDao.queryWithPhone(account);
         }
         if (user == null) {
-            user = userDao.queryWithPhone(username);
+            user = userDao.queryWithPhone(account);
         }
         if (user == null) {
-            log.warn("使用{}查找用户没有", username);
+            log.warn("使用{}查找用户没有", account);
         }
         return user;
     }
 
     @Override
-    public User queryWithUserName(String userName) {
-        return userDao.queryWithUserName(userName);
+    public User queryWithAccount(String account) {
+        return userDao.queryWithAccount(account);
     }
 
     @Override
