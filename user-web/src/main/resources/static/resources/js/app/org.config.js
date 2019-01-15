@@ -15,7 +15,8 @@
         'css!style/app',
         'loading',
         'ztree',
-        'icheck'
+        'icheck',
+        'js/app/selecte.org'
     ];
     define(models, function ($, ajax, user, dot, dialog, menu, UI, tmpl) {
 
@@ -118,119 +119,6 @@
             var arrText = dot.template(tmplate);
             var html = arrText(dataset);
             $('.panel-content').html(html);
-        }
-
-
-        function loadUserSchool() {
-            var url = 'org/user-org';
-            ajax.getJson(url).then(function (data) {
-                // var school = data.school;
-                // $('.school-name-label').text(school.name);
-                // $('#curSchoolCode').val(school.code);
-                var org = data.org;
-                $('.org-name-label').text(org.name);
-                $('#curOrgCode').val(org.code);
-                $('#curOrgDeep').val(org.deep);
-                loadOrgConfig();
-            }).always(function () {
-                $.processError(arguments);
-            });
-        }
-
-        function changeOrg() {
-
-            $('.change-school-btn').click(function () {
-                var url = 'user/res/query/org-menu';
-                ajax.getJson(url).then(function (data) {
-                    var dataset = {};
-                    dataset.orgs = data.reses;
-                    var tmplate = getTemplate('#selecteSchoolDialogT');
-                    var arrText = dot.template(tmplate);
-                    var html = arrText(dataset);
-                    var myDialog = dialog.myModal({size: getSize(), body: html}, function () {
-                        var selecteOrg = $('.org-radio:checked');
-                        if (selecteOrg.size() > 0) {
-                            $('.org-name-label').text(selecteOrg.data('name'));
-                            $('#curOrgCode').val(selecteOrg.val());
-                            $('#curOrgDeep').val(selecteOrg.data('deep'));
-                            loadOrgConfig();
-                        }
-                        myDialog.close();
-                    });
-                    listUserOrgs();
-                    $('#searchBtn').click(function () {
-                        listUserOrgs();
-                    });
-                    $('.org-nav-list').on('click', 'a', function () {
-                        var type = $(this).data('type');
-                        var deep = getOrgNavDeep(type);
-                        listUserOrgs(undefined, deep, type);
-                    });
-                }).always(function () {
-                    $.processError(arguments);
-                });
-            });
-        }
-
-        function getOrgNavDeep(type) {
-            if (!type) {
-                type = $('.org-nav-list a.active').data('type');
-            }
-            var deep = 0;
-            if (type === 'province') {
-                deep = 1;
-            } else if (type === 'city') {
-                deep = 2;
-            } else if (type === 'county') {
-                deep = 3;
-            } else if (type === 'school') {
-                deep = 4;
-            }
-            return deep;
-        }
-
-        function getOrgNavType() {
-            var type = $('.org-nav-list a.active').data('type');
-            return type;
-        }
-
-        function listUserOrgs(page, deep, type) {
-            if (!deep) {
-                var deep = getOrgNavDeep();
-                if (deep === 0) {
-                    dialog.alter("没有类型不能进行切换");
-                    return;
-                }
-            }
-            if (!type) {
-                type = getOrgNavType();
-            }
-
-
-            var url = 'org/user-orgs/' + deep + '?1=1';
-            if ($.isPlainObject(page)) {
-                url += '&pageNum=' + page.pageNum + "&pageSize=" + page.pageSize;
-            }
-            var searchText = $('#searchText').val();
-            if (searchText && searchText !== '') {
-                url += '&search=' + searchText;
-            }
-            ajax.getJson(url).then(function (data) {
-                var tmplate = getTemplate("#orgListT");
-                var arrText = dot.template(tmplate);
-                var html = arrText(data);
-                $('#nav-' + type).html(html);
-                UI.pager().create('pager', function (page) {
-                    listUserOrgs(page);
-                });
-                $(".attribute").iCheck({
-                    checkboxClass: 'icheckbox_square-blue',
-                    radioClass: 'iradio_square-blue'
-                });
-            }).always(function () {
-                $.processError(arguments);
-            });
-
         }
 
 
@@ -501,13 +389,20 @@
             $('.clazz-panel').on('click', '.del-subject', function () {
                 delClazz($(this))
             });
+
+            $('.org-div').selectOrg({
+                load: function () {
+                    loadOrgConfig();
+                },
+                click: function () {
+                    loadOrgConfig();
+                }
+            });
         }
 
         return {
             render: function () {
                 user.userInfo('orgConfig');
-                loadUserSchool();
-                changeOrg();
                 initEvent();
                 $('main').show();
             }

@@ -3,6 +3,7 @@ package com.liuyu.user.web.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.liuyu.common.mvc.ModelAndViewFactory;
 import com.liuyu.common.util.HttpReqUtils;
 import com.liuyu.user.web.domain.Resource;
@@ -23,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Map;
 
 /**
  * ClassName: ResourceController <br/>
@@ -87,7 +89,17 @@ public class RoleController extends BaseController {
         PageHelper.startPage(pageNum, pageSize);
         List<Role> roles = roleService.queryRoles();
         PageInfo<Role> pageInfo = new PageInfo<>(roles);
-        return ModelAndViewFactory.instance().with("pageInfo", pageInfo).with("roles", roles).build();
+        RoleType[] roleTypes = RoleType.values();
+        Map<String, RoleTypeDTO> roleTypeMap = Maps.newHashMap();
+        for (RoleType roleType : roleTypes) {
+            RoleTypeDTO roleTypeDTO = RoleTypeDTO.converFor(roleType);
+            roleTypeMap.put(roleTypeDTO.getCode(), roleTypeDTO);
+        }
+        return ModelAndViewFactory.instance()
+                .with("pageInfo", pageInfo)
+                .with("roles", roles)
+                .with("roleTypeMap", roleTypeMap)
+                .build();
     }
 
     @RequestMapping("/list/{level}")
@@ -105,7 +117,9 @@ public class RoleController extends BaseController {
             }
         }
         List<Role> roles = roleService.queryRoles(roleTypeList);
-        return ModelAndViewFactory.instance().with("roles", roles).build();
+        return ModelAndViewFactory.instance()
+                .with("roles", roles)
+                .build();
     }
 
     @RequestMapping("/roletype/{level}")
