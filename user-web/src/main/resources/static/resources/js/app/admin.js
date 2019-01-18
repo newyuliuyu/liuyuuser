@@ -7,7 +7,7 @@
         'dialog',
         'js/app/menu',
         'js/commons/UI',
-        'text!tmpl/school-maseter-tmpl.html',
+        'text!tmpl/admin-tmpl.html',
         'js/app/selecte.teacher',
         'bootstrap',
         'css!style/bootstrap/bootstrap.min',
@@ -44,18 +44,17 @@
             return parseInt($('#curOrgDeep').val());
         }
 
-        function showSchoolMaster(role) {
-            var url = 'schoolmaseter/list/' + getCurOrgCode() + '/' + role.id;
+        function showAdmin() {
+            var url = 'admin/list/' + getCurOrgCode() + '/' + role.id;
             ajax.getJson(url).then(function (data) {
+                console.log(data)
                 var dataset = {role: role};
-                dataset.schoolMaseters = data.schoolMaseters;
-                var template = getTemplate('#schoolMaseterUIT');
+                dataset.admins = data.admins;
+                var template = getTemplate('#adminUIT');
                 var arrText = dot.template(template);
                 var html = arrText(dataset);
                 $('.layout-center').html(html);
                 initEvent();
-
-
             }).always(function () {
                 $.processError(arguments);
             });
@@ -63,7 +62,7 @@
         }
 
         function initEvent() {
-            $('.school-maseter-list').on('click', '.delete-teacher', function () {
+            $('.admin-list').on('click', '.delete-teacher', function () {
                 var $teacher = $(this).parents('.teacher');
                 var teacher = {};
                 teacher.name = $teacher.data('name');
@@ -73,14 +72,14 @@
                 var org = {};
                 org.code = getCurOrgCode();
 
-                var schoolMaseter = {};
-                schoolMaseter.roleId = role.id;
-                schoolMaseter.org = org;
-                schoolMaseter.teacher = teacher;
+                var admin = {};
+                admin.roleId = role.id;
+                admin.org = org;
+                admin.teacher = teacher;
 
                 dialog.confirm('解除绑定', '你确定要解除该老师的权限吗?', function () {
-                    var url = 'schoolmaseter/delete-school-maseter';
-                    ajax.postJson(url, schoolMaseter).then(function (data) {
+                    var url = 'admin/delete-admin';
+                    ajax.postJson(url, admin).then(function (data) {
                         dialog.prompt('删除成功');
                         $teacher.remove();
                     }).always(function () {
@@ -88,9 +87,8 @@
                     });
                 });
 
-
             });
-            $('.add-role-teacher').on('click', function () {
+            $('.add-role-admin').on('click', function () {
                 selecteTeacherDialog.showTeacherDialog({
                     checkbox: true,
                     disable: function (teacher) {
@@ -99,29 +97,28 @@
                     click: function (teachers) {
                         var org = {};
                         org.code = getCurOrgCode();
-                        var schoolMaseters = [];
+                        var admins = [];
                         $.each(teachers, function (idx, item) {
-                            var schoolMaseter = {};
-                            schoolMaseter.roleId = role.id;
-                            schoolMaseter.org = org;
-                            schoolMaseter.teacher = item;
-                            schoolMaseters.push(schoolMaseter);
+                            var admin = {};
+                            admin.roleId = role.id;
+                            admin.org = org;
+                            admin.teacher = item;
+                            admins.push(admin);
                         });
-                        var url = 'schoolmaseter/add-school-maseter';
-                        ajax.postJson(url, schoolMaseters).then(function (data) {
+                        var url = 'admin/add-admin';
+                        ajax.postJson(url, admins).then(function (data) {
                             dialog.prompt('保存成功');
-                            $.each(schoolMaseters, function (idx, item) {
+                            $.each(admins, function (idx, item) {
                                 var html = '<span class="sm-' + item.teacher.code + ' teacher teacher-name update-teacher"' +
                                     '              data-code="' + item.teacher.code + '"' +
                                     '              data-account="' + item.teacher.account + '"' +
                                     '              data-name="' + item.teacher.name + '">' + item.teacher.name +
                                     '<span class="delete-teacher">x</span></span>';
-                                $('.school-maseter-list').append(html);
+                                $('.admin-list').append(html);
                             })
                         }).always(function () {
                             $.processError(arguments);
                         });
-                        console.log(schoolMaseters)
                     }
                 });
             });
@@ -136,7 +133,7 @@
                 role = {};
                 role.id = $role.data('roleId');
                 role.name = $role.data('roleName');
-                showSchoolMaster(role);
+                showAdmin();
             }
         }
     });

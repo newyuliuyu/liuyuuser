@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.liuyu.bs.dao.AdminDao">
+
+    <insert id="add">
+      insert into b_teacher_admin(orgCode,teacherCode,roleId)
+      values(#{admin.org.code},#{admin.teacher.code},#{admin.roleId})
+    </insert>
+    <insert id="adds">
+        insert into b_teacher_admin(orgCode,teacherCode,roleId)
+        values
+        <foreach collection="admins" item="admin" index="index" separator=",">
+            (#{admin.org.code},#{admin.teacher.code},#{admin.roleId})
+        </foreach>
+    </insert>
+
+    <delete id="delete">
+        delete from b_teacher_admin
+         where teacherCode=#{admin.teacher.code}
+         and orgCode=#{admin.org.code}
+         and roleId=#{admin.roleId}
+    </delete>
+
+    <resultMap id="adminMap" type="com.liuyu.bs.business.Admin">
+        <id property="id" column="id"/>
+        <result property="roleId" column="roleId"/>
+        <association property="teacher" javaType="com.liuyu.bs.business.Teacher">
+            <id property="code" column="teacherCode"/>
+            <result property="name" column="teacherName"/>
+            <result property="account" column="account"/>
+        </association>
+        <association property="org" javaType="com.liuyu.bs.business.Org">
+            <id property="code" column="orgCode"/>
+            <result property="name" column="orgName"/>
+        </association>
+    </resultMap>
+    <select id="queryAdmin" resultMap="adminMap">
+        select a.id,
+        a.orgCode,
+        b.name as orgName,
+        a.teacherCode,
+        e.name as teacherName,
+        e.account
+        from b_teacher_admin a
+        left join b_org b on a.orgCode=b.code
+        left join b_teacher e on a.teacherCode=e.code
+        where a.orgCode=#{orgCode} and a.roleId=#{roleId}
+    </select>
+
+</mapper>

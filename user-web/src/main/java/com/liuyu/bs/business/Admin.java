@@ -21,4 +21,5 @@ public class Admin {
     private int id;
     private Teacher teacher;
     private Org org;
+    private long roleId;
 }

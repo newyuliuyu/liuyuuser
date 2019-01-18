@@ -12,6 +12,7 @@
         'js/app/school.maseter',
         'js/app/LP.group.leader',
         'js/app/grade.maseter',
+        'js/app/admin',
         'bootstrap',
         'css!style/bootstrap/bootstrap.min',
         'bootstrapSelect',
@@ -28,7 +29,8 @@
                              selecteTeacherDialog,
                              schoolMaseter,
                              LPGroupLeader,
-                             gradeMaster) {
+                             gradeMaster,
+                             admin) {
 
         function getSize() {
             var h = window.getClientHeight() - 200;
@@ -179,11 +181,16 @@
             gradeMaster.init();
         }
 
+        function initAdmin() {
+            admin.init();
+        }
+
         var roleTypes = {
             teachTeacher: teachTeacher,
             schoolMaseter: initSchoolMaseter,
             LPGroupLeader: initLPGroupLeader,
-            gradeMaseter: initGradeMaseter
+            gradeMaseter: initGradeMaseter,
+            Admin: initAdmin
         };
 
         function loadSettingContent() {
