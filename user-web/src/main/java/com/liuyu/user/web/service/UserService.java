@@ -20,7 +20,10 @@ public interface UserService {
 
     boolean addRoleWithAccount(String account, long roleId);
 
+    boolean addRoleWithAccounts(List<String> accounts, long roleId);
+
     boolean deleteRoleWithAccount(String account, long roleId);
+
 
     void saveUserRoles(User user, List<Role> roles);
 

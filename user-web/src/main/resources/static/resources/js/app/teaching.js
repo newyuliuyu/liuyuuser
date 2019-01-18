@@ -10,6 +10,7 @@
         'text!tmpl/teaching-tmpl.html',
         'js/app/selecte.teacher',
         'js/app/school.maseter',
+        'js/app/LP.group.leader',
         'bootstrap',
         'css!style/bootstrap/bootstrap.min',
         'bootstrapSelect',
@@ -24,7 +25,8 @@
     ];
     define(models, function ($, ajax, user, dot, dialog, menu, UI, tmpl,
                              selecteTeacherDialog,
-                             schoolMaseter) {
+                             schoolMaseter,
+                             LPGroupLeader) {
 
         function getSize() {
             var h = window.getClientHeight() - 200;
@@ -168,7 +170,7 @@
         }
 
         function initLPGroupLeader() {
-            $('.layout-center').html('');
+            LPGroupLeader.init();
         }
 
         function initGradeMaseter() {
@@ -258,7 +260,7 @@
             var url = 'teaching/rmove-teacher-permis';
             ajax.postJson(url, RemoveTeacherPermisDTO).then(function (data) {
                 dialog.prompt('解除权限成功');
-                $td.html('<label class="teacher add-teacher" style="">添加老师+</label>')
+                $td.html('<label class="teaching-teacher teacher add-teacher" style="">添加老师+</label>')
             }).always(function () {
                 $.processError(arguments);
             });
@@ -267,10 +269,10 @@
 
         function initEvent() {
 
-            $('.layout-center').on('click', '.teaching-teacher', function () {
+            $('.layout-center').on('click', '.teaching-teacher-table .teaching-teacher', function () {
                 selectTeacher($(this));
             });
-            $('.layout-center').on('click', '.teaching-teacher .delete-teacher', function (e) {
+            $('.layout-center').on('click', '.teaching-teacher-table .teaching-teacher .delete-teacher', function (e) {
                 var $this = $(this);
                 dialog.confirm('解除绑定', '你确定要解除该老师的权限吗?', function () {
                     removeTeacherPermis($this);

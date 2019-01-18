@@ -14,6 +14,13 @@
             (#{userId},#{item.id})
         </foreach>
     </insert>
+    <insert id="addUsersRole">
+        insert into u_user_x_role(userId,roleId)
+        values
+        <foreach collection="users" item="item" index="index" separator=",">
+            (#{item.id},#{role.id})
+        </foreach>
+    </insert>
 
     <insert id="addUserRole">
         insert into u_user_x_role(userId,roleId)
@@ -60,12 +67,12 @@
 		from u_role a
 	</select>
     <select id="queryRolesWithLevel" resultType="com.liuyu.user.web.domain.Role">
-		select id,a.name,systembuiltin as systemBuiltin,a.roleType
-		from u_role a
-		where a.roleType in
-		<foreach collection="roleTypes" index="index" item="item" open="(" separator="," close=")">
-			#{item}
-		</foreach>
-	</select>
+        select id,a.name,systembuiltin as systemBuiltin,a.roleType
+        from u_role a
+        where a.roleType in
+        <foreach collection="roleTypes" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
 
 </mapper>

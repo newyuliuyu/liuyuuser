@@ -58,6 +58,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
+    public boolean addRoleWithAccounts(List<String> accounts, long roleId) {
+        List<User> users = userDao.queryUsersWithAccounts(accounts.toArray(new String[0]));
+        Role newRole = Role.builder().id(roleId).build();
+        roleDao.addUsersRole(users, newRole);
+        return true;
+    }
+
+    @Override
+    @Transactional
     public boolean deleteRoleWithAccount(String account, long roleId) {
         User user = queryWithAccount(account);
         roleDao.delUserRole(user.getId(), roleId);

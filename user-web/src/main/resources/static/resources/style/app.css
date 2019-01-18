@@ -319,6 +319,7 @@ a.btn-outline-primary:hover {
 .teacher {
     cursor: pointer;
     color: #cccccc;
+    margin: 5px;
 }
 
 .teacher.teacher-name {

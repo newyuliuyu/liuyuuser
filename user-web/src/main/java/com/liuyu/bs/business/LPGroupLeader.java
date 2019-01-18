@@ -1,5 +1,7 @@
 package com.liuyu.bs.business;
 
+import lombok.*;
+
 /**
  * ClassName: LPGroupLeader <br/>
  * Function:  ADD FUNCTION. <br/>
@@ -10,6 +12,11 @@ package com.liuyu.bs.business;
  * @version v1.0
  * @since JDK 1.7+
  */
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class LPGroupLeader {
     private int id;
     private Teacher teacher;

@@ -2,6 +2,7 @@ package com.liuyu.user.web.dao;
 
 import com.liuyu.user.web.domain.Role;
 import com.liuyu.user.web.domain.RoleType;
+import com.liuyu.user.web.domain.User;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -30,6 +31,8 @@ public interface RoleDao {
     int addUserRoles(@Param("userId") long userId, @Param("roles") List<Role> roles);
 
     int addUserRole(@Param("userId") long userId, @Param("role") Role role);
+
+    int addUsersRole(@Param("users") List<User> users, @Param("role") Role role);
 
     int delUserRoles(@Param("userId") long userId);
 
