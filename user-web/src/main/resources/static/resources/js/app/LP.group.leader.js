@@ -104,7 +104,7 @@
                     }
                 });
             });
-            $('.lpgroupleader-table').on('click', '.delete-teacher', function () {
+            $('.lpgroupleader-table').on('click', '.delete-teacher', function (e) {
                 var $this = $(this);
                 dialog.confirm('解除绑定', '你确定要解除该老师的权限吗?', function () {
                     removeTeacherPermis($this);

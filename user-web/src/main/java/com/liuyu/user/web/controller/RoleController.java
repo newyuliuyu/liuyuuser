@@ -115,6 +115,7 @@ public class RoleController extends BaseController {
                     roleTypeList.add(roleType);
                 }
             }
+            roleTypeList.add(RoleType.Admin);
         }
         List<Role> roles = roleService.queryRoles(roleTypeList);
         return ModelAndViewFactory.instance()

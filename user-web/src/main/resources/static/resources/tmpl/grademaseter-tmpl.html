@@ -1,4 +1,36 @@
+<script id="gradeMaseterUIT" type="text/x-dot-template">
+    <table class="grademaseter-table table table-bordered">
+        <thead class="thead-dark">
+        <tr>
+            <th style="width: 80px;">学段</th>
+            <th style="width: 80px;">年级</th>
+            <th style="">人员</th>
 
-<script id="teacherListT" type="text/x-dot-template">
+        </tr>
+        </thead>
+        <tbody>
+        {{~it.grades:grade:idx}}
+        <tr>
+            <td>{{? grade.learnSegment===1}}
+                小学
+                {{?? grade.learnSegment===2}}
+                初中
+                {{?? grade.learnSegment===3}}
+                高中
+                {{?}}
+            </td>
+            <td>{{=grade.name}}</td>
+            <td class="cell-{{=grade.id}}"
+                data-grade-id="{{=grade.id}}">
+                <div style="display: flex;flex-direction: column;">
+                    <div class="show-teacher" style="border-bottom: 1px solid;text-align: center;">
 
+                    </div>
+                    <div class="add-teacher" style="text-align: center;color: #cccccc;cursor: pointer;">添加老师+</div>
+                </div>
+            </td>
+        </tr>
+        {{~}}
+        </tbody>
+    </table>
 </script>

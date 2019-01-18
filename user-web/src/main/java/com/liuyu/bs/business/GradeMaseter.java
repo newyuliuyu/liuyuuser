@@ -17,7 +17,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class GradeMaster {
+public class GradeMaseter {
     private int id;
     private Teacher teacher;
     private Org org;

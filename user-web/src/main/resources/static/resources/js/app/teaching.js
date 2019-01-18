@@ -11,6 +11,7 @@
         'js/app/selecte.teacher',
         'js/app/school.maseter',
         'js/app/LP.group.leader',
+        'js/app/grade.maseter',
         'bootstrap',
         'css!style/bootstrap/bootstrap.min',
         'bootstrapSelect',
@@ -26,7 +27,8 @@
     define(models, function ($, ajax, user, dot, dialog, menu, UI, tmpl,
                              selecteTeacherDialog,
                              schoolMaseter,
-                             LPGroupLeader) {
+                             LPGroupLeader,
+                             gradeMaster) {
 
         function getSize() {
             var h = window.getClientHeight() - 200;
@@ -174,7 +176,7 @@
         }
 
         function initGradeMaseter() {
-            $('.layout-center').html('');
+            gradeMaster.init();
         }
 
         var roleTypes = {

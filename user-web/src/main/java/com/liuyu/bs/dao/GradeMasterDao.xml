@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.liuyu.bs.dao.GradeMasterDao">
+<mapper namespace="com.liuyu.bs.dao.GradeMaseterDao">
 
     <insert id="add">
       insert into b_gradeMaster(orgCode,teacherCode,gradeId)
-      values(#{gradeMaster.org.code},#{gradeMaster.teacher.code},#{gradeMaster.grade.id})
+      values(#{gradeMaseter.org.code},#{gradeMaseter.teacher.code},#{gradeMaseter.grade.id})
     </insert>
     <insert id="adds">
         insert into b_gradeMaster(orgCode,teacherCode,gradeId)
         values
-        <foreach collection="gradeMasters" item="gradeMaster" index="index" separator=",">
-            (#{gradeMaster.org.code},#{gradeMaster.teacher.code},#{gradeMaster.grade.id})
+        <foreach collection="gradeMaseters" item="gradeMaseter" index="index" separator=",">
+            (#{gradeMaseter.org.code},#{gradeMaseter.teacher.code},#{gradeMaseter.grade.id})
         </foreach>
     </insert>
 
     <delete id="delete">
         delete from b_gradeMaster
-         where teacherCode=#{gradeMaster.teacher.code}
-         and gradeId=#{gradeMaster.grade.id}
+         where teacherCode=#{gradeMaseter.teacher.code}
+         and gradeId=#{gradeMaseter.grade.id}
     </delete>
 
-    <resultMap id="gradeMasterMap" type="com.liuyu.bs.business.GradeMaster">
+    <resultMap id="gradeMaseterMap" type="com.liuyu.bs.business.GradeMaseter">
         <id property="id" column="id"/>
         <association property="teacher" javaType="com.liuyu.bs.business.Teacher">
             <id property="code" column="teacherCode"/>
@@ -38,9 +38,8 @@
             <result property="learnSegment" column="learnSegment"/>
         </association>
     </resultMap>
-    <select id="queryClazzMaster" resultMap="gradeMasterMap">
+    <select id="queryGradeMaseter" resultMap="gradeMaseterMap">
         select a.id,
-        a.subjectName,
         a.orgCode,
         b.name as orgName,
         a.teacherCode,
@@ -50,11 +49,16 @@
         c.name as gradeName,
         c.enterSchoolYear,
         c.learnSegment
-        from b_teaching_teacher a
+        from b_gradeMaster a
         left join b_org b on a.orgCode=b.code
         left join  b_org_grade c on a.gradeId=c.id
         left join b_teacher e on a.teacherCode=e.code
         where a.orgCode=#{orgCode}
+    </select>
+    <select id="teacheHasGradeMaseter" resultType="boolean">
+        select count(1)
+        from b_gradeMaster a
+        where a.teacherCode=#{teacherCode}
     </select>
 
 </mapper>
