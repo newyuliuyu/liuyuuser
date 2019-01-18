@@ -134,6 +134,9 @@ public class RoleController extends BaseController {
                 roleTypeDTOs.add(RoleTypeDTO.converFor(roleType));
             }
         }
+        if (level != -1) {
+            roleTypeDTOs.add(RoleTypeDTO.converFor(RoleType.Admin));
+        }
         return ModelAndViewFactory.instance().with("roleTypes", roleTypeDTOs).build();
     }
 

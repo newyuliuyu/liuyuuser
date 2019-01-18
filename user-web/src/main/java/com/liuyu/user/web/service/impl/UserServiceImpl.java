@@ -46,6 +46,24 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private IdGenerator idGenerator;
 
+
+    @Override
+    @Transactional
+    public boolean addRoleWithAccount(String account, long roleId) {
+        User user = queryWithAccount(account);
+        Role newRole = Role.builder().id(roleId).build();
+        roleDao.addUserRole(user.getId(), newRole);
+        return true;
+    }
+
+    @Override
+    @Transactional
+    public boolean deleteRoleWithAccount(String account, long roleId) {
+        User user = queryWithAccount(account);
+        roleDao.delUserRole(user.getId(), roleId);
+        return true;
+    }
+
     @Override
     @Transactional
     public void saveUserRoles(User user, List<Role> roles) {

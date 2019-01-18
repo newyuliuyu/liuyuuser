@@ -11,7 +11,8 @@
             'home': window.app.rootPath + 'home.html',
             'org': window.app.rootPath + 'org/org.html',
             'orgConfig': window.app.rootPath + 'org/config/org-config.html',
-            'teacher': window.app.rootPath + 'teacher/teacher.html'
+            'teacher': window.app.rootPath + 'teacher/teacher.html',
+            'teaching': window.app.rootPath + 'teaching/teaching.html'
         };
 
         var userHTML = '<div class="user-panel">\

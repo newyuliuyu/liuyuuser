@@ -121,7 +121,7 @@ public class OrgConfigController extends BaseController {
                                       HttpServletResponse response) throws Exception {
         log.debug(this.getClass().getSimpleName() + ".schoolGrades");
         List<Clazz> clazzes = orgConfigService.queryClazz(schoolCode);
-        clazzes.sort(Comparator.comparingInt(c -> ClazzNameToNumber.toNum(c.getName())));
+        clazzes.sort(Comparator.comparingInt((Clazz c) -> c.isTeachClazz() ? 1 : 0).thenComparingInt(c -> ClazzNameToNumber.toNum(c.getName())));
         return ModelAndViewFactory.instance()
                 .with("clazzes", clazzes)
                 .build();
@@ -153,8 +153,8 @@ public class OrgConfigController extends BaseController {
 
     @RequestMapping("/a-key-config-org")
     public ModelAndView aKeyConfigOrg(@RequestBody AKeyConfigOrgDTO aKeyConfigOrgDTO,
-                                         HttpServletRequest request,
-                                         HttpServletResponse response) throws Exception {
+                                      HttpServletRequest request,
+                                      HttpServletResponse response) throws Exception {
         log.debug(this.getClass().getSimpleName() + ".aKeyConfigOrg");
         orgConfigService.aKeyConfigOrg(aKeyConfigOrgDTO.getOrgCode(),
                 aKeyConfigOrgDTO.isHasPrimarySchool(),

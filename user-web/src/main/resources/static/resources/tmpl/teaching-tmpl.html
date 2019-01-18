@@ -1,0 +1,71 @@
+<script id="roleListT" type="text/x-dot-template">
+    {{? it.isSchool}}
+    <label class="label-btn active" data-role-type="teachTeacher">任课老师</label>
+    {{?}}
+    {{~it.roles:role:idx}}
+    {{? role.roleType !== 'teacher' && role.roleType !== 'clazzMaseter' }}
+    <label class="label-btn {{=(!it.isSchool && idx==0)?'active':''}}"
+           data-role-type="{{=role.roleType}}"
+           data-role-id="{{=role.id}}"
+           data-role-name="{{=role.name}}">{{=role.name}}</label>
+    {{?}}
+    {{~}}
+</script>
+<script id="teachTeacherT" type="text/x-dot-template">
+    <nav>
+        <div class="nav nav-tabs">
+            {{~it.grades:grade:idx}}
+            <a class="nav-item nav-link {{=(idx==0)?'active':''}}"
+               data-toggle="tab"
+               href="#nav-{{=grade.id}}">{{=grade.name}}</a>
+            {{~}}
+        </div>
+    </nav>
+    <div class="tab-content">
+        {{~it.grades:grade:idx}}
+        <div class="tab-pane fade show {{=(idx==0)?'active':''}}" id="nav-{{=grade.id}}">
+            <table class="table table-bordered">
+                <thead class="thead-dark">
+                <tr>
+                    <th style="width: 100px;">班级</th>
+                    <th>班主任</th>
+                    {{~it.subjects:subject:idx2}}
+                    <th>{{=subject.name}}</th>
+                    {{~}}
+                </tr>
+                </thead>
+                <tbody>
+                {{~it.gradeClazzMap[grade.id]:clazz:idx3}}
+                <tr>
+                    <td>
+                        {{=clazz.name}}
+                        {{?clazz.teachClazz}}
+                        <br/>(教学班-{{=clazz.subjectName}})
+                        {{?}}
+                    </td>
+                    <td class="cell-bzr-{{=grade.id}}-{{=clazz.code}}"
+                        data-grade-id="{{=grade.id}}"
+                        data-clazz-code="{{=clazz.code}}"
+                        data-clazzmaster="true">
+                        <label class="teaching-teacher teacher add-teacher">添加老师+</label>
+                    </td>
+                    {{~it.subjects:subject:idx2}}
+                    <td class="cell-{{=grade.id}}-{{=subject.name}}-{{=clazz.code}}"
+                        data-grade-id="{{=grade.id}}"
+                        data-subject-name="{{=subject.name}}"
+                        data-clazz-code="{{=clazz.code}}"
+                        data-clazzmaster="false">
+                        <label class="teaching-teacher teacher add-teacher" style="">添加老师+</label>
+                    </td>
+                    {{~}}
+                </tr>
+                {{~}}
+                </tbody>
+            </table>
+        </div>
+        {{~}}
+    </div>
+</script>
+
+
+

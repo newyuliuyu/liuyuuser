@@ -1,9 +1,11 @@
 package com.liuyu.user.web;
 
 import com.google.common.collect.Lists;
+import com.liuyu.bs.business.Clazz;
 import com.liuyu.bs.business.Org;
 import com.liuyu.bs.business.OrgHelper;
 import com.liuyu.bs.business.School;
+import com.liuyu.common.util.ClazzNameToNumber;
 import freemarker.cache.StringTemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -12,6 +14,7 @@ import org.junit.Test;
 
 import java.io.StringWriter;
 import java.text.MessageFormat;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,6 +72,29 @@ public class APITest {
 
         School school = OrgHelper.converTo(org, School.class);
         System.out.println();
+    }
+
+    @Test
+    public void listSort() throws Exception {
+        List<Clazz> clazzes = Lists.newArrayList();
+        clazzes.add(Clazz.builder().name("1班").teachClazz(false).build());
+        clazzes.add(Clazz.builder().name("3班").teachClazz(false).build());
+        clazzes.add(Clazz.builder().name("3班").teachClazz(true).build());
+        clazzes.add(Clazz.builder().name("1班").teachClazz(true).build());
+        clazzes.add(Clazz.builder().name("2班").teachClazz(false).build());
+        clazzes.add(Clazz.builder().name("5班").teachClazz(false).build());
+
+        clazzes.sort(Comparator.comparingInt((Clazz c) -> c.isTeachClazz() ? 1 : 0).thenComparingInt(c -> ClazzNameToNumber.toNum(c.getName())));
+
+        clazzes.forEach(c -> System.out.println(c.getName() + "==" + c.isTeachClazz()));
+        System.out.println();
+    }
+    @Test
+    public void precision() throws Exception {
+        double a=1.4;
+        double b=1.4;
+
+        System.out.println(a+b);
     }
 
 }

@@ -239,13 +239,16 @@ a.btn-outline-primary:hover {
     cursor: pointer;
     text-align: center;
 }
-.subject-name-block:hover{
+
+.subject-name-block:hover {
     background-color: #c9cccf;
 }
-.subject-name-block:hover .del-subject{
+
+.subject-name-block:hover .del-subject {
     display: inline-block;
 }
-.subject-name-block .del-subject{
+
+.subject-name-block .del-subject {
     position: absolute;
     display: none;
     border: 1px solid #7d8084;
@@ -260,13 +263,77 @@ a.btn-outline-primary:hover {
     top: -20%;
 }
 
-
-.school-li{
+.school-li {
     list-style: none;
     margin-top: 10px;
 }
-.school-li li{
+
+.school-li li {
     padding: 5px 0px;
+}
+
+.layout-left-and-center {
+    display: flex;
+    position: relative;
+    height: 100%;
+}
+
+.layout-left {
+    border: 1px solid #d0d0d0;
+    border-radius: 3px;
+    width: 20%;
+    padding: 5px;
+    margin: 3px;
+}
+
+.layout-center {
+    border: 1px solid #d0d0d0;
+    flex-grow: 1;
+    padding: 5px;
+    margin: 3px;
+    border-radius: 3px;
+}
+
+.label-btn {
+    color: #1d2124;
+    background-color: #ffffff;
+    border: 1px solid #ffffff;
+    text-align: center;
+    padding: 5px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.label-btn:hover {
+    color: #007bff;
+    border: 1px solid #007bff;
+    border-radius: 3px;
+}
+
+.label-btn.active {
+    background-color: #c9cccf;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.teacher {
+    cursor: pointer;
+    color: #cccccc;
+}
+
+.teacher.teacher-name {
+    color: #000000;
+}
+
+.delete-teacher {
+    display: inline-block;
+    border: 1px solid rebeccapurple;
+    border-radius: 50%;
+    width: 20px;
+    height: 21px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 12px;
 }
 
 /***************上传按钮********************/

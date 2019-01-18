@@ -1,0 +1,38 @@
+<script id="selectTeacherT" type="text/x-dot-template">
+    <div style="padding: 0px 30px;">
+        <div class="input-group">
+            <input type="text" id="searchText" class="form-control" placeholder="">
+            <div class="input-group-append">
+                <button id="searchBtn" class="btn btn-outline-secondary  icon-search" type="button">
+                    搜索
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="teacher-list"></div>
+
+</script>
+<script id="teacherListT" type="text/x-dot-template">
+    <ul class="school-li">
+        {{~it.teachers:item:index}}
+        <li><input type="{{=it.checkbox?'checkbox':'radio'}}" class="attribute teacher-radio"  name="teacher"
+                   data-name="{{=item.name}}"
+                   data-code="{{=item.code}}"
+                   data-account="{{=item.account}}" {{=it.disable(item)?'disabled':''}}>&nbsp;&nbsp;&nbsp;{{=item.name}}
+        </li>
+        {{~}}
+    </ul>
+    <div class="row noMargin" style="margin: 0px;">
+        <div class="col-xl-12 pager-container pagination">
+            <div id="teacherPager" class="pager" style="margin:0;text-align:left;width: 100%;">
+                <!--<div id="pager"  class="pager" style="margin-top: 20px; text-align: center;">-->
+                <input type="hidden" id="pageNum" value="{{=it.pageInfo.pageNum}}">
+                <input type="hidden" id="pageCount" value="{{=it.pageInfo.pages}}">
+                <input type="hidden" id="pageSize" value="{{=it.pageInfo.pageSize}}">
+                <input type="hidden" id="totalRows" value="{{=it.pageInfo.total}}">
+            </div>
+        </div>
+    </div>
+</script>
+
+
