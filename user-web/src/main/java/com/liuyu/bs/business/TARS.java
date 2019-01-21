@@ -7,6 +7,7 @@ import lombok.*;
  * Function:  ADD FUNCTION. <br/>
  * Reason:  ADD REASON(可选). <br/>
  * date: 19-1-16 下午2:33 <br/>
+ * 教研室主任
  *
  * @author liuyu
  * @version v1.0
@@ -22,4 +23,5 @@ public class TARS {
     private Teacher teacher;
     private Org org;
     private int learnSegment;
+    private Long roleId;
 }

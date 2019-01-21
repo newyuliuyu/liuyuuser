@@ -13,6 +13,9 @@
         'js/app/LP.group.leader',
         'js/app/grade.maseter',
         'js/app/admin',
+        'js/app/sfe',
+        'js/app/tars',
+        'js/app/researchstaff',
         'bootstrap',
         'css!style/bootstrap/bootstrap.min',
         'bootstrapSelect',
@@ -30,7 +33,7 @@
                              schoolMaseter,
                              LPGroupLeader,
                              gradeMaster,
-                             admin) {
+                             admin, sfe, tars, researchstaff) {
 
         function getSize() {
             var h = window.getClientHeight() - 200;
@@ -185,12 +188,27 @@
             admin.init();
         }
 
+        function initSFE() {
+            sfe.init();
+        }
+
+        function initTARS() {
+            tars.init();
+        }
+
+        function initResearchStaff() {
+            researchstaff.init();
+        }
+
         var roleTypes = {
             teachTeacher: teachTeacher,
             schoolMaseter: initSchoolMaseter,
             LPGroupLeader: initLPGroupLeader,
             gradeMaseter: initGradeMaseter,
-            Admin: initAdmin
+            Admin: initAdmin,
+            SFE: initSFE,
+            TARS: initTARS,
+            researchStaff: initResearchStaff
         };
 
         function loadSettingContent() {

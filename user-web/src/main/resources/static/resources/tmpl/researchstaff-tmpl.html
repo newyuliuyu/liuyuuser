@@ -1,0 +1,34 @@
+<script id="researchstaffUIT" type="text/x-dot-template">
+    <table class="researchStaff-table table table-bordered">
+        <thead class="thead-dark">
+        <tr>
+            <th style="width: 80px;">年级</th>
+            {{~it.subjects:subject:idx2}}
+            <th>{{=subject.name}}</th>
+            {{~}}
+        </tr>
+        </thead>
+        <tbody>
+        {{~it.grades:grade:idx}}
+        <tr>
+            <td>{{=grade.name}}</td>
+            {{~it.subjects:subject:idx2}}
+            <td class="cell-{{=grade.id}}-{{=subject.name}}"
+                data-grade-id="{{=grade.id}}"
+                data-subject-name="{{=subject.name}}">
+
+                <div style="display: flex;flex-direction: column;">
+                    <div class="show-teacher" style="border-bottom: 1px solid;text-align: center;">
+
+                    </div>
+                    <div class="add-teacher" style="text-align: center;color: #cccccc;cursor: pointer;">添加老师+</div>
+                </div>
+            </td>
+            {{~}}
+        </tr>
+        {{~}}
+        </tbody>
+    </table>
+</script>
+
+

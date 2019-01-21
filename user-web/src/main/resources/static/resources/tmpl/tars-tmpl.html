@@ -1,0 +1,27 @@
+<script id="tarsUIT" type="text/x-dot-template">
+    <table class="tars-table table table-bordered">
+        <thead class="thead-dark">
+        <tr>
+            <th style="width: 80px;">学段</th>
+            <th style="">教师</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{~it.learnSegments:item:idx}}
+        <tr>
+            <td>{{=item.name}}</td>
+            <td class="cell-{{=item.num}}" data-learn-segment="{{=item.num}}">
+                <div style="display: flex;flex-direction: column;">
+                    <div class="show-teacher" style="border-bottom: 1px solid;text-align: center;">
+
+                    </div>
+                    <div class="add-teacher" style="text-align: center;color: #cccccc;cursor: pointer;">添加老师+</div>
+                </div>
+            </td>
+        </tr>
+        {{~}}
+        </tbody>
+    </table>
+</script>
+
+

@@ -1,0 +1,16 @@
+<script id="sfeUIT" type="text/x-dot-template">
+    <div class="school-tool-bar container" style="padding: 15px;">
+        <a href="javascript:void(0);" class="add-role-sfe" style="font-size: 16px;font-weight: 800;">设置{{=it.role.name}}</a>
+    </div>
+    <div class="sfe-list">
+        {{~it.sfes:item:idx}}
+        <span class="sm-{{=item.teacher.code}} teacher teacher-name update-teacher"
+              data-code="{{=item.teacher.code}}"
+              data-account="{{=item.teacher.account}}"
+              data-name="{{=item.teacher.name}}">{{=item.teacher.name}}<span
+                class="delete-teacher">x</span></span>
+        {{~}}
+    </div>
+</script>
+
+

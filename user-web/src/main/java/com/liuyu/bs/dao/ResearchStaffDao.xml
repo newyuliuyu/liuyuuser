@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.liuyu.bs.dao.ResearchStaffDao">
+
+    <insert id="add">
+      insert into b_researchStaff(orgCode,teacherCode,roleId,gradeId,subjectName)
+      values(#{researchStaff.org.code},#{researchStaff.teacher.code},#{researchStaff.roleId},#{researchStaff.grade.id},#{researchStaff.subjectName})
+    </insert>
+    <insert id="adds">
+        insert into b_researchStaff(orgCode,teacherCode,roleId,gradeId,subjectName)
+        values
+        <foreach collection="researchStaffs" item="researchStaff" index="index" separator=",">
+            (#{researchStaff.org.code},#{researchStaff.teacher.code},#{researchStaff.roleId},#{researchStaff.grade.id},#{researchStaff.subjectName})
+        </foreach>
+    </insert>
+
+    <delete id="delete">
+        delete from b_researchStaff
+         where teacherCode=#{researchStaff.teacher.code}
+         and orgCode=#{researchStaff.org.code}
+         and gradeId=#{researchStaff.grade.id}
+         and subjectName=#{researchStaff.subjectName}
+         and roleId=#{researchStaff.roleId}
+    </delete>
+
+    <resultMap id="researchStaffMap" type="com.liuyu.bs.business.ResearchStaff">
+        <id property="id" column="id"/>
+        <result property="roleId" column="roleId"/>
+        <result property="subjectName" column="subjectName"/>
+        <association property="teacher" javaType="com.liuyu.bs.business.Teacher">
+            <id property="code" column="teacherCode"/>
+            <result property="name" column="teacherName"/>
+            <result property="account" column="account"/>
+        </association>
+        <association property="org" javaType="com.liuyu.bs.business.Org">
+            <id property="code" column="orgCode"/>
+            <result property="name" column="orgName"/>
+        </association>
+        <association property="grade" javaType="com.liuyu.bs.business.Grade">
+            <id property="id" column="gradeId"/>
+            <result property="name" column="gradeName"/>
+            <result property="enterSchoolYear" column="enterSchoolYear"/>
+            <result property="learnSegment" column="learnSegment"/>
+        </association>
+    </resultMap>
+    <select id="queryResearchStaff" resultMap="researchStaffMap">
+        select a.id,
+        a.subjectName,
+        a.orgCode,
+        b.name as orgName,
+        a.teacherCode,
+        e.name as teacherName,
+        e.account,
+        a.gradeId,
+        c.name as gradeName,
+        c.enterSchoolYear,
+        c.learnSegment
+        from b_researchStaff a
+        left join b_org b on a.orgCode=b.code
+        left join  b_org_grade c on a.gradeId=c.id
+        left join b_teacher e on a.teacherCode=e.code
+        where a.orgCode=#{orgCode} and a.roleId=#{roleId}
+    </select>
+    <select id="teacheHasResearchStaff" resultType="boolean">
+        select count(1)
+        from b_researchStaff a
+        where a.teacherCode=#{teacherCode} and a.roleId=#{roleId}
+        limit 1
+    </select>
+
+</mapper>
