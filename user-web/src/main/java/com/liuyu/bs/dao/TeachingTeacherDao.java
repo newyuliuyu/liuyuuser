@@ -25,6 +25,8 @@ public interface TeachingTeacherDao {
     int delete(@Param("teachingTeacher") TeachingTeacher teachingTeacher);
 
     List<TeachingTeacher> queryTeachingTeacher(@Param("orgCode") String orgCode);
+    List<TeachingTeacher> queryTeachingTeacherOfClazz(@Param("orgCode") String orgCode,
+                                                      @Param("clazzCode") String clazzCode);
 
     boolean teacheHasTeachingTeacher(@Param("teacherCode") String teacherCode);
 }

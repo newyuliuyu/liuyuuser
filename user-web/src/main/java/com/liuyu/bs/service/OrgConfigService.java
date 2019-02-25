@@ -28,19 +28,22 @@ public interface OrgConfigService {
 
     void delGrade(long gradeId);
 
+
     List<Grade> queryGrade(String code);
 
     List<Clazz> addClazzes(List<Clazz> clazzes);
 
     void delClazz(String clazzCode);
 
+    Clazz getClazz(String schoolCode, String name, String gradeName, String subjectName);
+
     List<Clazz> queryClazz(String code);
 
 
     void aKeyConfigOrg(String code,
-                          boolean hasPrimarySchool,
-                          boolean hasJuniorHighSchool,
-                          boolean hasHighSchool);
+                       boolean hasPrimarySchool,
+                       boolean hasJuniorHighSchool,
+                       boolean hasHighSchool);
 
 
 }

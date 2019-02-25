@@ -3,8 +3,6 @@ package com.liuyu.bs.business;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.List;
-
 /**
  * ClassName: Student <br/>
  * Function:  ADD FUNCTION. <br/>
@@ -22,10 +20,12 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class Student {
-    private String owenId;
-    private String code;
-    private String name;
+    private Long id;
     private School school;
+    private Grade grade;
     private Clazz clazz;
-    private List<TeachClazz> teachClazzes;
+    private String studentId;//学号
+    private String zkzh;//准考证号
+    private String name;//姓名
+    private String account;//帐号
 }

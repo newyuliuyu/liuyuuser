@@ -15,6 +15,7 @@ import java.util.List;
  * @since JDK 1.7+
  */
 public interface ClazzMasterService {
+    ClazzMaseter get(String orgCode,String clazzCode);
 
     List<ClazzMaseter> queryClazzMasters(String orgCode);
 }

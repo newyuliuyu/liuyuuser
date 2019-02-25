@@ -3,6 +3,7 @@ package com.liuyu.bs.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.liuyu.bs.business.Org;
+import com.liuyu.bs.business.OrgHelper;
 import com.liuyu.bs.business.SysConfig;
 import com.liuyu.bs.service.OrgService;
 import com.liuyu.bs.service.UserOrgService;
@@ -165,14 +166,17 @@ public class OrgController extends BaseController {
     }
 
 
-    @RequestMapping(value = "/user-org")
-    public ModelAndView userOrg(HttpServletRequest request,
+    @RequestMapping(value = "/user-org/{isSchool}")
+    public ModelAndView userOrg(@PathVariable boolean isSchool,
+                                HttpServletRequest request,
                                 HttpServletResponse response) throws Exception {
         log.debug("进入" + this.getClass().getSimpleName() + ".userOrg");
         User user = getUser();
 
         Org org = user.queryOrg();
-        if (org.getDeep() == -2) {
+        if (isSchool && !OrgHelper.isSchool(org)) {
+            org = userOrgService.getSchool(user);
+        } else if (org.getDeep() == -2) {
             if (user.isSuperAdmin()) {
                 org = userOrgService.getSchool(user);
             } else {

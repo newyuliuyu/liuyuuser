@@ -104,5 +104,29 @@ public class TeachingController extends BaseController {
                 .build();
     }
 
+    @RequestMapping("/get/clazz/clazzmaseter/{orgCode}/{clazzCode}")
+    public ModelAndView getClazzMaster(@PathVariable String orgCode,
+                                       @PathVariable String clazzCode,
+                                       HttpServletRequest request,
+                                       HttpServletResponse response) throws Exception {
+        log.debug(this.getClass().getSimpleName() + ".getClazzMaster");
+        ClazzMaseter clazzMaster = clazzMasterService.get(orgCode, clazzCode);
+        return ModelAndViewFactory.instance()
+                .with("clazzMaster", clazzMaster)
+                .build();
+    }
+
+    @RequestMapping("/get/clazz/teachingteacher/{orgCode}/{clazzCode}")
+    public ModelAndView getClazzTeachingteacher(@PathVariable String orgCode,
+                                                @PathVariable String clazzCode,
+                                                HttpServletRequest request,
+                                                HttpServletResponse response) throws Exception {
+        log.debug(this.getClass().getSimpleName() + ".getClazzTeachingteacher");
+        List<TeachingTeacher> teachingTeachers = teachingTeacherService.queryTeachingTeacherOfClazz(orgCode, clazzCode);
+        return ModelAndViewFactory.instance()
+                .with("teachingTeachers", teachingTeachers)
+                .build();
+    }
+
 
 }

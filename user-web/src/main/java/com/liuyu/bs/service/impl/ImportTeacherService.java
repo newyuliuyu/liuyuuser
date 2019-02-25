@@ -66,7 +66,7 @@ public class ImportTeacherService implements Runnable {
             process();
             webProgress.info(90, "导入成功");
         } catch (Exception e) {
-            log.error("导入机构数据失败", e);
+            log.error("导入教师数据失败", e);
             webProgress.error(90, "导入失败" + ThrowableToString.formatHtml(e));
         } finally {
             webProgress.over("导入完成");

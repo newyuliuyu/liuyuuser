@@ -337,6 +337,29 @@ a.btn-outline-primary:hover {
     font-size: 12px;
 }
 
+.clazz-teacher-list {
+    padding: 0px;
+}
+
+.clazz-teacher-list li {
+    padding-left: 5px;
+    padding-top: 5px;
+    display: inline-block;
+    width: 100px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.clazz-teacher-list li label {
+    display: block;
+    color: #c6c8ca;
+}
+
+.clazz-teacher-list li span {
+    display: block;
+    font-size: 18px;
+}
+
 /***************上传按钮********************/
 .uploadBtn {
     position: relative;

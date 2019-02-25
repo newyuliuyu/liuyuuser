@@ -24,6 +24,8 @@ public interface ClazzMasterDao {
 
     int delete(@Param("clazzMaster") ClazzMaseter clazzMaster);
 
+    ClazzMaseter get(@Param("orgCode") String orgCode, @Param("clazzCode") String clazzCode);
+
     List<ClazzMaseter> queryClazzMaster(@Param("orgCode") String orgCode);
 
     boolean teacheHasClazzMaster(@Param("teacherCode") String teacherCode);

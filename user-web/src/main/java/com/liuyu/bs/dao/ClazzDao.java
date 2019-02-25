@@ -29,6 +29,11 @@ public interface ClazzDao {
 
     Clazz get(@Param("code") String clazzCode);
 
+    Clazz getClazzWithName(@Param("schoolCode") String schoolCode,
+                           @Param("clazzName") String clazzName,
+                           @Param("gradeName") String gradeName,
+                           @Param("subjectName") String subjectName);
+
     List<Clazz> queryClazzesWithSchoolCode(@Param("schoolCode") String schoolCode);
 
 

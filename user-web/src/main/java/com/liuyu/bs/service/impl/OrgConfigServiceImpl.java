@@ -13,6 +13,7 @@ import com.liuyu.common.util.IdGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -99,6 +100,14 @@ public class OrgConfigServiceImpl implements OrgConfigService {
     }
 
     @Override
+    public Clazz getClazz(String schoolCode, String name,String gradeName, String subjectName) {
+        if (StringUtils.isEmpty(subjectName)) {
+            subjectName = null;
+        }
+        return clazzDao.getClazzWithName(schoolCode, name, gradeName,subjectName);
+    }
+
+    @Override
     public List<Clazz> queryClazz(String code) {
         return clazzDao.queryClazzesWithSchoolCode(code);
     }
@@ -106,9 +115,9 @@ public class OrgConfigServiceImpl implements OrgConfigService {
     @Override
     @Transactional
     public void aKeyConfigOrg(String code,
-                                 boolean hasPrimarySchool,
-                                 boolean hasJuniorHighSchool,
-                                 boolean hasHighSchool) {
+                              boolean hasPrimarySchool,
+                              boolean hasJuniorHighSchool,
+                              boolean hasHighSchool) {
 
         List<Subject> subjects = Lists.newArrayList();
         subjects.add(Subject.builder().name("语文").build());

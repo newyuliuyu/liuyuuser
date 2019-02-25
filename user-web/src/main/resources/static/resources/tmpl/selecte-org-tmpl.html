@@ -20,16 +20,16 @@
         </div>
     </nav>
     <div class="tab-content">
-        <div class="tab-pane fade show active" id="nav-province">
+        <div class="tab-pane fade {{=(it.orgs[0].elementId==='province'?'show active':'')}}" id="nav-province">
             省市
         </div>
-        <div class="tab-pane fade" id="nav-city">
+        <div class="tab-pane fade {{=(it.orgs[0].elementId==='city'?'show active':'')}}" id="nav-city">
             地市
         </div>
-        <div class="tab-pane fade" id="nav-county">
+        <div class="tab-pane fade {{=(it.orgs[0].elementId==='county'?'show active':'')}}" id="nav-county">
             区县
         </div>
-        <div class="tab-pane fade" id="nav-school">
+        <div class="tab-pane fade {{=(it.orgs[0].elementId==='school'?'show active':'')}}" id="nav-school">
             学校
         </div>
     </div>

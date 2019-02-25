@@ -67,6 +67,28 @@
         left join b_teacher e on a.teacherCode=e.code
         where a.orgCode=#{orgCode}
     </select>
+    <select id="queryTeachingTeacherOfClazz" resultMap="TeachingTeacherMap">
+        select a.id,
+        a.subjectName,
+        a.orgCode,
+        b.name as orgName,
+        a.teacherCode,
+        e.name as teacherName,
+        e.account,
+        a.gradeId,
+        c.name as gradeName,
+        c.enterSchoolYear,
+        c.learnSegment,
+        a.clazzCode,
+        d.name as clazzName,
+        d.teachClazz
+        from b_teaching_teacher a
+        left join b_org b on a.orgCode=b.code
+        left join  b_org_grade c on a.gradeId=c.id
+        left join b_clazz d on a.clazzCode=d.code
+        left join b_teacher e on a.teacherCode=e.code
+        where a.orgCode=#{orgCode} and a.clazzCode=#{clazzCode}
+    </select>
     <select id="teacheHasTeachingTeacher" resultType="boolean">
         select count(1)
         from b_teaching_teacher a

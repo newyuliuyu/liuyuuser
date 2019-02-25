@@ -49,6 +49,26 @@
         where a.code=#{code}
     </select>
 
+    <select id="getClazzWithName" resultMap="clazzMap">
+        select a.id,a.code,a.name,a.wl,a.teachClazz,a.subjectName,
+        a.schoolCode,b.name as schoolName,
+        a.grade as gradeId,c.name as gradeName,c.enterSchoolYear,c.learnSegment
+        from b_clazz a
+        left join b_org b on a.schoolCode=b.code and b.deep=4
+        left join b_org_grade c on a.grade=c.id
+        where a.schoolCode=#{schoolCode}
+        and a.name=#{clazzName}
+        and c.name=#{gradeName}
+        <choose>
+            <when test="subjectName != null">
+                and a.teachClazz=1 and a.subjectName=#{subjectName}
+            </when>
+            <otherwise>
+                and a.teachClazz=0
+            </otherwise>
+        </choose>
+    </select>
+
     <select id="queryClazzesWithSchoolCode" resultMap="clazzMap">
         select a.id,a.code,a.name,a.wl,a.teachClazz,a.subjectName,
         a.schoolCode,b.name as schoolName,

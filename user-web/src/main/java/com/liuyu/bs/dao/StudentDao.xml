@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.liuyu.bs.dao.StudentDao">
+
+    <insert id="add">
+        insert into b_student(schoolCode,gradeId,clazzCode,name,studentId,account,zkzh)
+        values (#{student.school.code},#{student.grade.id},#{student.clazz.code},#{student.name},#{student.studentId},#{student.account},#{student.zkzh})
+    </insert>
+    <insert id="adds">
+        insert into b_student(schoolCode,gradeId,clazzCode,name,studentId,account,zkzh)
+        values
+        <foreach collection="students" item="student" separator=",">
+            (#{student.school.code},#{student.grade.id},#{student.clazz.code},#{student.name},#{student.studentId},#{student.account},#{student.zkzh})
+        </foreach>
+    </insert>
+    <update id="update">
+        update b_student a
+        set name=#{student.name},
+        studentId=#{student.studentId},
+        zkzh=#{student.zkzh}
+        where id=#{student.id}
+    </update>
+
+    <delete id="delete">
+        delete from b_student where id=#{student.id}
+    </delete>
+
+    <resultMap id="studentMap" type="com.liuyu.bs.business.Student">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="account" column="account"/>
+        <result property="studentId" column="studentId"/>
+        <result property="zkzh" column="zkzh"/>
+        <association property="school" javaType="com.liuyu.bs.business.School">
+            <id property="code" column="schoolCode"/>
+            <result property="name" column="schoolName"/>
+        </association>
+        <association property="grade" javaType="com.liuyu.bs.business.Grade">
+            <id property="id" column="gradeId"/>
+            <result property="name" column="gradeName"/>
+            <result property="enterSchoolYear" column="enterSchoolYear"/>
+            <result property="learnSegment" column="learnSegment"/>
+        </association>
+        <association property="clazz" javaType="com.liuyu.bs.business.Clazz">
+            <id property="code" column="clazzCode"/>
+            <result property="name" column="clazzName"/>
+            <result property="teachClazz" column="teachClazz"/>
+        </association>
+    </resultMap>
+
+    <select id="get" resultMap="studentMap">
+        SELECT
+        a.id,
+        a.NAME,
+        a.account,
+        a.studentId,
+        a.zkzh,
+        a.schoolCode,
+        b.name AS schoolName,
+        a.gradeId,
+        c.NAME gradeName,
+        c.enterSchoolYear,
+        c.learnSegment,
+        a.clazzCode,
+        d.NAME AS clazzName,
+        d.teachClazz
+        FROM b_student a
+        LEFT JOIN b_org b ON a.schoolCode=b.code
+        LEFT JOIN b_org_grade c ON a.gradeId=c.id
+        LEFT JOIN b_clazz d ON a.clazzCode=d.code
+        where a.id=#{id}
+    </select>
+    <select id="queryListWithClazz" resultMap="studentMap">
+        SELECT
+        a.id,
+        a.NAME,
+        a.account,
+        a.studentId,
+        a.zkzh,
+        a.schoolCode,
+        b.name AS schoolName,
+        a.gradeId,
+        c.NAME gradeName,
+        c.enterSchoolYear,
+        c.learnSegment,
+        a.clazzCode,
+        d.NAME AS clazzName,
+        d.teachClazz
+        FROM b_student a
+        LEFT JOIN b_org b ON a.schoolCode=b.code
+        LEFT JOIN b_org_grade c ON a.gradeId=c.id
+        LEFT JOIN b_clazz d ON a.clazzCode=d.code
+        where a.schoolCode=#{orgCode} and a.clazzCode=#{clazzCode}
+    </select>
+
+</mapper>

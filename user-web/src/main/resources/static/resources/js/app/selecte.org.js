@@ -22,12 +22,22 @@
         }
 
 
-        function changeOrg($this, callback) {
+        function changeOrg($this, isSchool, callback) {
             $this.find('.change-org-btn').click(function () {
                 var url = 'user/res/query/org-menu';
                 ajax.getJson(url).then(function (data) {
                     var dataset = {};
                     dataset.orgs = data.reses;
+                    if (isSchool === true) {
+                        var schools = [];
+                        $.each(data.reses, function (idx, item) {
+                            if (item.elementId === 'school') {
+                                schools.push(item);
+                                return false;
+                            }
+                        });
+                        dataset.orgs = schools;
+                    }
                     var tmplate = getTemplate('#selecteSchoolDialogT');
                     var arrText = dot.template(tmplate);
                     var html = arrText(dataset);
@@ -121,8 +131,11 @@
 
         }
 
-        function loadOrgData(callback) {
-            var url = 'org/user-org';
+        function loadOrgData(isSchool, callback) {
+            if (isSchool !== true) {
+                isSchool = false;
+            }
+            var url = 'org/user-org/' + isSchool;
             ajax.getJson(url).then(function (data) {
                 var org = data.org;
                 $('.org-name-label').text(org.name);
@@ -139,8 +152,8 @@
         $.fn.extend({
             selectOrg: function (opts) {
                 var $this = $(this);
-                loadOrgData(opts.load);
-                changeOrg($this, opts.click);
+                loadOrgData(opts.isSchool, opts.load);
+                changeOrg($this, opts.isSchool, opts.click);
             }
         });// $.fn.extend
 

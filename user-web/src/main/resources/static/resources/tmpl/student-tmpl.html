@@ -1,0 +1,147 @@
+<script id="studentUIT" type="text/x-dot-template">
+    <div class="clazz-teacher-list-div"></div>
+    <div class="student-tool-bar container" style="padding: 5px;">
+        <span class="student-num" style="border: 1px solid rebeccapurple;border-radius: 50%;display: inline-block;width: 30px;
+                height: 30px;
+                text-align: center;
+                line-height: 30px;
+                font-size: 12px;
+                background-color: #9999FF;
+                color: #fff;">0人</span>
+        {{? !it.clazz.teachClazz}}
+        <div class="float-right" style="display: inline-block;">
+            <a href="javascript:void(0);" class="btn btn-outline-primary add">增加学生</a>
+            <a href="javascript:void(0);" class="btn btn-outline-primary import">批量导入</a>
+            <a href="javascript:void(0);" class="btn btn-outline-primary download-tmp">下载模板</a>
+            <a href="javascript:void(0);" class="btn btn-outline-primary chang-clazz">设置转班</a>
+            <a href="javascript:void(0);" class="btn btn-outline-primary setting-teach-clazz">设置教学班</a>
+        </div>
+        {{?}}
+    </div>
+    <div class="student-table-div"></div>
+</script>
+<script id="clazz-teacher-listT" type="text/x-dot-template">
+    <ul class="clazz-teacher-list">
+        <li>
+            <label>班主任</label>
+            <span>
+                {{? it.clazzMaster}}
+                    {{=it.clazzMaster.teacher.name}}
+                {{?}}
+                &nbsp;
+            </span>
+        </li>
+        {{~it.subjects:item:idx}}
+        <li>
+            <label>{{=item.name}}</label>
+            <span>
+                {{? it.teachingTeacherMap[item.name]}}
+                    {{=it.teachingTeacherMap[item.name].teacher.name}}
+                {{?}}
+                &nbsp;
+            </span>
+        </li>
+        {{~}}
+    </ul>
+</script>
+<script id="student-table-divT" type="text/x-dot-template">
+
+    <table class="student-table table table-hover">
+        <thead class="thead-dark">
+        <tr>
+            <th>序号</th>
+            <th>姓名</th>
+            <th>学号</th>
+            <th>准考证号</th>
+            <th>账号</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{~it.students:student:idx}}
+        <tr>
+            <td>{{=idx+1}}</td>
+            <td data-id="{{=student.id}}">{{=student.name}}
+            <div class="select-div">
+            </div>
+            </td>
+            <td>{{=student.studentId}}</td>
+            <td>{{=student.zkzh}}</td>
+            <td>{{=student.account}}</td>
+            <td>
+                <a href="javascript:void(0);" class="del-btn" data-id="{{=student.id}}">刪除</a>
+                <a href="javascript:void(0);" class="update-btn" data-id="{{=student.id}}">修改</a>
+            </td>
+        </tr>
+        {{~}}
+        </tbody>
+    </table>
+</script>
+
+<script id="new-and-update-studentT" type="text/x-dot-template">
+    <form>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label text-right">学校</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control"
+                       value="{{=it.student.school.name}}" readonly>
+                <small class="form-text text-danger"></small>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label text-right">班级</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control"
+                       value="{{=it.student.grade.name+'-'+it.student.clazz.name}}" readonly>
+                <small class="form-text text-danger"></small>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label text-right">帐号</label>
+            <div class="col-sm-10">
+                <input type="text" class="account form-control" placeholder="帐号"
+                       value="{{=it.student.account || ''}}" {{=it.student.account?'readonly':''}}>
+                <small class="form-text text-danger"></small>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label text-right">姓名</label>
+            <div class="col-sm-10">
+                <input type="text" class="name form-control" placeholder="姓名"
+                       value="{{=it.student.name || ''}}">
+                <small class="form-text text-danger"></small>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label text-right">学号</label>
+            <div class="col-sm-10">
+                <input type="text" class="studentId form-control" placeholder="学号"
+                       value="{{=it.student.studentId || ''}}">
+                <small class="form-text text-danger"></small>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label text-right">准考证号</label>
+            <div class="col-sm-10">
+                <input type="text" class="zkzh form-control" value="{{=it.student.zkzh||''}}" placeholder="准考证号">
+                <small class="form-text text-danger"></small>
+            </div>
+        </div>
+        <input type="hidden" class="id" value="{{=it.student.id || ''}}">
+    </form>
+</script>
+
+<script id="importStudentT" type="text/x-dot-template">
+    <div class="upload-file-div">
+        <div class="col-md-12">
+        <span id="selectedFileBtn" class="uploadBtn btn btn-primary btn-lg">
+            <label class="icon-cloud-upload">选择文件</label>
+        </span>
+        </div>
+        <div id="uploadFileProgressDiv" class="col-md-12" style="margin-top: 30px;"></div>
+    </div>
+    <div class="progress-div" style="width: 100%;height: 350px; display: none;">
+
+    </div>
+</script>
+

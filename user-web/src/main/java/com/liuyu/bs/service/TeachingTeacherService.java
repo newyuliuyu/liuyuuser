@@ -16,4 +16,6 @@ import java.util.List;
  */
 public interface TeachingTeacherService {
     List<TeachingTeacher> queryTeachingTeacher(String orgCode);
+
+    List<TeachingTeacher> queryTeachingTeacherOfClazz(String orgCode, String clazzCode);
 }

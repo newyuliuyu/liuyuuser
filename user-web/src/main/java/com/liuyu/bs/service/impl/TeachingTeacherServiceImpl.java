@@ -28,4 +28,9 @@ public class TeachingTeacherServiceImpl implements TeachingTeacherService {
     public List<TeachingTeacher> queryTeachingTeacher(String orgCode) {
         return teachingTeacherDao.queryTeachingTeacher(orgCode);
     }
+
+    @Override
+    public List<TeachingTeacher> queryTeachingTeacherOfClazz(String orgCode, String clazzCode) {
+        return teachingTeacherDao.queryTeachingTeacherOfClazz(orgCode, clazzCode);
+    }
 }

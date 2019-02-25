@@ -116,10 +116,10 @@ public class TeacherController extends BaseController {
     }
 
     @RequestMapping(value = "/import")
-    public ModelAndView importOrg(@RequestBody UploadFileDTO uploadFileDTO,
+    public ModelAndView importTeacher(@RequestBody UploadFileDTO uploadFileDTO,
                                   HttpServletRequest request,
                                   HttpServletResponse response) throws Exception {
-        log.debug("进入" + this.getClass().getSimpleName() + ".importOrg");
+        log.debug("进入" + this.getClass().getSimpleName() + ".importTeacher");
         uploadFileDTO = solveRealPath(uploadFileDTO);
         ImportTeacherService importTeacherService = new ImportTeacherService(uploadFileDTO.getNewName(), "");
         String key = importTeacherService.getKey();

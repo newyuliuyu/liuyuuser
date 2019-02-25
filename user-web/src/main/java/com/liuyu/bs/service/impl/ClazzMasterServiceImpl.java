@@ -25,6 +25,11 @@ public class ClazzMasterServiceImpl implements ClazzMasterService {
     private ClazzMasterDao clazzMasterDao;
 
     @Override
+    public ClazzMaseter get(String orgCode, String clazzCode) {
+        return clazzMasterDao.get(orgCode, clazzCode);
+    }
+
+    @Override
     public List<ClazzMaseter> queryClazzMasters(String orgCode) {
         return clazzMasterDao.queryClazzMaster(orgCode);
     }
