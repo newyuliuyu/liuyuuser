@@ -30,4 +30,5 @@ public class Resource {
     private String smallGroup;
     private int orderNum;
     private Long parentId;
+    private String extendData;
 }

@@ -74,6 +74,7 @@ CREATE TABLE u_resource(
   parentId BIGINT NOT NULL COMMENT'父级ID',
   orderNum INT DEFAULT 0 COMMENT'显示顺序',
   resType VARCHAR(20) DEFAULT '' COMMENT'资源类型',
+  extendData text comment'扩展数据,由具体的业务系统定义和实现',
 	PRIMARY KEY id(id)
 ) ENGINE=INNODB COMMENT'资源表';
 

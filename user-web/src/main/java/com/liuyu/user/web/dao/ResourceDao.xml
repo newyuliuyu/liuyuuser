@@ -3,15 +3,15 @@
 <mapper namespace="com.liuyu.user.web.dao.ResourceDao">
 
     <insert id="add">
-        insert into u_resource(id,name,displayText,groups,smallGroup,parentId,orderNum,resType,elementId)
-        values (#{res.id},#{res.name},#{res.displayText},#{res.group},#{res.smallGroup},#{res.parentId},#{res.orderNum},#{res.resourceType},#{res.elementId})
+        insert into u_resource(id,name,displayText,groups,smallGroup,parentId,orderNum,resType,elementId,extendData)
+        values (#{res.id},#{res.name},#{res.displayText},#{res.group},#{res.smallGroup},#{res.parentId},#{res.orderNum},#{res.resourceType},#{res.elementId},#{res.extendData})
     </insert>
 
     <insert id="addResources">
-        insert into u_resource(id,name,displayText,groups,smallGroup,parentId,orderNum,resType,elementId)
+        insert into u_resource(id,name,displayText,groups,smallGroup,parentId,orderNum,resType,elementId,extendData)
         values
         <foreach collection="reses" item="res" index="index" separator=",">
-            (#{res.id},#{res.name},#{res.displayText},#{res.group},#{res.smallGroup},#{res.parentId},#{res.orderNum},#{res.resourceType},#{res.elementId})
+            (#{res.id},#{res.name},#{res.displayText},#{res.group},#{res.smallGroup},#{res.parentId},#{res.orderNum},#{res.resourceType},#{res.elementId},#{res.extendData})
         </foreach>
     </insert>
 
@@ -39,7 +39,8 @@
         parentId=#{res.parentId},
         orderNum=#{res.orderNum},
         resType=#{res.resourceType},
-        elementId=#{res.elementId}
+        elementId=#{res.elementId},
+        extendData=#{res.extendData}
         where a.id=#{res.id}
     </update>
 
@@ -89,23 +90,23 @@
 
 
     <select id="queryResources" resultType="com.liuyu.user.web.domain.Resource">
-        select id,name,displayText,groups as `group`,smallGroup,parentId,orderNum,resType as resourceType,elementId
+        select id,name,displayText,groups as `group`,smallGroup,parentId,orderNum,resType as resourceType,elementId,extendData
         from u_resource
     </select>
     <select id="queryRoleResources" resultType="com.liuyu.user.web.domain.Resource">
-        select a.id,name,displayText,groups as `group`,smallGroup,parentId,orderNum,resType as resourceType,elementId
+        select a.id,name,displayText,groups as `group`,smallGroup,parentId,orderNum,resType as resourceType,elementId,extendData
         from u_resource a
         inner join u_role_x_resource b on a.id=b.resId
         where b.roleId=#{roleId}
     </select>
     <select id="queryRoleResourcesWtihGroup" resultType="com.liuyu.user.web.domain.Resource">
-        select a.id,name,displayText,groups as `group`,smallGroup,parentId,orderNum,resType as resourceType,elementId
+        select a.id,name,displayText,groups as `group`,smallGroup,parentId,orderNum,resType as resourceType,elementId,extendData
         from u_resource a
         inner join u_role_x_resource b on a.id=b.resId
         where b.roleId=#{roleId} and a.groups=#{group}
     </select>
     <select id="queryRolesResourcesWtihGroup" resultType="com.liuyu.user.web.domain.Resource">
-        select a.id,name,displayText,groups as `group`,smallGroup,parentId,orderNum,resType as resourceType,elementId
+        select a.id,name,displayText,groups as `group`,smallGroup,parentId,orderNum,resType as resourceType,elementId,extendData
         from u_resource a
         inner join u_role_x_resource b on a.id=b.resId
         where b.roleId in
@@ -115,13 +116,13 @@
         and a.groups=#{group}
     </select>
     <select id="queryUserResources" resultType="com.liuyu.user.web.domain.Resource">
-        select a.id,name,displayText,groups as `group`,smallGroup,parentId,orderNum,resType as resourceType,elementId
+        select a.id,name,displayText,groups as `group`,smallGroup,parentId,orderNum,resType as resourceType,elementId,extendData
         from u_resource a
         inner join u_user_x_resource b on a.id=b.resId
         where b.userId=#{userId}
     </select>
     <select id="queryUserResourcesWtihGroup" resultType="com.liuyu.user.web.domain.Resource">
-        select a.id,name,displayText,groups as `group`,smallGroup,parentId,orderNum,resType as resourceType,elementId
+        select a.id,name,displayText,groups as `group`,smallGroup,parentId,orderNum,resType as resourceType,elementId,extendData
         from u_resource a
         inner join u_user_x_resource b on a.id=b.resId
         where b.userId=#{userId}
